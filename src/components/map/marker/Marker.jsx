@@ -11,6 +11,9 @@ export const markerFnIndex = [1];
 export const groupFnIndex = [1];
 export const groupPersonIndex = [1];
 export const functionSelected = [];
+export const defaulFunction = [20];
+export const defaultPerson = [20];
+export const defaultFunctionPerson = [20];
 
 export const Markers = observer(({ SetModal }) => {
   const { click, lock, addIcon, addIconHandle } = STORES;
