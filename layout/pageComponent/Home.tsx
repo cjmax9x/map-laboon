@@ -9,15 +9,15 @@ import { STORES } from "../../src/components/store/GlobalStore";
 import { MapInforMation } from "../../src/components/map/MapInforMation";
 
 const Home = (): React.ReactElement => {
-  // const Router = useRouter();
+  const Router = useRouter();
 
-  // const { user } = STORES;
+  const { user } = STORES;
 
-  // useEffect(() => {
-  //   !user && Router.push("/login");
-  // }, [user]);
+  useEffect(() => {
+    !user && Router.push("/login");
+  }, [user]);
 
-  // if (!user) return <div></div>;
+  if (!user) return <div></div>;
 
   return (
     <div className={styles["container"]}>
