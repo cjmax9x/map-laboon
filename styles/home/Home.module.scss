@@ -1,0 +1,33 @@
+.container {
+  // width: 1280px;
+  margin: 0 auto;
+}
+.content {
+  display: flex;
+  padding-top: 70px;
+  min-height: 100vh;
+}
+.side-bar {
+  border: solid 1px #d1d1d1;
+}
+.map {
+  flex: 1;
+  position: relative;
+}
+.map-information {
+  z-index: 999;
+  position: absolute;
+  min-width: 200px;
+  border-radius: 4px;
+  height: 200px;
+  border-radius: 2px;
+  padding: 10px;
+  background-color: #d1d1d1;
+}
+.map-information h4 {
+  font-size: 13px;
+  font-weight: 400;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+}

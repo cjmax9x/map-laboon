@@ -1,0 +1,36 @@
+html,
+body {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+* {
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+sub {
+  margin-top: 6px;
+}
+.leaflet-popup-content {
+  margin: 0 !important;
+  width: unset !important;
+}
+
+.leaflet-popup-content-wrapper {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.leaflet-popup-tip {
+  background-color: transparent !important;
+  color: transparent !important;
+  box-shadow: none !important;
+}

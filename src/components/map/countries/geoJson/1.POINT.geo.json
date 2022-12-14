@@ -1,0 +1,1034 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [33.9677882204964, 35.00963186938169, 0]
+      },
+      "properties": {
+        "Name": "",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1,
+        "marker-color": "#ff0000"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [34.0720785622235, 34.97518235394532, 0]
+      },
+      "properties": {
+        "Name": "Άγιοι Ανάργυροι",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1,
+        "marker-color": "#ff0000"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [33.57300650871169, 34.93880895323832, 0]
+      },
+      "properties": {
+        "Name": "",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 2,
+        "marker-color": "#ff0080"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [33.40100982991935, 34.90487948425734, 0]
+      },
+      "properties": {
+        "Name": "",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1,
+        "marker-color": "#008000"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [33.3828088455635, 35.12439814652059, 0]
+      },
+      "properties": {
+        "Name": "",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1,
+        "marker-color": "#ff0000"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [33.40018511189874, 35.14346644998462, 0]
+      },
+      "properties": {
+        "Name": "",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 2,
+        "marker-color": "#ff0000"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [33.38276401462256, 35.16269006561175, 0]
+      },
+      "properties": {
+        "Name": "",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 3,
+        "marker-color": "#008000"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [33.19793267469741, 34.92039271277303, 0]
+      },
+      "properties": {
+        "Name": "Τζιόνια",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 3,
+        "marker-color": "#ff0000"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [33.24635989635559, 34.93362260825729, 0]
+      },
+      "properties": {
+        "Name": "Προφήτης Ηλίας",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1,
+        "marker-color": "#ff0000"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [33.22349841549663, 34.95403381147543, 0]
+      },
+      "properties": {
+        "Name": "Μαντρα του Καμπιού",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1,
+        "marker-color": "#008000"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [33.22868986017019, 34.95208440575483, 0]
+      },
+      "properties": {
+        "Name": "Μαντρα του Καμπιού",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1,
+        "marker-color": "#008000"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [33.0057751677547, 34.71361882777877, 0]
+      },
+      "properties": {
+        "Name": "",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1,
+        "marker-color": "#ff0000"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [33.02768768141799, 34.81229502051258, 0]
+      },
+      "properties": {
+        "Name": "",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 2,
+        "marker-color": "#008000"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [33.04256756612379, 34.82499416494662, 0]
+      },
+      "properties": {
+        "Name": "",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1,
+        "marker-color": "#ff0000"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [32.49082458892919, 34.70788198854704, 0]
+      },
+      "properties": {
+        "Name": "",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1,
+        "marker-color": "#008000"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [32.37133786148712, 34.89546638710551, 0]
+      },
+      "properties": {
+        "Name": "",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1,
+        "marker-color": "#008000"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [32.46096592175574, 35.06113240889896, 0]
+      },
+      "properties": {
+        "Name": "",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 2,
+        "marker-color": "#ff0000"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [32.33323475866558, 35.02371183103502, 0]
+      },
+      "properties": {
+        "Name": "",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1,
+        "marker-color": "#008000"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [32.54952013295871, 35.03177582614017, 0]
+      },
+      "properties": {
+        "Name": "",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1,
+        "marker-color": "#ff0000"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [32.63059473445243, 35.02421142299387, 0]
+      },
+      "properties": {
+        "Name": "",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1,
+        "marker-color": "#008000"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [32.64814115925881, 34.92624161915388, 0]
+      },
+      "properties": {
+        "Name": "",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 2,
+        "marker-color": "#ff0000"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [32.59428288194859, 35.10095068884905, 0]
+      },
+      "properties": {
+        "Name": "",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [32.7595303929531, 35.08903126025053, 0]
+      },
+      "properties": {
+        "Name": "",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [32.74273991297507, 35.07310164806782, 0]
+      },
+      "properties": {
+        "Name": "",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [32.77986022591843, 34.97883220783952, 0]
+      },
+      "properties": {
+        "Name": "Ξυσταρούδα",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [32.77456976315449, 34.9472917600856, 0]
+      },
+      "properties": {
+        "Name": "Κομιτιτζιή",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [32.73169468058822, 34.89266035443464, 0]
+      },
+      "properties": {
+        "Name": "Πέρα Βάσα",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [32.62514441251336, 34.98105851364614, 0]
+      },
+      "properties": {
+        "Name": "",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [32.90544265075693, 34.89511685967472, 0]
+      },
+      "properties": {
+        "Name": "Αρκολαχανιά",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [32.92890134908689, 34.94697145281938, 0]
+      },
+      "properties": {
+        "Name": "Πλατάνια",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [32.92856910612756, 34.94487116774571, 0]
+      },
+      "properties": {
+        "Name": "Πλατάνια",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [32.89803718207124, 34.92544398220366, 0]
+      },
+      "properties": {
+        "Name": "Αλμυρολίβαδο",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [32.89670416801314, 34.92719070566686, 0]
+      },
+      "properties": {
+        "Name": "Αλμυρολίβαδο",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [32.90014395480231, 34.92893131961153, 0]
+      },
+      "properties": {
+        "Name": "Αλμυρολίβαδο",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [32.89876274846715, 34.92914798186581, 0]
+      },
+      "properties": {
+        "Name": "Αλμυρολίβαδο",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [32.8986872579255, 34.93531613198473, 0]
+      },
+      "properties": {
+        "Name": "Λιβάδι του Πασσιά",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [32.89261604211716, 34.93706976905191, 0]
+      },
+      "properties": {
+        "Name": "Λιβάδι του Πασσιά",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [32.88796413355009, 34.93649367928921, 0]
+      },
+      "properties": {
+        "Name": "Κάμπος του Λιβαδιού",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [32.84319306764419, 34.91432812392812, 0]
+      },
+      "properties": {
+        "Name": "Ξεροκόλυμπος",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [32.83250163184793, 34.9268888901214, 0]
+      },
+      "properties": {
+        "Name": "Καμπί του Καλοήρου",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [32.84286142939845, 34.94758267317221, 0]
+      },
+      "properties": {
+        "Name": "Φράκτης Προδρόμου",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [32.85890905086176, 34.96900561899994, 0]
+      },
+      "properties": {
+        "Name": "Μάραθος",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [32.83198755840349, 35.0467015077195, 0]
+      },
+      "properties": {
+        "Name": "Ξεραρκάκα",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [33.00508215292022, 35.01108707657313, 0]
+      },
+      "properties": {
+        "Name": "",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [33.08225956260714, 35.01706427983131, 0]
+      },
+      "properties": {
+        "Name": "",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [33.03730857133985, 35.01017629267606, 0]
+      },
+      "properties": {
+        "Name": "",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [32.98234075481656, 35.05548652199524, 0]
+      },
+      "properties": {
+        "Name": "",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [33.96191424298027, 34.98659854950775, 0]
+      },
+      "properties": {
+        "Name": "Άγιος Νίκανδρος",
+        "timestamp": "",
+        "begin": "",
+        "end": "",
+        "altitudeMo": "clampToGround",
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": "",
+        "snippet": "",
+        "status": 1
+      }
+    }
+  ]
+}
