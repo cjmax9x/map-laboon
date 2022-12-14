@@ -9,7 +9,7 @@ import { divHouse, divHouseName } from "../marker/Icon";
 export const House = observer(({}) => {
   const map = useMap();
   const { houseView } = STORES;
-  console.log(map);
+
   useEffect(() => {
     map.eachLayer((layer) => {
       if (layer.options?.infor) {

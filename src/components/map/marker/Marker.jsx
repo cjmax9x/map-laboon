@@ -16,7 +16,7 @@ export const Markers = observer(({ SetModal }) => {
   const { click, lock, addIcon, addIconHandle } = STORES;
 
   const map = useMap();
-
+  map.doubleClickZoom.disable()
   useEffect(() => {
     if (lock) {
       map.eachLayer((layer) => {
@@ -32,8 +32,8 @@ export const Markers = observer(({ SetModal }) => {
   }, [lock]);
 
   useEffect(() => {
-    const mapContainer = document.querySelector(".leaflet-container");
     if (!click) {
+      const mapContainer = document.querySelector(".leaflet-container");
       mapContainer.ondragover = function (e) {
         e.preventDefault();
       };
@@ -78,6 +78,7 @@ export const Markers = observer(({ SetModal }) => {
 
   useMapEvents({
     click(e) {
+      addIconHandle("");
       if (addIcon === "person" && click) {
         L.marker([e.latlng.lat, e.latlng.lng], {
           index: markerPersonIndex[0],

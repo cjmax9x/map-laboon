@@ -1,5 +1,5 @@
 import styles from "../../../../styles/map/Map.module.scss";
-import { divFunction, divPerson } from "../marker/Icon";
+import { divFunction, divFunctionCircle, divPerson } from "../marker/Icon";
 import L from "leaflet";
 import { functionSelected, groupFnIndex } from "../marker/Marker";
 import { STORES } from "../../store/GlobalStore";
@@ -11,7 +11,7 @@ export const customPopUp = (SetModal, index, type) => {
   });
 
   window.openModal = () => {
-    SetModal(true);
+    SetModal("modal");
   };
   return `<div style="background-color:#fff;padding:10px; min-width:180px" class="${
     styles["popup-interact-function"]
@@ -50,6 +50,13 @@ export const customPopUp = (SetModal, index, type) => {
         styles["color-circle"],
       ].join(" ")}">
       </div>
+
+      <div onclick = "changeShape('elip')"  class="${[
+        styles.black,
+        styles["color-elip"],
+      ].join(" ")}">
+      </div>
+
       <div onclick = "changeShape('rectangle')" class="${[
         styles.black,
         styles["color-rectangle"],
@@ -60,12 +67,25 @@ export const customPopUp = (SetModal, index, type) => {
   <div onclick="deleteItem()" class="${[styles.row].join(" ")}">
     Delete
   </div>
-  <div style="display:flex" class="${[styles.row].join(
-    " "
-  )}"><label style="margin-left:4px;hieght:20px;width:100%" for="input">Select</label>
-  <input onchange="inputChange(event,${index})" id="input" ${
+
+
+
+  <div  style="display:flex; ${
+    functionSelected.length < 9 || checked
+      ? "color:unset"
+      : "color:#ddd;pointer-events: none"
+  }" class="${
+    styles.row
+  }"><label style="margin-left:4px;hieght:20px;width:100%" for="input">Select</label>
+  <input style="${
+    functionSelected.length < 9 || checked ? "opacity:1 " : "opacity:0.2"
+  }" onchange="inputChange(event,${index})" id="input" ${
     checked ? "checked" : ""
   } type ="checkbox"/> </div>
+
+
+
+
   <div onclick="${checked} ? makeGroup():makeGroup" style="${
     checked && functionSelected.length > 1 ? "" : "color:#ddd"
   }" class="${[styles.row].join(" ")}">
@@ -76,7 +96,7 @@ export const customPopUp = (SetModal, index, type) => {
 
 export const customPersonPopUp = (SetModal) => {
   window.openModal = () => {
-    SetModal(true);
+    SetModal("modal");
   };
   return `<div style="background-color:#fff;padding:10px;min-width:180px" class="${
     styles["popup-interact-function"]
@@ -123,7 +143,7 @@ export const changeIcon = (map, SetModal, e) => {
   ) => {
     if (e.target._icon.classList.contains(styles["circle-fn"])) {
       e.target.setIcon(
-        divFunction(
+        divFunctionCircle(
           [
             styles["circle-fn"],
             color ? styles[`fn--${color}`] : currentColor,
@@ -139,6 +159,16 @@ export const changeIcon = (map, SetModal, e) => {
         divFunction(
           [
             styles["rectangle-fn"],
+            color ? styles[`fn--${color}`] : currentColor,
+          ].join(" "),
+          name ? name : currentName
+        )
+      );
+    } else if (e.target._icon.classList.contains(styles["elip-fn"])) {
+      e.target.setIcon(
+        divFunction(
+          [
+            styles["elip-fn"],
             color ? styles[`fn--${color}`] : currentColor,
           ].join(" "),
           name ? name : currentName
@@ -165,15 +195,22 @@ export const changeIcon = (map, SetModal, e) => {
   window.changeShape = (shape) => {
     if (shape === "circle") {
       e.target.setIcon(
-        divFunction(
+        divFunctionCircle(
           [styles["circle-fn"], e.target._icon.classList[2]].join(" "),
           e.target._icon.textContent
         )
       );
-    } else {
+    } else if (shape === "rectangle") {
       e.target.setIcon(
         divFunction(
           [styles["rectangle-fn"], e.target._icon.classList[2]].join(" "),
+          e.target._icon.textContent
+        )
+      );
+    } else if (shape === "elip") {
+      e.target.setIcon(
+        divFunction(
+          [styles["elip-fn"], e.target._icon.classList[2]].join(" "),
           e.target._icon.textContent
         )
       );
@@ -184,7 +221,7 @@ export const changeIcon = (map, SetModal, e) => {
 
   window.inputChange = (event, index) => {
     if (event.target.checked) {
-      functionSelected.push(index);
+      functionSelected.length < 9 && functionSelected.push(index);
     } else {
       let length = functionSelected.length;
       for (let i = 0; i < length; i++) {

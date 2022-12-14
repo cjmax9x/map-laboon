@@ -12,10 +12,10 @@ import {
   markerFnIndex,
   groupFnIndex,
 } from "../marker/Marker";
-import { divFunction, divHouse, divHouseName, divPerson } from "../marker/Icon";
+import { divFunction, divHouse, divPerson ,divThreeDot} from "../marker/Icon";
 import { changeIcon, popupGroup, groupLayout } from "../popup/Popup";
 
-let i = 1;
+let y = 1;
 
 export const Countries = observer(({ SetModal }) => {
   const { houseView, lock, code, mainLand, addIconHandle } = STORES;
@@ -55,7 +55,7 @@ export const Countries = observer(({ SetModal }) => {
 
   const options = { units: "miles" };
 
-  window.handlePopulateFn = (object) => {
+  window.handlePopulateFn = (object,input) => {
     const grid = turf.pointGrid(extent, cellSide, options);
     grid.features.reverse();
 
@@ -77,45 +77,62 @@ export const Countries = observer(({ SetModal }) => {
         return newItem.reverse();
       });
     }
-    grid.features.forEach((item) => {
-      if (
-        i <= 20 &&
-        turf.booleanPointInPolygon(
-          item.geometry.coordinates,
-          turf.polygon([newPol])
-        )
-      ) {
-        if (object === "function-person") {
-          i % 2 !== 0 &&
-            L.marker(item.geometry.coordinates, {
-              draggable: !lock,
-              index: markerPersonIndex[0],
-              icon: divPerson(
-                styles["person"],
-                `Person ${markerPersonIndex[0]}`
-              ),
-            })
+    //-----------------------------------------------------------
+    const newGrid = grid.features.filter((item) => {
+      return turf.booleanPointInPolygon(
+        item.geometry.coordinates,
+        turf.polygon([newPol])
+      );
+    });
+    const newArray = [];
+    newGrid.forEach((item) => {
+      newArray.push(item.geometry.coordinates);
+    });
 
-              .on("contextmenu", changeIcon.bind(this, map, SetModal))
-              .addTo(map) &&
-            markerPersonIndex[0]++;
+    const result = newArray.reduce(function (prev, cur) {
+      prev[cur[0]] = prev[cur[0]] || [];
+      prev[cur[0]].push(cur);
+      return prev;
+    }, {});
+    const lengthItem = newArray.length
+    const newResult =  Object.values(result)
 
-          i % 2 === 0 &&
-            L.marker(item.geometry.coordinates, {
-              draggable: !lock,
-              index: markerFnIndex[0],
-              icon: divFunction(
-                [styles["rectangle-fn"], styles["fn--black"]].join(" "),
-                `Function ${markerFnIndex[0]}`
-              ),
-            })
+    if(input > lengthItem)  {
+      input = lengthItem - 1
+      L.marker(newResult[newResult.length-1][0], {
+        icon: divThreeDot(
+         
+        ),
+      }).addTo(map)
+    }
 
-              .on("contextmenu", changeIcon.bind(this, map, SetModal))
-              .addTo(map) &&
-            markerFnIndex[0]++;
-        } else {
-          object === "function"
-            ? L.marker(item.geometry.coordinates, {
+
+
+
+    for (let i in result) {
+      result[i].reverse();
+
+      result[i].forEach((item) => {
+        if (
+          input ? y <= input :y <= 20 &&
+          turf.booleanPointInPolygon(item, turf.polygon([newPol]))
+        ) {
+          if (object === "function-person") {
+            y % 2 !== 0 &&
+              L.marker(item, {
+                draggable: !lock,
+                index: markerPersonIndex[0],
+                icon: divPerson(
+                  styles["person"],
+                  `Person ${markerPersonIndex[0]}`
+                ),
+              })
+                .on("contextmenu", changeIcon.bind(this, map, SetModal))
+                .addTo(map) &&
+              markerPersonIndex[0]++;
+
+              y % 2 === 0 &&
+              L.marker(item, {
                 draggable: !lock,
                 index: markerFnIndex[0],
                 icon: divFunction(
@@ -125,28 +142,113 @@ export const Countries = observer(({ SetModal }) => {
               })
 
                 .on("contextmenu", changeIcon.bind(this, map, SetModal))
-                .addTo(map) && markerFnIndex[0]++
-            : L.marker(item.geometry.coordinates, {
-                draggable: !lock,
-                index: markerPersonIndex[0],
-                icon: divPerson(
-                  styles["person"],
-                  `Person ${markerPersonIndex[0]}`
-                ),
-              })
+                .addTo(map) &&
+              markerFnIndex[0]++;
+          } else {
+            object === "function"
+              ? L.marker(item, {
+                  draggable: !lock,
+                  index: markerFnIndex[0],
+                  icon: divFunction(
+                    [styles["rectangle-fn"], styles["fn--black"]].join(" "),
+                    `Function ${markerFnIndex[0]}`
+                  ),
+                })
 
-                .on("contextmenu", changeIcon.bind(this, map, SetModal))
-                .addTo(map) && markerPersonIndex[0]++;
+                  .on("contextmenu", changeIcon.bind(this, map, SetModal))
+                  .addTo(map) && markerFnIndex[0]++
+              : L.marker(item, {
+                  draggable: !lock,
+                  index: markerPersonIndex[0],
+                  icon: divPerson(
+                    styles["person"],
+                    `Person ${markerPersonIndex[0]}`
+                  ),
+                })
+
+                  .on("contextmenu", changeIcon.bind(this, map, SetModal))
+                  .addTo(map) && markerPersonIndex[0]++;
+          }
+          y++;
         }
-        i++;
-      }
-    });
-    i = 0;
+      });
+    }
+
+    //-----------------------------------------------------------------
+
+    // grid.features.forEach((item) => {
+    //   if (
+    //     y <= 20 &&
+    //     turf.booleanPointInPolygon(
+    //       item.geometry.coordinates,
+    //       turf.polygon([newPol])
+    //     )
+    //   ) {
+    //     if (object === "function-person") {
+    //       i % 2 !== 0 &&
+    //         L.marker(item.geometry.coordinates, {
+    //           draggable: !lock,
+    //           index: markerPersonIndex[0],
+    //           icon: divPerson(
+    //             styles["person"],
+    //             `Person ${markerPersonIndex[0]}`
+    //           ),
+    //         })
+
+    //           .on("contextmenu", changeIcon.bind(this, map, SetModal))
+    //           .addTo(map) &&
+    //         markerPersonIndex[0]++;
+
+    //       i % 2 === 0 &&
+    //         L.marker(item.geometry.coordinates, {
+    //           draggable: !lock,
+    //           index: markerFnIndex[0],
+    //           icon: divFunction(
+    //             [styles["rectangle-fn"], styles["fn--black"]].join(" "),
+    //             `Function ${markerFnIndex[0]}`
+    //           ),
+    //         })
+
+    //           .on("contextmenu", changeIcon.bind(this, map, SetModal))
+    //           .addTo(map) &&
+    //         markerFnIndex[0]++;
+    //     } else {
+    //       object === "function"
+    //         ? L.marker(item.geometry.coordinates, {
+    //             draggable: !lock,
+    //             index: markerFnIndex[0],
+    //             icon: divFunction(
+    //               [styles["rectangle-fn"], styles["fn--black"]].join(" "),
+    //               `Function ${markerFnIndex[0]}`
+    //             ),
+    //           })
+
+    //             .on("contextmenu", changeIcon.bind(this, map, SetModal))
+    //             .addTo(map) && markerFnIndex[0]++
+    //         : L.marker(item.geometry.coordinates, {
+    //             draggable: !lock,
+    //             index: markerPersonIndex[0],
+    //             icon: divPerson(
+    //               styles["person"],
+    //               `Person ${markerPersonIndex[0]}`
+    //             ),
+    //           })
+
+    //             .on("contextmenu", changeIcon.bind(this, map, SetModal))
+    //             .addTo(map) && markerPersonIndex[0]++;
+    //     }
+    //     y++;
+    //   }
+    // });
+    y = 0;
     map.closePopup();
   };
 
   useEffect(() => {
     const makeEvent = (e) => {
+      window.openPopulateModal = () => {
+        SetModal({code});
+      };
       L.popup()
         .setLatLng([e.latlng.lat, e.latlng.lng])
         .setContent(
@@ -173,8 +275,11 @@ export const Countries = observer(({ SetModal }) => {
           <h3 onclick ="handlePopulateFn('function-person')" class = ${
             styles["menu-geojson"]
           }>Populate Person & Function</h3>
+          <h3 onclick="openPopulateModal()" class = ${
+            styles["menu-geojson"]
+          }>Populate Property</h3>
           </div>
-
+         
         `
         )
         .openOn(map);
@@ -239,13 +344,9 @@ export const Countries = observer(({ SetModal }) => {
       },
     }).on("click", (e) => {
       if (STORES.addIcon === "house") {
-        const layers = [];
+        const addHouse = [];
         map.eachLayer((layer) => {
-          layer._icon && layers.push(layer);
-        });
-
-        const addHouse = layers.filter((item) => {
-          return item.options.infor;
+          layer.options?.infor && addHouse.push(layer.options.infor.name);
         });
 
         if (addHouse.length === 0) {
@@ -256,12 +357,7 @@ export const Countries = observer(({ SetModal }) => {
             },
           }).addTo(map);
         } else {
-          const notExistHouse = [];
-          addHouse.forEach((item) => {
-            notExistHouse.push(item.options.infor.name);
-          });
-
-          !notExistHouse.includes(code) &&
+          !addHouse.includes(code) &&
             L.marker([e.latlng.lat, e.latlng.lng], {
               icon: divHouse(),
               infor: {

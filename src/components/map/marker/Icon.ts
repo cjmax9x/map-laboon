@@ -14,7 +14,7 @@ export const divPerson = (className: string, name: string, image: string) => {
   });
 };
 
-export const divNavigationSigns = (className: string, name: string) => {
+export const divNavigationSigns = (className: string) => {
   return L.divIcon({
     className: className,
     iconSize: [80, 80],
@@ -22,11 +22,26 @@ export const divNavigationSigns = (className: string, name: string) => {
     html: `<img src="../../../../navigation_sign.png" alt="navigation" width="80" height="80">`,
   });
 };
-
+export const divThreeDot = (className: string) => {
+  return L.divIcon({
+    className: className,
+    iconSize: [10, 10],
+    iconAnchor: [20, 30],
+    html: `<img src="../../../../group.png" alt="group" width="10" height="10">`,
+  });
+};
 export const divFunction = (className: string, name: string) => {
   return L.divIcon({
     className: className,
     iconSize: [100, 50],
+    iconAnchor: [20, 30],
+    html: name,
+  });
+};
+export const divFunctionCircle = (className: string, name: string) => {
+  return L.divIcon({
+    className: className,
+    iconSize: [100, 100],
     iconAnchor: [20, 30],
     html: name,
   });
