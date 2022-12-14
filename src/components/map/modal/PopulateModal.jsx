@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "../../../../styles/map/Map.module.scss";
 import {
   defaulFunction,
@@ -6,30 +6,48 @@ import {
   defaultFunctionPerson,
 } from "../marker/Marker";
 export const PopulateModal = ({ modal, SetModal }) => {
-  const [defaultValue, setDefaultValue] = useState(defaulFunction);
+  const defaultRef = useRef({
+    defaulFunction:defaulFunction[0],
+    defaultPerson:defaultPerson[0],
+    defaultFunctionPerson:defaultFunctionPerson[0]
+  });
+  const [defaultValue, setDefaultValue] = useState(
+    defaultRef.current.defaulFunction
+  );
+  let population;
 
-  let inputValue;
   let selectionValue;
 
+  if (modal.code === "us") population = "330 Million";
+  else if (modal.code === "vn") population = "98 Million";
+  else if (modal.code === "gbr") population = "67 Million";
+  else if (modal.code === "bel") population = "11 Million";
+  else if (modal.code === "bol") population = "1.6 Thousand";
+
   const handlePopulateFnModal = () => {
-    inputValue.value > 0 &&
-      window.handlePopulateFn(selectionValue.value, inputValue.value);
+      defaulFunction[0] = defaultRef.current.defaulFunction;
+      defaultPerson[0] = defaultRef.current.defaultPerson
+      defaultFunctionPerson[0] = defaultRef.current.defaultFunctionPerson
     SetModal("");
   };
 
   const handleInputOnchange = (e) => {
     setDefaultValue([e.target.value]);
-    if (selectionValue.value === "function") defaulFunction[0] = e.target.value 
-    else if (selectionValue.value === "person") defaultPerson[0] = e.target.value 
+    if (selectionValue.value === "function")
+      defaultRef.current.defaulFunction = e.target.value;
+    else if (selectionValue.value === "person")
+      defaultRef.current.defaultPerson = e.target.value;
     else if (selectionValue.value === "function-person")
-    defaultFunctionPerson[0] = e.target.value 
+      defaultRef.current.defaultFunctionPerson = e.target.value;
   };
 
   const handleChange = () => {
-    if (selectionValue.value === "function") setDefaultValue(defaulFunction);
-    else if (selectionValue.value === "person") setDefaultValue(defaultPerson);
+    if (selectionValue.value === "function")
+      setDefaultValue(defaultRef.current.defaulFunction);
+    else if (selectionValue.value === "person")
+      setDefaultValue(defaultRef.current.defaultPerson);
     else if (selectionValue.value === "function-person")
-      setDefaultValue(defaultFunctionPerson);
+      setDefaultValue(defaultRef.current.defaultFunctionPerson);
   };
   return (
     <div className={styles["container"]}>
@@ -54,7 +72,7 @@ export const PopulateModal = ({ modal, SetModal }) => {
             style={{ marginBottom: 10, paddingLeft: 20 }}
             className={styles["infor"]}
           >
-            Population: 330 Million
+            Population: {population}
           </h4>
           <div className={styles["infor-selection"]}>
             <span className={styles["selection-title"]}>Display options:</span>
@@ -75,15 +93,12 @@ export const PopulateModal = ({ modal, SetModal }) => {
           </div>
           <div className={styles["infor-selection"]}>
             <span className={styles["infor"]}>Population Default Value:</span>
-            <div style={{ width: 166 }}>
+            <div style={{ width: 166, textAlign: "left" }}>
               <input
                 type="number"
-                ref={(e) => {
-                  inputValue = e;
-                }}
                 min={0}
                 className={styles["input-infor"]}
-                value={defaultValue[0]}
+                value={defaultValue}
                 onChange={handleInputOnchange}
               />
             </div>

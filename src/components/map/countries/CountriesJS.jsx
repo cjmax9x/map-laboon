@@ -11,6 +11,10 @@ import {
   markerPersonIndex,
   markerFnIndex,
   groupFnIndex,
+  defaulFunction,
+  defaultPerson,
+  defaultFunctionPerson
+
 } from "../marker/Marker";
 import { divFunction, divHouse, divPerson ,divThreeDot} from "../marker/Icon";
 import { changeIcon, popupGroup, groupLayout } from "../popup/Popup";
@@ -97,7 +101,7 @@ export const Countries = observer(({ SetModal }) => {
     const lengthItem = newArray.length
     const newResult =  Object.values(result)
 
-    if(input > lengthItem)  {
+    if(+input > lengthItem)  {
       input = lengthItem - 1
       L.marker(newResult[newResult.length-1][0], {
         icon: divThreeDot(
@@ -106,15 +110,12 @@ export const Countries = observer(({ SetModal }) => {
       }).addTo(map)
     }
 
-
-
-
     for (let i in result) {
       result[i].reverse();
 
       result[i].forEach((item) => {
         if (
-          input ? y <= input :y <= 20 &&
+          y <= +input &&
           turf.booleanPointInPolygon(item, turf.polygon([newPol]))
         ) {
           if (object === "function-person") {
@@ -173,74 +174,7 @@ export const Countries = observer(({ SetModal }) => {
         }
       });
     }
-
-    //-----------------------------------------------------------------
-
-    // grid.features.forEach((item) => {
-    //   if (
-    //     y <= 20 &&
-    //     turf.booleanPointInPolygon(
-    //       item.geometry.coordinates,
-    //       turf.polygon([newPol])
-    //     )
-    //   ) {
-    //     if (object === "function-person") {
-    //       i % 2 !== 0 &&
-    //         L.marker(item.geometry.coordinates, {
-    //           draggable: !lock,
-    //           index: markerPersonIndex[0],
-    //           icon: divPerson(
-    //             styles["person"],
-    //             `Person ${markerPersonIndex[0]}`
-    //           ),
-    //         })
-
-    //           .on("contextmenu", changeIcon.bind(this, map, SetModal))
-    //           .addTo(map) &&
-    //         markerPersonIndex[0]++;
-
-    //       i % 2 === 0 &&
-    //         L.marker(item.geometry.coordinates, {
-    //           draggable: !lock,
-    //           index: markerFnIndex[0],
-    //           icon: divFunction(
-    //             [styles["rectangle-fn"], styles["fn--black"]].join(" "),
-    //             `Function ${markerFnIndex[0]}`
-    //           ),
-    //         })
-
-    //           .on("contextmenu", changeIcon.bind(this, map, SetModal))
-    //           .addTo(map) &&
-    //         markerFnIndex[0]++;
-    //     } else {
-    //       object === "function"
-    //         ? L.marker(item.geometry.coordinates, {
-    //             draggable: !lock,
-    //             index: markerFnIndex[0],
-    //             icon: divFunction(
-    //               [styles["rectangle-fn"], styles["fn--black"]].join(" "),
-    //               `Function ${markerFnIndex[0]}`
-    //             ),
-    //           })
-
-    //             .on("contextmenu", changeIcon.bind(this, map, SetModal))
-    //             .addTo(map) && markerFnIndex[0]++
-    //         : L.marker(item.geometry.coordinates, {
-    //             draggable: !lock,
-    //             index: markerPersonIndex[0],
-    //             icon: divPerson(
-    //               styles["person"],
-    //               `Person ${markerPersonIndex[0]}`
-    //             ),
-    //           })
-
-    //             .on("contextmenu", changeIcon.bind(this, map, SetModal))
-    //             .addTo(map) && markerPersonIndex[0]++;
-    //     }
-    //     y++;
-    //   }
-    // });
-    y = 0;
+    y = 1;
     map.closePopup();
   };
 
@@ -266,13 +200,13 @@ export const Countries = observer(({ SetModal }) => {
           <div onclick="handleAddFunction(event, 'Existing function')">Existing function</div>
           </div>
           </div>
-          <h3 onclick ="handlePopulateFn('function')" class = ${
+          <h3 onclick ="handlePopulateFn('function',${defaulFunction[0]})" class = ${
             styles["menu-geojson"]
           }>Populate Function</h3>
-          <h3 onclick ="handlePopulateFn('person')" class = ${
+          <h3 onclick ="handlePopulateFn('person',${defaultPerson[0]})" class = ${
             styles["menu-geojson"]
           }>Populate Person</h3>
-          <h3 onclick ="handlePopulateFn('function-person')" class = ${
+          <h3 onclick ="handlePopulateFn('function-person',${defaultFunctionPerson[0]})" class = ${
             styles["menu-geojson"]
           }>Populate Person & Function</h3>
           <h3 onclick="openPopulateModal()" class = ${
