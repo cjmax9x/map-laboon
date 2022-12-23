@@ -23,7 +23,7 @@ const IconList = [
   { value: "person", Icon: PerSonIcon, name: "Person", ability: true },
   { value: "main-set", Icon: MainsetIcon, name: "The Given Set" },
   { value: "house", Icon: HomeIcon, name: "House", ability: true },
-  { value: "straight", Icon: VectorIcon, name: "Inter-Route", ability: true },
+  { value: "inter-route", Icon: VectorIcon, name: "Inter-Route", ability: true },
   { value: "distance", Icon: LocationIcon, name: "Distance" },
   { value: "philosophy", Icon: CircleIcon, name: "Philosophy" },
   {

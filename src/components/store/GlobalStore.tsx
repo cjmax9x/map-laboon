@@ -14,7 +14,7 @@ class STORE {
   position: string = "right";
   addIcon: string = "";
   click: boolean = true;
-  lock: boolean = true;
+  lock: boolean = false;
   houseView: string = "";
   constructor() {
     makeAutoObservable(this);

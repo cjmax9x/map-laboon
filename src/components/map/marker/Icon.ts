@@ -64,3 +64,11 @@ export const divHouseName = (className: string, name: string) => {
     `,
   });
 };
+export const divDistancePoint = () => {
+  return L.divIcon({
+    className: styles['dot-point-distance'],
+    iconSize: [10, 10],
+    iconAnchor: [2, 5],
+    
+  });
+};

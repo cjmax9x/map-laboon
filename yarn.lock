@@ -17,6 +17,13 @@
   dependencies:
     "regenerator-runtime" "^0.13.10"
 
+"@elfalem/leaflet-curve@^0.9.1":
+  "integrity" "sha512-qRx+GK68e+j60TJ9/e/xIC31ON2owmEIxYajGbX+FQ/knOSlGTIgZYhQvLIeChU/1RQd+ly7Up6z62LWOjLyWQ=="
+  "resolved" "https://registry.npmjs.org/@elfalem/leaflet-curve/-/leaflet-curve-0.9.1.tgz"
+  "version" "0.9.1"
+  optionalDependencies:
+    "@tweenjs/tween.js" "^17.2.0"
+
 "@eslint/eslintrc@^1.3.3":
   "integrity" "sha512-uj3pT6Mg+3t39fvLrj8iuCIJ38zKO9FpGtJ4BBJebJhEwjoT+KLVNCcHT5QC9NGRIEi7fZ0ZR8YRb884auB4Lg=="
   "resolved" "https://registry.npmjs.org/@eslint/eslintrc/-/eslintrc-1.3.3.tgz"
@@ -63,9 +70,9 @@
   dependencies:
     "glob" "7.1.7"
 
-"@next/swc-win32-x64-msvc@13.0.1":
-  "integrity" "sha512-t/0G33t/6VGWZUGCOT7rG42qqvf/x+MrFp1CU+8CN6PrjSSL57R5bqkXfubV9t4eCEnUxVP+5Hn3MoEXEebtEw=="
-  "resolved" "https://registry.npmjs.org/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-13.0.1.tgz"
+"@next/swc-darwin-x64@13.0.1":
+  "integrity" "sha512-8E6BY/VO+QqQkthhoWgB8mJMw1NcN9Vhl2OwEwxv8jy2r3zjeU+WNRxz4y8RLbcY0R1h+vHlXuP0mLnuac84tQ=="
+  "resolved" "https://registry.npmjs.org/@next/swc-darwin-x64/-/swc-darwin-x64-13.0.1.tgz"
   "version" "13.0.1"
 
 "@nodelib/fs.scandir@2.1.5":
@@ -1255,6 +1262,11 @@
     "@turf/invariant" "^6.5.0"
     "d3-voronoi" "1.1.2"
 
+"@tweenjs/tween.js@^17.2.0":
+  "integrity" "sha512-utSXj0WHi4qr/iyfFHGMJBaL+ixQ2N7BAmx1R5g8jBqykJfjBUQ0hKWwXf767hbALC3zOoOIofKYSDWu5n04JQ=="
+  "resolved" "https://registry.npmjs.org/@tweenjs/tween.js/-/tween.js-17.6.0.tgz"
+  "version" "17.6.0"
+
 "@types/geojson@*":
   "integrity" "sha512-Nmh0K3iWQJzniTuPRcJn5hxXkfB1T1pgB89SBig5PlJQU5yocazeu4jATJlaA0GYFKWMqDdvYemoSnF2pXgLVA=="
   "resolved" "https://registry.npmjs.org/@types/geojson/-/geojson-7946.0.10.tgz"
@@ -1399,6 +1411,11 @@
   dependencies:
     "normalize-path" "^3.0.0"
     "picomatch" "^2.0.4"
+
+"arc@git+https://github.com/springmeyer/arc.js.git#b005df058b010d1c7aaf3aa451516d41294dac0e":
+  "integrity" "sha512-EHnq0zdANUHgZBZykWNt4OCUoI04hT7YW1jydSMkJ3OU/tMckAkXPkDeEhQkAnhmUp4cE29QtAwQsY3yNCWXpQ=="
+  "resolved" "git+ssh://git@github.com/springmeyer/arc.js.git#b005df058b010d1c7aaf3aa451516d41294dac0e"
+  "version" "0.1.0"
 
 "argparse@^2.0.1":
   "integrity" "sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q=="
@@ -2021,6 +2038,11 @@
   "resolved" "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz"
   "version" "1.0.0"
 
+"fsevents@~2.3.2":
+  "integrity" "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA=="
+  "resolved" "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz"
+  "version" "2.3.2"
+
 "function-bind@^1.1.1":
   "integrity" "sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A=="
   "resolved" "https://registry.npmjs.org/function-bind/-/function-bind-1.1.1.tgz"
@@ -2404,12 +2426,29 @@
   dependencies:
     "language-subtag-registry" "~0.3.2"
 
+"leaflet-arc@^1.0.2":
+  "integrity" "sha512-WBmTEjf2O1IH7Ol6XFbv96l5RYVqO8hvUaR+GsL4TcbeMS9u3PHgZWVUF/ay0CG9HWhiHoJAHJ62Itcqduo6qQ=="
+  "resolved" "https://registry.npmjs.org/leaflet-arc/-/leaflet-arc-1.0.2.tgz"
+  "version" "1.0.2"
+  dependencies:
+    "arc" "git+https://github.com/springmeyer/arc.js.git#b005df058b010d1c7aaf3aa451516d41294dac0e"
+
 "leaflet-boundary-canvas@^1.0.0":
   "integrity" "sha512-+0kTmtqOBIKM5iOI8lywAAPHpKVHBSkyjdg/UvPW+M9moc8f1lBWaF7KEL6uc5cL3FAQf5J66bRFtJQ0bxPoLA=="
   "resolved" "https://registry.npmjs.org/leaflet-boundary-canvas/-/leaflet-boundary-canvas-1.0.0.tgz"
   "version" "1.0.0"
 
-"leaflet@^1.9.0", "leaflet@^1.9.2":
+"leaflet-textpath@^1.2.3":
+  "integrity" "sha512-mPb5m2MlihNkLlo762j8S8FJCUyLvDU2fJTjjmDWKfqqyUQkV3ca3IzrxwsfzYz2DXrV2ytCVHb5+DjQymF+8w=="
+  "resolved" "https://registry.npmjs.org/leaflet-textpath/-/leaflet-textpath-1.2.3.tgz"
+  "version" "1.2.3"
+
+"leaflet.polylinemeasure@^3.0.0":
+  "integrity" "sha512-PTTHz7NBJiWmNFetH8hb3leQNM15qoM9Xe7VDKh1Hyat/M+USqFYeoa0A0LAecsqsjUqA63Rzux4SivoyrSFkA=="
+  "resolved" "https://registry.npmjs.org/leaflet.polylinemeasure/-/leaflet.polylinemeasure-3.0.0.tgz"
+  "version" "3.0.0"
+
+"leaflet@^1.1.0", "leaflet@^1.3.1", "leaflet@^1.9.0", "leaflet@^1.9.2":
   "integrity" "sha512-Kc77HQvWO+y9y2oIs3dn5h5sy2kr3j41ewdqCMEUA4N89lgfUUfOBy7wnnHEstDpefiGFObq12FdopGRMx4J7g=="
   "resolved" "https://registry.npmjs.org/leaflet/-/leaflet-1.9.2.tgz"
   "version" "1.9.2"

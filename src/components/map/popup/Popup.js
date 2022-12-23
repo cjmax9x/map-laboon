@@ -1,6 +1,13 @@
 import styles from "../../../../styles/map/Map.module.scss";
-import { divFunction, divFunctionCircle, divPerson } from "../marker/Icon";
+import {
+  divDistancePoint,
+  divFunction,
+  divFunctionCircle,
+  divPerson,
+} from "../marker/Icon";
 import L from "leaflet";
+import "@elfalem/leaflet-curve";
+import "leaflet-textpath";
 import { functionSelected, groupFnIndex } from "../marker/Marker";
 import { STORES } from "../../store/GlobalStore";
 
@@ -358,3 +365,68 @@ export const groupLayoutPopup = (group) => {
 //       .openOn(map);
 //   };
 // };
+
+//----------------------------------------------------------------------
+
+//for Distance popup
+export function distancePopup(distancePoint, distancePoint1, e) {
+  const popup = L.popup()
+    .setLatLng([e.latlng.lat, e.latlng.lng])
+    .setContent(
+      `
+      <div style="background-color:#fff;padding:10px;min-width:180px">
+        <div onclick="changeRoute()" class = "${[
+          styles["menu-geojson"],
+          styles["on-hover-function"],
+        ].join(" ")}">
+          Arc-Route
+        </div>
+      </div>
+    </div>
+   
+  `
+    )
+    .addTo(this);
+
+  window.changeRoute = () => {
+    if (!e.target.parentArc) {
+      const thetaOffset = 3.14 / 9;
+      const thetaOffsetRev = 3.14 / -9;
+      let thetaOffsetData;
+      if (distancePoint.getLatLng().lng < distancePoint1.getLatLng().lng) {
+        thetaOffsetData = thetaOffset;
+      } else {
+        thetaOffsetData = thetaOffsetRev;
+      }
+      const latlng1 = [e.target._latlngs[0].lat, e.target._latlngs[0].lng],
+        latlng2 = [e.target._latlngs[1].lat, e.target._latlngs[1].lng];
+
+      const offsetX = latlng2[1] - latlng1[1],
+        offsetY = latlng2[0] - latlng1[0];
+      const r = Math.sqrt(Math.pow(offsetX, 2) + Math.pow(offsetY, 2)),
+        theta = Math.atan2(offsetY, offsetX);
+
+      const r2 = r / 2 / Math.cos(thetaOffsetData),
+        theta2 = theta + thetaOffsetData;
+
+      const midpointX = r2 * Math.cos(theta2) + latlng1[1],
+        midpointY = r2 * Math.sin(theta2) + latlng1[0];
+
+      const midpointLatLng = [midpointY, midpointX];
+
+      const pathOptions = {
+        color: "black",
+        weight: 3,
+      };
+      const curvedPath = L.curve(
+        ["M", latlng1, "Q", midpointLatLng, latlng2],
+        pathOptions
+      ).addTo(this);
+
+      e.target.setStyle({ color: "transparent" });
+      distancePoint.parentArc = curvedPath;
+      distancePoint1.parentArc = curvedPath;
+    }
+    this.removeLayer(popup);
+  };
+}

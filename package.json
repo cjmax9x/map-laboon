@@ -10,12 +10,16 @@
     "export": "next build & next export"
   },
   "dependencies": {
+    "@elfalem/leaflet-curve": "^0.9.1",
     "@tippyjs/react": "^4.2.6",
     "@turf/boolean-point-in-polygon": "^6.5.0",
     "@turf/helpers": "^6.5.0",
     "@turf/turf": "^6.5.0",
     "leaflet": "^1.9.2",
+    "leaflet-arc": "^1.0.2",
     "leaflet-boundary-canvas": "^1.0.0",
+    "leaflet-textpath": "^1.2.3",
+    "leaflet.polylinemeasure": "^3.0.0",
     "mobx": "^6.6.2",
     "mobx-react": "^7.5.3",
     "next": "13.0.1",
