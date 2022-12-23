@@ -159,6 +159,16 @@ export const Markers = observer(({ SetModal }) => {
             distancePopup.bind(this, distancePoint, distancePoint1)
           )
           .on("click", (e) => {
+            let direct;
+
+            if (
+              distancePoint.getLatLng().lng < distancePoint1.getLatLng().lng
+            ) {
+              direct = true;
+            } else {
+              direct = false;
+            }
+
             if (e.target._text === "Distance") {
               const latLng = e.target.getLatLngs();
               const distance = map.distance(
@@ -170,12 +180,14 @@ export const Markers = observer(({ SetModal }) => {
               e.target.setText(`${(distance * 0.001).toFixed()} km`, {
                 center: true,
                 offset: -3,
+                orientation: !direct ? 180 : 0,
               });
             } else {
               e.target.setText(null);
               e.target.setText("Distance", {
                 center: true,
                 offset: -3,
+                orientation: !direct ? 180 : 0,
               });
             }
           })

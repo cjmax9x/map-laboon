@@ -74,9 +74,6 @@ export const customPopUp = (SetModal, index, type) => {
   <div onclick="deleteItem()" class="${[styles.row].join(" ")}">
     Delete
   </div>
-
-
-
   <div  style="display:flex; ${
     functionSelected.length < 9 || checked
       ? "color:unset"
@@ -89,11 +86,9 @@ export const customPopUp = (SetModal, index, type) => {
   }" onchange="inputChange(event,${index})" id="input" ${
     checked ? "checked" : ""
   } type ="checkbox"/> </div>
-
-
-
-
-  <div onclick="${checked} ? makeGroup():makeGroup" style="${
+  <div onclick="${
+    checked && functionSelected.length > 1
+  } ? makeGroup():makeGroup" style="${
     checked && functionSelected.length > 1 ? "" : "color:#ddd"
   }" class="${[styles.row].join(" ")}">
     Make Group
