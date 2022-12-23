@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 //modal
 .container {
   background-color: rgba(61, 61, 61, 0.5);
@@ -507,3 +508,408 @@
   background-color: black;
   border-radius: 50%;
 }
+=======
+//modal
+.container {
+  background-color: rgba(61, 61, 61, 0.5);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.input {
+  padding: 10px;
+  border: none;
+  outline: none;
+  border-radius: 6px;
+  margin-right: 10px;
+}
+.button {
+  padding: 6px;
+  width: 70px;
+  margin-right: 10px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+.button:hover {
+  background-color: #3d3d3d;
+  color: white;
+}
+//--------------------
+.menu-geojson {
+  padding: 10px 3px;
+  font-size: 13px;
+  font-weight: 400;
+}
+.menu-geojson:hover {
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+// Icon
+.person {
+  font-size: 13px;
+  font-weight: 400;
+  color: black;
+}
+.name-person {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 80px;
+  text-align: center;
+  transform: translate(-50%);
+  background-color: #fff;
+  padding: 6px;
+  border-radius: 6px;
+  &.upload-image {
+    left: 88%;
+  }
+}
+.name-house {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: transparent;
+  font-weight: 800;
+  font-size: 16px;
+}
+
+.upload-file-wrapper {
+  position: relative;
+  input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+  }
+}
+.rectangle-fn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 400;
+  text-align: center;
+}
+.circle-fn {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 400;
+  text-align: center;
+}
+.fn--black {
+  background-color: Black;
+  color: white;
+}
+.fn--green {
+  background-color: #27ae60;
+  color: white;
+}
+.fn--red {
+  background-color: #eb5757;
+  color: white;
+}
+.fn--yellow {
+  background-color: #f2c94c;
+  color: white;
+}
+.fn--blue {
+  background-color: #56ccf2;
+  color: white;
+}
+
+.popup-interact-function {
+  .row {
+    cursor: pointer;
+    &:last-child {
+      border: unset;
+    }
+    border-bottom: 1px solid #d1d1d1;
+    padding: 10px;
+  }
+  .row:hover {
+    background-color: #d1d1d1;
+  }
+  .color-circle {
+    &.black {
+      background: #3d3d3d;
+    }
+    &.active.black::before {
+      border: 2px solid #3d3d3d;
+    }
+
+    &.green {
+      background: #27ae60;
+    }
+    &.active.green::before {
+      border: 2px solid #27ae60;
+    }
+
+    &.red {
+      background: #eb5757;
+    }
+    &.active.red::before {
+      border: 2px solid #eb5757;
+    }
+
+    &.yellow {
+      background: #f2c94c;
+    }
+    &.active.yellow::before {
+      border: 2px solid #f2c94c;
+    }
+
+    &.blue {
+      background: #56ccf2;
+    }
+    &.active.blue::before {
+      border: 2px solid #56ccf2;
+    }
+
+    margin-right: 15px;
+    &:last-child {
+      margin-right: unset;
+    }
+    position: relative;
+    &.active::before {
+      content: " ";
+      position: absolute;
+      // z-index: -1;
+      top: -5px;
+      left: -5px;
+      right: -5px;
+      bottom: -5px;
+      border: 2px solid #ffea00;
+      border-radius: 50%;
+    }
+    border: 2px solid transparent;
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+  }
+  .color-rectangle {
+    &.black {
+      background: #3d3d3d;
+    }
+    position: relative;
+    &.active::before {
+      content: " ";
+      position: absolute;
+      // z-index: -1;
+      top: -5px;
+      left: -5px;
+      right: -5px;
+      bottom: -5px;
+      border: 2px solid #ffea00;
+      border-radius: 50%;
+    }
+    border: 2px solid transparent;
+    width: 17px;
+    height: 17px;
+    // border-radius: 50%;
+  }
+  .on-hover {
+    position: relative;
+    &:hover .hover-func {
+      display: flex;
+    }
+    &:hover .hover-func-block {
+      display: block;
+    }
+    .hover-func {
+      overflow: hidden;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      z-index: 10000;
+      top: 20px;
+      left: 90%;
+      // right: -150%;
+      display: none;
+      width: 175px;
+      height: 46px;
+      background: #ffffff;
+      box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
+      border-radius: 2px;
+    }
+    .hover-func-block {
+      overflow: hidden;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      z-index: 10000;
+      top: 20px;
+      left: 90%;
+      // right: -150%;
+      display: none;
+      width: 175px;
+      padding: 14px;
+      background: #ffffff;
+      box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
+      border-radius: 2px;
+      div {
+        padding: 10px;
+        &:hover {
+          background-color: #ddd;
+          cursor: pointer;
+        }
+        border-bottom: 1px solid #d1d1d1;
+        &:last-child {
+          border-bottom: unset;
+        }
+      }
+    }
+  }
+  .on-hover-rename {
+    position: relative;
+    &:hover .hover-func {
+      display: block;
+    }
+    .hover-func {
+      overflow: hidden;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      z-index: 10000;
+      top: 20px;
+      // right: -150%;
+      left: 90%;
+      display: none;
+      width: 175px;
+      padding: 14px;
+      background: #ffffff;
+      box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
+      border-radius: 2px;
+      div {
+        padding: 10px;
+        &:hover {
+          background-color: #ddd;
+          cursor: pointer;
+        }
+        border-bottom: 1px solid #d1d1d1;
+        &:last-child {
+          border-bottom: unset;
+        }
+      }
+    }
+  }
+}
+
+.on-hover-function {
+  position: relative;
+  &:hover .hover-func {
+    display: block;
+  }
+  .hover-func {
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    z-index: 10000;
+    top: 20px;
+    right: -70%;
+    display: none;
+    width: 175px;
+    padding: 14px;
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 2px;
+    div {
+      padding: 10px;
+
+      border-bottom: 1px solid #d1d1d1;
+      &:last-child {
+        border-bottom: unset;
+      }
+      &:hover {
+        background-color: #ddd;
+        cursor: pointer;
+      }
+    }
+  }
+}
+.width-max-content {
+  width: max-content !important;
+  padding: 0 4px;
+}
+.location {
+  background-color: #2a93ee;
+  border-radius: 50%;
+  border: 1px solid #fff;
+}
+
+//---------- house
+.house {
+}
+
+// group popup
+
+.group-rectangle {
+  padding: 40px 10px;
+  min-width: 400px;
+  min-height: 200px;
+  background-color: transparent;
+  border: 3px solid #3d3d3d;
+}
+.group-elip {
+  padding: 40px 10px;
+  min-width: 400px;
+  min-height: 200px;
+  background-color: transparent;
+  border: 3px solid #3d3d3d;
+  border-radius: 50%;
+}
+.group-function {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: flex-start;
+  width: 400px;
+}
+.rectangle-fn-gr {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 40px;
+  margin: 0 4px 4px 0;
+  cursor: pointer;
+}
+
+.rectangle-fn-gr {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 40px;
+  margin: 0 4px 4px 0;
+  cursor: pointer;
+}
+.button-group {
+  position: absolute;
+  left: 16%;
+  // transform: translateX(-50%);
+  bottom: 2px;
+  border: none;
+  padding: 4px 6px;
+  border-radius: 4px;
+  background-color: #fff;
+  color: black;
+  cursor: pointer;
+  border: 2px solid #3d3d3d;
+}
+.button-group:hover {
+  color: white;
+}
+>>>>>>> parent of e03c2a2 ([MileStone 3] Add Populate property #1)

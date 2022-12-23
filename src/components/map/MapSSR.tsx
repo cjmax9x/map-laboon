@@ -9,7 +9,6 @@ import { Markers } from "./marker/Marker";
 import { House } from "./house/House";
 import LocationMarker from "./location/Location";
 import { Modal } from "./modal/Modal";
-import { PopulateModal } from "./modal/PopulateModal";
 import { useState } from "react";
 
 const bounds = new L.LatLngBounds(
@@ -19,14 +18,14 @@ const bounds = new L.LatLngBounds(
 
 const Map = () => {
   const { grid, country } = STORES;
-  const [modal, SetModal] = useState<string>("");
+  const [modal, SetModal] = useState<boolean | string>(false);
   return (
     <MapContainer
       attributionControl={false}
       style={{ backgroundColor: "#AAD3DF", width: "100%", height: "100%" }}
       center={[0, 0]}
       zoom={2}
-      maxZoom={8}
+      maxZoom={6}
       minZoom={2}
       maxBounds={bounds}
       maxBoundsViscosity={1}
@@ -43,10 +42,7 @@ const Map = () => {
       )}
       <GridLayer grid={grid} />
       <Markers SetModal={SetModal} />
-      {modal === "modal" && <Modal SetModal={SetModal} />}
-      {typeof modal === 'object' && <PopulateModal modal={modal} SetModal={SetModal} />}
-
-
+      {modal && <Modal SetModal={SetModal} />}
       <House />
     </MapContainer>
   );
