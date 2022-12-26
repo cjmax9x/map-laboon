@@ -28,6 +28,32 @@ export const defaulFunction = ["20"];
 export const defaultPerson = ["20"];
 export const defaultFunctionPerson = ["20"];
 
+const arcRouteInit = (e) => {
+  const thetaOffset = 3.14 / 9;
+  const latlng1 = [e.latlng.lat, e.latlng.lng],
+    latlng2 = [e.latlng.lat, e.latlng.lng + 10];
+  const offsetX = latlng2[1] - latlng1[1],
+    offsetY = latlng2[0] - latlng1[0];
+  const r = Math.sqrt(Math.pow(offsetX, 2) + Math.pow(offsetY, 2)),
+    theta = Math.atan2(offsetY, offsetX);
+  const r2 = r / 2 / Math.cos(thetaOffset),
+    theta2 = theta + thetaOffset;
+  const midpointX = r2 * Math.cos(theta2) + latlng1[1],
+    midpointY = r2 * Math.sin(theta2) + latlng1[0];
+
+  const midpointLatLng = [midpointY, midpointX];
+  const pathOptions = {
+    color: "transparent",
+    weight: 3,
+  };
+
+  return {
+    latlng1,
+    latlng2,
+    midpointLatLng,
+    pathOptions,
+  };
+};
 export const Markers = observer(({ SetModal }) => {
   const { click, lock, addIcon, addIconHandle } = STORES;
   const map = useMap();
@@ -192,8 +218,60 @@ export const Markers = observer(({ SetModal }) => {
             }
           })
           .addTo(map);
+
         distancePoint.parentLine = polyline;
         distancePoint1.parentLine = polyline;
+
+        const { midpointLatLng, latlng2, latlng1, pathOptions } =
+          arcRouteInit(e);
+        const curvedPath = L.curve(
+          ["M", latlng1, "Q", midpointLatLng, latlng2],
+          pathOptions
+        )
+          .addTo(map)
+          .on(
+            "contextmenu",
+            distancePopup.bind(this, distancePoint, distancePoint1)
+          )
+          .on("click", (e) => {
+            let direct;
+
+            if (
+              distancePoint.getLatLng().lng < distancePoint1.getLatLng().lng
+            ) {
+              direct = true;
+            } else {
+              direct = false;
+            }
+
+            if (distancePoint.parentArc._text === "Distance") {
+              const latLng = distancePoint.parentLine.getLatLngs();
+              const distance = map.distance(
+                L.latLng(latLng[0].lat, latLng[0].lng),
+                L.latLng(latLng[1].lat, latLng[1].lng)
+              );
+
+              distancePoint.parentArc.setText(null);
+              distancePoint.parentArc.setText(
+                `${(distance * 0.001).toFixed()} km`,
+                {
+                  center: true,
+                  offset: -3,
+                  orientation: !direct ? 180 : 0,
+                }
+              );
+            } else {
+              distancePoint.parentArc.setText(null);
+              distancePoint.parentArc.setText("Distance", {
+                center: true,
+                offset: -3,
+                orientation: !direct ? 180 : 0,
+              });
+            }
+          });
+        curvedPath.setText = polyline.setText;
+        distancePoint.parentArc = curvedPath;
+        distancePoint1.parentArc = curvedPath;
       }
     },
   });

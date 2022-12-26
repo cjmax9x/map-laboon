@@ -1,10 +1,5 @@
 import styles from "../../../../styles/map/Map.module.scss";
-import {
-  divDistancePoint,
-  divFunction,
-  divFunctionCircle,
-  divPerson,
-} from "../marker/Icon";
+import { divFunction, divFunctionCircle, divPerson } from "../marker/Icon";
 import L from "leaflet";
 import "@elfalem/leaflet-curve";
 import "leaflet-textpath";
@@ -250,7 +245,12 @@ export const changeIcon = (map, SetModal, e) => {
         (e) => {
           return groupLayoutPopup(e.options.group.group);
         },
-        { className: styles["group-rectangle"], offset: L.point(30, -12) }
+        {
+          className: styles["group-rectangle"],
+          offset: L.point(30, -12),
+          autoClose: false,
+          closeOnClick: false,
+        }
       )
       .on("contextmenu", changeGroup.bind(this, map))
       .openPopup();
@@ -374,54 +374,49 @@ export function distancePopup(distancePoint, distancePoint1, e) {
           styles["menu-geojson"],
           styles["on-hover-function"],
         ].join(" ")}">
-          Arc-Route
+          Change-Route
         </div>
       </div>
     </div>
-   
   `
     )
     .addTo(this);
 
   window.changeRoute = () => {
-    if (!e.target.parentArc) {
-      const thetaOffset = 3.14 / 9;
-      const thetaOffsetRev = 3.14 / -9;
-      let thetaOffsetData;
-      if (distancePoint.getLatLng().lng < distancePoint1.getLatLng().lng) {
-        thetaOffsetData = thetaOffset;
-      } else {
-        thetaOffsetData = thetaOffsetRev;
-      }
-      const latlng1 = [e.target._latlngs[0].lat, e.target._latlngs[0].lng],
-        latlng2 = [e.target._latlngs[1].lat, e.target._latlngs[1].lng];
-
-      const offsetX = latlng2[1] - latlng1[1],
-        offsetY = latlng2[0] - latlng1[0];
-      const r = Math.sqrt(Math.pow(offsetX, 2) + Math.pow(offsetY, 2)),
-        theta = Math.atan2(offsetY, offsetX);
-
-      const r2 = r / 2 / Math.cos(thetaOffsetData),
-        theta2 = theta + thetaOffsetData;
-
-      const midpointX = r2 * Math.cos(theta2) + latlng1[1],
-        midpointY = r2 * Math.sin(theta2) + latlng1[0];
-
-      const midpointLatLng = [midpointY, midpointX];
-
-      const pathOptions = {
-        color: "black",
-        weight: 3,
-      };
-      const curvedPath = L.curve(
-        ["M", latlng1, "Q", midpointLatLng, latlng2],
-        pathOptions
-      ).addTo(this);
-
-      e.target.setStyle({ color: "transparent" });
-      distancePoint.parentArc = curvedPath;
-      distancePoint1.parentArc = curvedPath;
+    let direct;
+    let name = distancePoint.parentLine._text;
+    if (!name) name = distancePoint.parentArc._text;
+    if (distancePoint.getLatLng().lng < distancePoint1.getLatLng().lng) {
+      direct = true;
+    } else {
+      direct = false;
     }
+    if (distancePoint.parentArc.options.color === "black") {
+      distancePoint.parentArc.setStyle({ color: "transparent" });
+
+      distancePoint.parentLine.setStyle({ color: "black" });
+
+      distancePoint.parentArc.setText(null);
+
+      distancePoint.parentLine.setText(name, {
+        center: true,
+        offset: -3,
+        orientation: !direct ? 180 : 0,
+      });
+    } else {
+      distancePoint.parentLine.setStyle({ color: "transparent" });
+
+      distancePoint.parentArc.setStyle({ color: "black" });
+
+      distancePoint.parentLine.setText(null);
+
+      distancePoint.parentArc.setText(name, {
+        center: true,
+        offset: -3,
+        orientation: !direct ? 180 : 0,
+      });
+    }
+
     this.removeLayer(popup);
   };
 }
