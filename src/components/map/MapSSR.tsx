@@ -18,7 +18,7 @@ const bounds = new L.LatLngBounds(
 );
 
 const Map = () => {
-  const { grid, country } = STORES;
+  const { houseView,grid, country } = STORES;
   const [modal, SetModal] = useState<string>("");
   return (
     <MapContainer
@@ -33,7 +33,7 @@ const Map = () => {
     >
       <LocationMarker />
       {!country && <Countries SetModal={SetModal} />}
-      {country && (
+      {country && !houseView && (
         <TileLayer
           zIndex={0}
           noWrap={true}
