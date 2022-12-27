@@ -1,10 +1,24 @@
 //-------------------------------------
 export function dragStartHandlerLine(e) {
+  this.eachLayer((layer) => {
+    if (layer.options.type === "distance") {
+      layer.parentLine.options.color === "blue" &&
+        layer.parentLine.setStyle({ color: "black" });
+      layer.parentArc.options.color === "blue" &&
+        layer.parentArc.setStyle({ color: "black" });
+    }
+  });
+
+  e.target.parentLine.options.color === "black" &&
+    e.target.parentLine.setStyle({ color: "blue" });
+  e.target.parentArc.options.color === "black" &&
+    e.target.parentArc.setStyle({ color: "blue" });
+
   const polyline = e.target.parentLine;
 
   const polyArc = e.target.parentArc;
 
-  const latlngMarker = this.getLatLng();
+  const latlngMarker = e.target.getLatLng();
 
   const latlngPolyArc = polyArc.getLatLngs();
 
@@ -13,13 +27,13 @@ export function dragStartHandlerLine(e) {
       Array.isArray(latlngPolyArc[i]) &&
       latlngMarker.equals(latlngPolyArc[i])
     ) {
-      this.polyArcLatlng = i;
+      e.target.polyArcLatlng = i;
     }
   }
   const latlngPolyLine = polyline.getLatLngs();
   for (let i = 0; i < latlngPolyLine.length; i++) {
     if (latlngMarker.equals(latlngPolyLine[i])) {
-      this.polylineLatlng = i;
+      e.target.polylineLatlng = i;
     }
   }
 }

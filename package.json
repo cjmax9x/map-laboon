@@ -16,7 +16,6 @@
     "@turf/helpers": "^6.5.0",
     "@turf/turf": "^6.5.0",
     "leaflet": "^1.9.2",
-    "leaflet-arc": "^1.0.2",
     "leaflet-boundary-canvas": "^1.0.0",
     "leaflet-textpath": "^1.2.3",
     "leaflet.polylinemeasure": "^3.0.0",

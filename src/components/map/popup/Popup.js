@@ -391,10 +391,23 @@ export function distancePopup(distancePoint, distancePoint1, e) {
     } else {
       direct = false;
     }
-    if (distancePoint.parentArc.options.color === "black") {
-      distancePoint.parentArc.setStyle({ color: "transparent" });
+    if (
+      distancePoint.parentArc.options.color === "blue" ||
+      distancePoint.parentArc.options.color === "black"
+    ) {
+      this.eachLayer((layer) => {
+        if (layer.options.type === "distance") {
+          layer.parentLine.options.color === "blue" &&
+            layer.parentLine.setStyle({ color: "black" });
+          layer.parentArc.options.color === "blue" &&
+            layer.parentArc.setStyle({ color: "black" });
+        }
+      });
 
-      distancePoint.parentLine.setStyle({ color: "black" });
+      distancePoint.parentLine.setStyle({
+        color: "blue",
+      });
+      distancePoint.parentArc.setStyle({ color: "transparent" });
 
       distancePoint.parentArc.setText(null);
 
@@ -404,9 +417,19 @@ export function distancePopup(distancePoint, distancePoint1, e) {
         orientation: !direct ? 180 : 0,
       });
     } else {
-      distancePoint.parentLine.setStyle({ color: "transparent" });
+      this.eachLayer((layer) => {
+        if (layer.options.type === "distance") {
+          layer.parentLine.options.color === "blue" &&
+            layer.parentLine.setStyle({ color: "black" });
+          layer.parentArc.options.color === "blue" &&
+            layer.parentArc.setStyle({ color: "black" });
+        }
+      });
 
-      distancePoint.parentArc.setStyle({ color: "black" });
+      distancePoint.parentArc.setStyle({
+        color: "blue",
+      });
+      distancePoint.parentLine.setStyle({ color: "transparent" });
 
       distancePoint.parentLine.setText(null);
 

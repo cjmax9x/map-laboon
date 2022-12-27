@@ -45,6 +45,7 @@ const arcRouteInit = (e) => {
   const pathOptions = {
     color: "transparent",
     weight: 3,
+    type: "arc",
   };
 
   return {
@@ -151,19 +152,27 @@ export const Markers = observer(({ SetModal }) => {
         markerFnIndex[0]++;
         addIconHandle("");
       } else if (addIcon === "inter-route") {
+        // distance-------------------------------------------------
+
         const distancePoint = L.marker([e.latlng.lat, e.latlng.lng], {
           icon: divDistancePoint(),
           draggable: !lock,
+          type: "distance",
         })
-          .on("dragstart", dragStartHandlerLine)
+          .on("dragstart", dragStartHandlerLine.bind(this))
           .on("drag", dragHandlerLine.bind(this))
           .on("dragend", dragEndHandler)
+          // .on("click", () => {
+          //   console.log(e.target);
+          // })
           .addTo(map);
+
         const distancePoint1 = L.marker([e.latlng.lat, e.latlng.lng + 10], {
           icon: divDistancePoint(),
           draggable: !lock,
+          type: "distance",
         })
-          .on("dragstart", dragStartHandlerLine)
+          .on("dragstart", dragStartHandlerLine.bind(this))
           .on("drag", dragHandlerLine.bind(this))
           .on("dragend", dragEndHandler)
           .addTo(map);
@@ -174,7 +183,7 @@ export const Markers = observer(({ SetModal }) => {
             [e.latlng.lat, e.latlng.lng + 10],
           ],
 
-          { color: "black" }
+          { type: "line", color: "black" }
         )
           .setText("Distance", {
             center: true,
@@ -185,8 +194,17 @@ export const Markers = observer(({ SetModal }) => {
             distancePopup.bind(this, distancePoint, distancePoint1)
           )
           .on("click", (e) => {
-            let direct;
+            map.eachLayer((layer) => {
+              if (layer.options.type === "distance") {
+                layer.parentLine.options.color === "blue" &&
+                  layer.parentLine.setStyle({ color: "black" });
+                layer.parentArc.options.color === "blue" &&
+                  layer.parentArc.setStyle({ color: "black" });
+              }
+            });
 
+            e.target.setStyle({ color: "blue" });
+            let direct;
             if (
               distancePoint.getLatLng().lng < distancePoint1.getLatLng().lng
             ) {
@@ -234,6 +252,16 @@ export const Markers = observer(({ SetModal }) => {
             distancePopup.bind(this, distancePoint, distancePoint1)
           )
           .on("click", (e) => {
+            map.eachLayer((layer) => {
+              if (layer.options.type === "distance") {
+                layer.parentLine.options.color === "blue" &&
+                  layer.parentLine.setStyle({ color: "black" });
+                layer.parentArc.options.color === "blue" &&
+                  layer.parentArc.setStyle({ color: "black" });
+              }
+            });
+
+            e.target.setStyle({ color: "blue" });
             let direct;
 
             if (
@@ -272,6 +300,34 @@ export const Markers = observer(({ SetModal }) => {
         curvedPath.setText = polyline.setText;
         distancePoint.parentArc = curvedPath;
         distancePoint1.parentArc = curvedPath;
+        distancePoint.on("click", (e) => {
+          map.eachLayer((layer) => {
+            if (layer.options.type === "distance") {
+              layer.parentLine.options.color === "blue" &&
+                layer.parentLine.setStyle({ color: "black" });
+              layer.parentArc.options.color === "blue" &&
+                layer.parentArc.setStyle({ color: "black" });
+            }
+          });
+          distancePoint.parentLine.options.color === "black" &&
+            distancePoint.parentLine.setStyle({ color: "blue" });
+          distancePoint.parentArc.options.color === "black" &&
+            distancePoint.parentArc.setStyle({ color: "blue" });
+        });
+        distancePoint1.on("click", (e) => {
+          map.eachLayer((layer) => {
+            if (layer.options.type === "distance") {
+              layer.parentLine.options.color === "blue" &&
+                layer.parentLine.setStyle({ color: "black" });
+              layer.parentArc.options.color === "blue" &&
+                layer.parentArc.setStyle({ color: "black" });
+            }
+          });
+          distancePoint1.parentLine.options.color === "black" &&
+            distancePoint1.parentLine.setStyle({ color: "blue" });
+          distancePoint1.parentArc.options.color === "black" &&
+            distancePoint1.parentArc.setStyle({ color: "blue" });
+        });
       }
     },
   });
