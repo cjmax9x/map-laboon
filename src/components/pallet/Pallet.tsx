@@ -20,7 +20,7 @@ export const Pallet = observer((): React.ReactElement => {
       style={position === "top" ? { top: 170 } : {}}
       className={styles["pallet"]}
     >
-      <div className={styles["wrapper-icon"]}>
+      <div id="pointer-event" className={styles["wrapper-icon"]}>
         <PointerIcon />
         <h4 className={styles["title-icon"]}>Pointer</h4>
       </div>

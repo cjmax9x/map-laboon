@@ -10,6 +10,7 @@
     "export": "next build & next export"
   },
   "dependencies": {
+    "@bopen/leaflet-area-selection": "^0.7.0",
     "@elfalem/leaflet-curve": "^0.9.1",
     "@tippyjs/react": "^4.2.6",
     "@turf/boolean-point-in-polygon": "^6.5.0",
@@ -17,6 +18,7 @@
     "@turf/turf": "^6.5.0",
     "leaflet": "^1.9.2",
     "leaflet-arc": "^1.0.2",
+    "leaflet-area-select": "^1.0.5",
     "leaflet-boundary-canvas": "^1.0.0",
     "leaflet-textpath": "^1.2.3",
     "leaflet.polylinemeasure": "^3.0.0",

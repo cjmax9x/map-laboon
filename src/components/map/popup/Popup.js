@@ -15,9 +15,8 @@ export const customPopUp = (SetModal, index, type) => {
   window.openModal = () => {
     SetModal("modal");
   };
-  return `<div style="background-color:#fff;padding:10px; min-width:180px" class="${
-    styles["popup-interact-function"]
-  }">
+  return `<div style="background-color:#fff;padding:10px; min-width:180px" class="${styles["popup-interact-function"]
+    }">
   <div class="${[styles.row, styles["on-hover-rename"]].join(" ")}">
     Function type
     <div class="${styles["hover-func"]}">
@@ -48,44 +47,38 @@ export const customPopUp = (SetModal, index, type) => {
       Show Function
     <div  class="${styles["hover-func"]}">
       <div onclick = "changeShape('circle')"  class="${[
-        styles.black,
-        styles["color-circle"],
-      ].join(" ")}">
+      styles.black,
+      styles["color-circle"],
+    ].join(" ")}">
       </div>
 
       <div onclick = "changeShape('elip')"  class="${[
-        styles.black,
-        styles["color-elip"],
-      ].join(" ")}">
+      styles.black,
+      styles["color-elip"],
+    ].join(" ")}">
       </div>
 
       <div onclick = "changeShape('rectangle')" class="${[
-        styles.black,
-        styles["color-rectangle"],
-      ].join(" ")}">
+      styles.black,
+      styles["color-rectangle"],
+    ].join(" ")}">
       </div>
     </div>
   </div>
   <div onclick="deleteItem()" class="${[styles.row].join(" ")}">
     Delete
   </div>
-  <div  style="display:flex; ${
-    functionSelected.length < 9 || checked
+  <div  style="display:flex; ${functionSelected.length < 9 || checked
       ? "color:unset"
       : "color:#ddd;pointer-events: none"
-  }" class="${
-    styles.row
-  }"><label style="margin-left:4px;hieght:20px;width:100%" for="input">Select</label>
-  <input style="${
-    functionSelected.length < 9 || checked ? "opacity:1 " : "opacity:0.2"
-  }" onchange="inputChange(event,${index})" id="input" ${
-    checked ? "checked" : ""
-  } type ="checkbox"/> </div>
-  <div onclick="${
-    checked && functionSelected.length > 1
-  } ? makeGroup():makeGroup" style="${
-    checked && functionSelected.length > 1 ? "" : "color:#ddd"
-  }" class="${[styles.row].join(" ")}">
+    }" class="${styles.row
+    }"><label style="margin-left:4px;hieght:20px;width:100%" for="input">Select</label>
+  <input style="${functionSelected.length < 9 || checked ? "opacity:1 " : "opacity:0.2"
+    }" onchange="inputChange(event,${index})" id="input" ${checked ? "checked" : ""
+    } type ="checkbox"/> </div>
+  <div onclick="${checked && functionSelected.length > 1
+    } ? makeGroup():makeGroup" style="${checked && functionSelected.length > 1 ? "" : "color:#ddd"
+    }" class="${[styles.row].join(" ")}">
     Make Group
   </div>
   </div>`;
@@ -95,9 +88,8 @@ export const customPersonPopUp = (SetModal) => {
   window.openModal = () => {
     SetModal("modal");
   };
-  return `<div style="background-color:#fff;padding:10px;min-width:180px" class="${
-    styles["popup-interact-function"]
-  }">
+  return `<div style="background-color:#fff;padding:10px;min-width:180px" class="${styles["popup-interact-function"]
+    }">
   <div onclick="openModal()" class="${styles.row}">
     Rename
   </div>
@@ -124,13 +116,13 @@ export const changeIcon = (map, SetModal, e) => {
   }
   !e.target._icon.classList.contains(styles["person"])
     ? L.popup()
-        .setLatLng([e.latlng.lat, e.latlng.lng])
-        .setContent(customPopUp(SetModal, e.target.options.index, type))
-        .openOn(map)
+      .setLatLng([e.latlng.lat, e.latlng.lng])
+      .setContent(customPopUp(SetModal, e.target.options.index, type))
+      .openOn(map)
     : L.popup()
-        .setLatLng([e.latlng.lat, e.latlng.lng])
-        .setContent(customPersonPopUp(SetModal))
-        .openOn(map);
+      .setLatLng([e.latlng.lat, e.latlng.lng])
+      .setContent(customPersonPopUp(SetModal))
+      .openOn(map);
 
   window.edittingItem = (
     color,
@@ -283,9 +275,23 @@ export const changeGroup = (map, e) => {
 };
 
 export const groupContext = (index) => {
-  return `<div style="background-color:#fff;padding:10px; min-width:180px" class="${
-    styles["popup-interact-function"]
-  }">
+  const getElement = document.querySelector(`.id-group-${index}`)
+
+  window.changeShapeOption = (shape) => {
+    if (getElement) {
+      if (shape === 'rectangle') {
+        getElement.classList.remove(styles["group-elip"])
+        getElement.classList.add(styles["group-rectangle"])
+      }
+      else {
+        getElement.classList.remove(styles["group-rectangle"])
+        getElement.classList.add(styles["group-elip"])
+      }
+    }
+  }
+
+  return `<div style="background-color:#fff;padding:10px; min-width:180px" class="${styles["popup-interact-function"]
+    }">
   <div class="${[styles.row, styles["on-hover-rename"]].join(" ")}">
     Group function type
     <div class="${styles["hover-func"]}">
@@ -301,9 +307,9 @@ export const groupContext = (index) => {
   <div class="${[styles.row, styles["on-hover"]].join(" ")}">
       Show group function
     <div class="${styles["hover-func"]}">
-      <div class="${[styles.black, styles["color-circle"]].join(" ")}">
+      <div onclick="changeShapeOption('elip')" class="${[styles.black, styles["color-circle"]].join(" ")}">
       </div>
-      <div class="${[styles.black, styles["color-rectangle"]].join(" ")}">
+      <div onclick="changeShapeOption('rectangle')" class="${[styles.black, styles["color-rectangle"]].join(" ")}">
       </div>
     </div>
   </div>
@@ -371,9 +377,9 @@ export function distancePopup(distancePoint, distancePoint1, e) {
       `
       <div style="background-color:#fff;padding:10px;min-width:180px">
         <div onclick="changeRoute()" class = "${[
-          styles["menu-geojson"],
-          styles["on-hover-function"],
-        ].join(" ")}">
+        styles["menu-geojson"],
+        styles["on-hover-function"],
+      ].join(" ")}">
           Change-Route
         </div>
       </div>
