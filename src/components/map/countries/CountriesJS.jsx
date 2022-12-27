@@ -13,11 +13,16 @@ import {
   groupFnIndex,
   defaulFunction,
   defaultPerson,
-  defaultFunctionPerson
-
+  defaultFunctionPerson,
 } from "../marker/Marker";
-import { divFunction, divHouse, divPerson ,divThreeDot} from "../marker/Icon";
-import { changeIcon, popupGroup, groupLayout } from "../popup/Popup";
+import { divFunction, divHouse, divPerson, divThreeDot } from "../marker/Icon";
+import {
+  changeIcon,
+  popupGroup,
+  groupLayout,
+  groupLayoutPopup,
+  changeGroup,
+} from "../popup/Popup";
 
 let y = 1;
 
@@ -59,7 +64,7 @@ export const Countries = observer(({ SetModal }) => {
 
   const options = { units: "miles" };
 
-  window.handlePopulateFn = (object,input) => {
+  window.handlePopulateFn = (object, input) => {
     const grid = turf.pointGrid(extent, cellSide, options);
     grid.features.reverse();
 
@@ -98,16 +103,14 @@ export const Countries = observer(({ SetModal }) => {
       prev[cur[0]].push(cur);
       return prev;
     }, {});
-    const lengthItem = newArray.length
-    const newResult =  Object.values(result)
+    const lengthItem = newArray.length;
+    const newResult = Object.values(result);
 
-    if(+input > lengthItem)  {
-      input = lengthItem - 1
-      L.marker(newResult[newResult.length-1][0], {
-        icon: divThreeDot(
-         
-        ),
-      }).addTo(map)
+    if (+input > lengthItem) {
+      input = lengthItem - 1;
+      L.marker(newResult[newResult.length - 1][0], {
+        icon: divThreeDot(),
+      }).addTo(map);
     }
 
     for (let i in result) {
@@ -132,7 +135,7 @@ export const Countries = observer(({ SetModal }) => {
                 .addTo(map) &&
               markerPersonIndex[0]++;
 
-              y % 2 === 0 &&
+            y % 2 === 0 &&
               L.marker(item, {
                 draggable: !lock,
                 index: markerFnIndex[0],
@@ -181,8 +184,35 @@ export const Countries = observer(({ SetModal }) => {
   useEffect(() => {
     const makeEvent = (e) => {
       window.openPopulateModal = () => {
-        SetModal({code});
+        SetModal({ code });
       };
+
+      window.makeGroupFromCountry = () => {
+        L.marker([e.latlng.lat, e.latlng.lng], {
+          draggable: !STORES.lock,
+          group: { group: [], index: groupFnIndex[0] },
+          icon: divFunction(
+            [styles["rectangle-fn"], styles["fn--black"]].join(" "),
+            `Group function ${groupFnIndex[0]}`
+          ),
+        })
+          .addTo(map)
+          .bindPopup(
+            (e) => {
+              return groupLayoutPopup(e.options.group.group);
+            },
+            {
+              className: `${styles["group-rectangle"]} id-group-${groupFnIndex[0]}`,
+              offset: L.point(30, -12),
+              autoClose: false,
+              closeOnClick: false,
+            }
+          )
+          .on("contextmenu", changeGroup.bind(this, map))
+          .openPopup();
+        groupFnIndex[0]++;
+      };
+
       L.popup()
         .setLatLng([e.latlng.lat, e.latlng.lng])
         .setContent(
@@ -200,18 +230,21 @@ export const Countries = observer(({ SetModal }) => {
           <div onclick="handleAddFunction(event, 'Existing function')">Existing function</div>
           </div>
           </div>
-          <h3 onclick ="handlePopulateFn('function',${defaulFunction[0]})" class = ${
-            styles["menu-geojson"]
-          }>Populate Function</h3>
-          <h3 onclick ="handlePopulateFn('person',${defaultPerson[0]})" class = ${
-            styles["menu-geojson"]
-          }>Populate Person</h3>
-          <h3 onclick ="handlePopulateFn('function-person',${defaultFunctionPerson[0]})" class = ${
-            styles["menu-geojson"]
-          }>Populate Person & Function</h3>
+          <h3 onclick ="handlePopulateFn('function',${
+            defaulFunction[0]
+          })" class = ${styles["menu-geojson"]}>Populate Function</h3>
+          <h3 onclick ="handlePopulateFn('person',${
+            defaultPerson[0]
+          })" class = ${styles["menu-geojson"]}>Populate Person</h3>
+          <h3 onclick ="handlePopulateFn('function-person',${
+            defaultFunctionPerson[0]
+          })" class = ${styles["menu-geojson"]}>Populate Person & Function</h3>
           <h3 onclick="openPopulateModal()" class = ${
             styles["menu-geojson"]
           }>Populate Property</h3>
+          <h3 onclick="makeGroupFromCountry()" class=${
+            styles["menu-geojson"]
+          }>Group Function</h3>
           </div>
          
         `

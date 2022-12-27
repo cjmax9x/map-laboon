@@ -5,8 +5,8 @@ import "leaflet-textpath";
 import { observer } from "mobx-react";
 import { useMap, useMapEvents } from "react-leaflet";
 import { STORES } from "../../store/GlobalStore";
-import '@bopen/leaflet-area-selection/dist/index.css';
-import { DrawAreaSelection } from '@bopen/leaflet-area-selection';
+import "@bopen/leaflet-area-selection/dist/index.css";
+import { DrawAreaSelection } from "@bopen/leaflet-area-selection";
 
 import {
   divFunction,
@@ -34,7 +34,6 @@ export const defaulFunction = ["20"];
 export const defaultPerson = ["20"];
 export const defaultFunctionPerson = ["20"];
 export let selectedList = [];
-
 
 const arcRouteInit = (e) => {
   const thetaOffset = 3.14 / 9;
@@ -66,19 +65,19 @@ const arcRouteInit = (e) => {
 export const Markers = observer(({ SetModal }) => {
   const { click, lock, addIcon, addIconHandle } = STORES;
   const map = useMap();
-  let areaSelection
+  let areaSelection;
   const addSelectedItem = (event) => {
-    event.originalEvent.stopPropagation()
-    event.originalEvent.preventDefault()
-    if (event.originalEvent.ctrlKey) {
-      const isExistItem = selectedList.find((item) => item === event.target)
+    event.originalEvent.stopPropagation();
+    event.originalEvent.preventDefault();
+    console.log(event.originalEvent.metaKey);
+    if (event.originalEvent.ctrlKey || event.originalEvent.metaKey) {
+      const isExistItem = selectedList.find((item) => item === event.target);
 
       // add item to list
       if (!isExistItem) {
-        selectedList.push(event.target)
-        event.target._icon.classList.add("selected-icon")
-      }
-      else {
+        selectedList.push(event.target);
+        event.target._icon.classList.add("selected-icon");
+      } else {
         // const index = selectedList.indexOf(isExistItem);
         // console.log("remove selected item from list", index);
         // selectedList.splice(index, 1);
@@ -89,7 +88,7 @@ export const Markers = observer(({ SetModal }) => {
             selectedList.splice(index, 1);
             item._icon.classList.remove("selected-icon");
           }
-        })
+        });
       }
 
       if (selectedList.length > 0) {
@@ -97,22 +96,23 @@ export const Markers = observer(({ SetModal }) => {
           for (let index = 0; index < selectedList.length; index++) {
             selectedList[index]._icon.classList.remove("selected-icon");
           }
-          selectedList = []
-          map.closePopup()
-        }
+          selectedList = [];
+          // map.closePopup();
+        };
 
         window.getSelectedList = (_event) => {
-          _event.stopPropagation()
-          _event.preventDefault()
-
+          _event.stopPropagation();
+          _event.preventDefault();
 
           selectedList.forEach((e) => {
-            functionSelected.push(e.options.index)
-          })
-          console.log(functionSelected);
+            functionSelected.push(e.options.index);
+          });
           L.marker([event.latlng.lat, event.latlng.lng], {
             draggable: !STORES.lock,
-            group: { group: [...functionSelected].sort(), index: groupFnIndex[0] },
+            group: {
+              group: [...functionSelected].sort(),
+              index: groupFnIndex[0],
+            },
             icon: divFunction(
               [styles["rectangle-fn"], styles["fn--black"]].join(" "),
               `Group function ${groupFnIndex[0]}`
@@ -121,22 +121,25 @@ export const Markers = observer(({ SetModal }) => {
             .addTo(map)
             .bindPopup(
               (e) => {
-                console.log(e);
-                return (
-                  `
+                console.log(1);
+                return `
                 <div class="${styles["group-function"]}">
                 ${e.options.group.group.map((item) => {
-                    return `<div  class="${[
-                      styles["rectangle-fn-gr"],
-                      styles["fn--black"],
-                    ].join(" ")}">Function ${item} </div>`;
-                  })}
+                  return `<div  class="${[
+                    styles["rectangle-fn-gr"],
+                    styles["fn--black"],
+                  ].join(" ")}">Function ${item} </div>`;
+                })}
                 </div>
-                `
-                )
+                `;
+              },
+              {
+                className: `${styles["group-rectangle"]} id-group-${groupFnIndex[0]}`,
+                offset: L.point(30, -12),
+                id: "check",
+                autoClose: false,
+                closeOnClick: false,
               }
-              ,
-              { className: `${styles["group-rectangle"]} id-group-${groupFnIndex[0]}`, offset: L.point(30, -12), id: "check" }
             )
             .on("contextmenu", changeGroup.bind(this, map))
             .openPopup();
@@ -153,23 +156,23 @@ export const Markers = observer(({ SetModal }) => {
           });
           functionSelected.splice(0, functionSelected.length);
           selectedList.splice(0, selectedList.length);
-        }
+        };
         L.popup()
           .setLatLng([event.latlng.lat, event.latlng.lng])
           .setContent(
             `
-            <div style="background-color:#fff;padding:10px;min-width:180px;padding-right: 40px;
+            <div style="background-color:#fff;padding:10px;min-width:100px;padding-right: 40px;
             display: flex;
             justify-content: space-between;">
             <div class="group-button" onclick="getSelectedList(event)">Group</div>
-            <div class="group-button" onclick="handleRemoveTempList()">Cancel</div>
             </div>
-        `
+            `
           )
-          .openOn(map)
+          //<div class="group-button" onclick="handleRemoveTempList()">Cancel</div>
+          .openOn(map);
       }
     }
-  }
+  };
   map.doubleClickZoom.disable();
   useEffect(() => {
     if (lock) {
@@ -185,50 +188,57 @@ export const Markers = observer(({ SetModal }) => {
     }
   }, [lock]);
 
-
   // Scan Selection function
 
   useEffect(() => {
-    const getButton = document.getElementById("pointer-event")
+    const getButton = document.getElementById("pointer-event");
 
     areaSelection = new DrawAreaSelection({
       onPolygonReady: (polygon) => {
         if (polygon && polygon._latlngs) {
-          let index = 0
-          const arr = polygon._latlngs[0].map((e) => Object.values(e))
+          let index = 0;
+          const arr = polygon._latlngs[0].map((e) => Object.values(e));
 
           map.eachLayer((layer) => {
             if (layer._latlng) {
-              if (turf.booleanPointInPolygon(turf.point(Object.values(layer._latlng)), turf.polygon([[...arr, arr[0]]]))) {
+              if (
+                turf.booleanPointInPolygon(
+                  turf.point(Object.values(layer._latlng)),
+                  turf.polygon([[...arr, arr[0]]])
+                )
+              ) {
                 if (layer.options.index) {
-                  selectedList.push(layer)
-                  layer._icon.classList.add("selected-icon")
-                  index++
+                  selectedList.push(layer);
+                  layer._icon.classList.add("selected-icon");
+                  index++;
                 }
               }
             }
-          })
+          });
 
           if (index > 0) {
             window.handleRemoveTempList = () => {
               for (let index = 0; index < selectedList.length; index++) {
                 selectedList[index]._icon.classList.remove("selected-icon");
               }
-              selectedList = []
-              map.closePopup()
-            }
+              selectedList = [];
+              // map.closePopup();
+            };
 
             window.getSelectedList = (_event) => {
-              _event.stopPropagation()
-              _event.preventDefault()
+              _event.stopPropagation();
+              _event.preventDefault();
 
               selectedList.forEach((e) => {
-                functionSelected.push(e.options.index)
-              })
+                functionSelected.push(e.options.index);
+              });
 
               L.marker([arr[2][0], arr[2][1]], {
                 draggable: !STORES.lock,
-                group: { group: [...functionSelected].sort(), index: groupFnIndex[0] },
+                group: {
+                  group: [...functionSelected].sort(),
+                  index: groupFnIndex[0],
+                },
                 icon: divFunction(
                   [styles["rectangle-fn"], styles["fn--black"]].join(" "),
                   `Group function ${groupFnIndex[0]}`
@@ -237,10 +247,7 @@ export const Markers = observer(({ SetModal }) => {
                 .addTo(map)
                 .bindPopup(
                   (e) => {
-                    console.log(e);
-
-                    return (
-                      `
+                    return `
                       <div class="${styles["group-function"]}">
                       ${e.options.group.group.map((item) => {
                         return `<div  class="${[
@@ -249,11 +256,14 @@ export const Markers = observer(({ SetModal }) => {
                         ].join(" ")}">Function ${item} </div>`;
                       })}
                       </div>
-                      `
-                    )
+                      `;
+                  },
+                  {
+                    className: `${styles["group-rectangle"]} id-group-${groupFnIndex[0]}`,
+                    offset: L.point(30, -12),
+                    autoClose: false,
+                    closeOnClick: false,
                   }
-                  ,
-                  { className: `${styles["group-rectangle"]} id-group-${groupFnIndex[0]}`, offset: L.point(30, -12) }
                 )
                 .on("contextmenu", changeGroup.bind(this, map))
                 .openPopup();
@@ -269,21 +279,21 @@ export const Markers = observer(({ SetModal }) => {
               });
               functionSelected.splice(0, functionSelected.length);
               selectedList.splice(0, selectedList.length);
-            }
+            };
 
             L.popup()
               .setLatLng([arr[2][0], arr[2][1]])
               .setContent(
                 `
-                <div style="background-color:#fff;padding:10px;min-width:180px;padding-right: 40px;
+                <div style="background-color:#fff;padding:10px;min-width:100px;padding-right: 40px;
                 display: flex;
                 justify-content: space-between;">
                 <div class="group-button" onclick="getSelectedList(event)">Group</div>
-                <div class="group-button" onclick="handleRemoveTempList()">Cancel</div>
                 </div>
-            `
+                `
               )
-              .openOn(map)
+              // <div class="group-button" onclick="handleRemoveTempList()">Cancel</div>
+              .openOn(map);
             // .on('remove', () =>
             //   handleRemoveTempList()
             // );
@@ -295,29 +305,31 @@ export const Markers = observer(({ SetModal }) => {
     map.addControl(areaSelection);
     const showScanSelection = () => {
       areaSelection.activate();
-    }
-    getButton.addEventListener('click', showScanSelection);
+    };
+    getButton.addEventListener("click", showScanSelection);
     return () => {
-      getButton.removeEventListener('click', showScanSelection);
-    }
-
+      getButton.removeEventListener("click", showScanSelection);
+    };
   }, []);
   useEffect(() => {
-    const onKeyDown = (event) => {
-
-      if (window.handleRemoveTempList && !event.ctrlKey && event.target.classList && !event.target.classList.contains(styles["rectangle-fn"])) {
-        console.log('clean list');
-        window.handleRemoveTempList()
+    const onClick = (event) => {
+      if (
+        window.handleRemoveTempList &&
+        (!event.ctrlKey || !event.metaKey) &&
+        event.target.classList &&
+        !event.target.classList.contains(styles["rectangle-fn"])
+      ) {
+        window.handleRemoveTempList();
       }
-    }
+    };
 
-    document.addEventListener('click', onKeyDown);
+    document.addEventListener("click", onClick);
 
     return () => {
-      document.removeEventListener('click', onKeyDown);
-    }
-
+      document.removeEventListener("click", onClick);
+    };
   }, []);
+
   useEffect(() => {
     if (!click) {
       const mapContainer = document.querySelector(".leaflet-container");
@@ -394,7 +406,7 @@ export const Markers = observer(({ SetModal }) => {
         })
           .addTo(map)
           .on("contextmenu", changeIcon.bind(this, map, SetModal))
-          .on("click", (e) => addSelectedItem(e))
+          .on("click", (e) => addSelectedItem(e));
         markerFnIndex[0]++;
         addIconHandle("");
       } else if (addIcon === "inter-route") {
@@ -480,7 +492,6 @@ export const Markers = observer(({ SetModal }) => {
                 orientation: !direct ? 180 : 0,
               });
             }
-
           })
           .addTo(map);
 
@@ -543,8 +554,6 @@ export const Markers = observer(({ SetModal }) => {
                 orientation: !direct ? 180 : 0,
               });
             }
-            addSelectedItem(e)
-
           });
         curvedPath.setText = polyline.setText;
         distancePoint.parentArc = curvedPath;
