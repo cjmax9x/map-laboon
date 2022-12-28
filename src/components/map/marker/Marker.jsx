@@ -27,6 +27,7 @@ import * as turf from "@turf/turf";
 
 export const markerPersonIndex = [1];
 export const markerFnIndex = [1];
+export const markerProblemIndex = [1];
 export const groupFnIndex = [1];
 export const groupPersonIndex = [1];
 export const functionSelected = [];
@@ -69,7 +70,6 @@ export const Markers = observer(({ SetModal }) => {
   const addSelectedItem = (event) => {
     event.originalEvent.stopPropagation();
     event.originalEvent.preventDefault();
-    console.log(event.originalEvent.metaKey);
     if (event.originalEvent.ctrlKey || event.originalEvent.metaKey) {
       const isExistItem = selectedList.find((item) => item === event.target);
 
@@ -114,14 +114,13 @@ export const Markers = observer(({ SetModal }) => {
               index: groupFnIndex[0],
             },
             icon: divFunction(
-              [styles["rectangle-fn"], styles["fn--black"]].join(" "),
+              [styles["rectangle-fn"]].join(" "),
               `Group function ${groupFnIndex[0]}`
             ),
           })
             .addTo(map)
             .bindPopup(
               (e) => {
-                console.log(1);
                 return `
                 <div class="${styles["group-function"]}">
                 ${e.options.group.group.map((item) => {
@@ -142,6 +141,12 @@ export const Markers = observer(({ SetModal }) => {
               }
             )
             .on("contextmenu", changeGroup.bind(this, map))
+            .on("popupclose", (e) => {
+              e.target._icon.classList.add(`${styles["group-fn-border"]}`);
+            })
+            .on("popupopen", (e) => {
+              e.target._icon.classList.remove(`${styles["group-fn-border"]}`);
+            })
             .openPopup();
 
           groupFnIndex[0]++;
@@ -222,7 +227,6 @@ export const Markers = observer(({ SetModal }) => {
                 selectedList[index]._icon.classList.remove("selected-icon");
               }
               selectedList = [];
-              // map.closePopup();
             };
 
             window.getSelectedList = (_event) => {
@@ -233,14 +237,14 @@ export const Markers = observer(({ SetModal }) => {
                 functionSelected.push(e.options.index);
               });
 
-              L.marker([arr[2][0], arr[2][1]], {
+              const groupMarker = L.marker([arr[2][0], arr[2][1]], {
                 draggable: !STORES.lock,
                 group: {
                   group: [...functionSelected].sort(),
                   index: groupFnIndex[0],
                 },
                 icon: divFunction(
-                  [styles["rectangle-fn"], styles["fn--black"]].join(" "),
+                  [styles["rectangle-fn"]].join(" "),
                   `Group function ${groupFnIndex[0]}`
                 ),
               })
@@ -266,7 +270,16 @@ export const Markers = observer(({ SetModal }) => {
                   }
                 )
                 .on("contextmenu", changeGroup.bind(this, map))
+                .on("popupclose", (e) => {
+                  e.target._icon.classList.add(`${styles["group-fn-border"]}`);
+                })
+                .on("popupopen", (e) => {
+                  e.target._icon.classList.remove(
+                    `${styles["group-fn-border"]}`
+                  );
+                })
                 .openPopup();
+
               groupFnIndex[0]++;
               map.eachLayer((layer) => {
                 if (layer.options.index) {
@@ -386,7 +399,9 @@ export const Markers = observer(({ SetModal }) => {
         })
           .on("contextmenu", changeIcon.bind(this, map, SetModal))
           .on("click", (e) => addSelectedItem(e))
+
           .addTo(map);
+
         markerPersonIndex[0]++;
         addIconHandle("");
       } else if (addIcon === "welcome-sign" && click) {

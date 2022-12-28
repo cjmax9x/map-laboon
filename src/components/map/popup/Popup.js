@@ -272,30 +272,84 @@ export const changeIcon = (map, SetModal, e) => {
     map.closePopup();
   };
 };
-
+export function customProblemPopup(e) {
+  const popup = L.popup()
+    .setLatLng([e.latlng.lat, e.latlng.lng])
+    .setContent(
+      `<div style="background-color:#fff;padding:10px; min-width:180px" class="${
+        styles["popup-interact-function"]
+      }">
+    <div class="${[styles.row, styles["on-hover"]].join(" ")}">
+    Show Function
+  <div  class="${styles["hover-func"]}">
+    <div onclick = "changeShapeProblem('circle')"  class="${[
+      styles.black,
+      styles["color-circle"],
+    ].join(" ")}">
+    </div>
+  
+    <div onclick = "changeShapeProblem('elip')"  class="${[
+      styles.black,
+      styles["color-elip"],
+    ].join(" ")}">
+    </div>
+  
+    <div onclick = "changeShapeProblem('rectangle')" class="${[
+      styles.black,
+      styles["color-rectangle"],
+    ].join(" ")}">
+      </div>
+      </div>
+    </div>
+  </div>
+    `
+    )
+    .addTo(this);
+  window.changeShapeProblem = (shape) => {
+    if (shape === "circle") {
+      e.target._icon.classList.add(styles["circle-fn-1"]);
+      e.target._icon.classList.remove(styles["rectangle-fn"]);
+      e.target._icon.classList.remove(styles["elip-fn"]);
+    } else if (shape === "rectangle") {
+      e.target._icon.classList.remove(styles["circle-fn-1"]);
+      e.target._icon.classList.add(styles["rectangle-fn"]);
+      e.target._icon.classList.remove(styles["elip-fn"]);
+    } else if (shape === "elip") {
+      e.target._icon.classList.add(styles["elip-fn"]);
+      e.target._icon.classList.remove(styles["circle-fn-1"]);
+      e.target._icon.classList.remove(styles["rectangle-fn"]);
+    }
+    this.removeLayer(popup);
+  };
+}
 // for Group function/Person
 
 export const changeGroup = (map, e) => {
   const popup = L.popup();
   popup
     .setLatLng([e.latlng.lat, e.latlng.lng])
-    .setContent(groupContext(e.target.options.group.index, popup, map))
+    .setContent(groupContext(e.target.options.group.index, popup, map, e))
     .openOn(map);
 };
 
-export const groupContext = (index, popup, map) => {
-  console.log(popup);
-  const getElement = document.querySelector(`.id-group-${index}`);
+export const groupContext = (index, popup, map, e) => {
   window.changeShapeOption = (shape) => {
-    if (getElement) {
-      if (shape === "rectangle") {
-        getElement.classList.remove(styles["group-elip"]);
-        getElement.classList.add(styles["group-rectangle"]);
-      } else {
-        getElement.classList.remove(styles["group-rectangle"]);
-        getElement.classList.add(styles["group-elip"]);
-      }
+    if (shape === "rectangle") {
+      e.target.getPopup()._container.classList.remove(styles["group-elip"]);
+      e.target.getPopup()._container.classList.add(styles["group-rectangle"]);
+      e.target._icon.classList.add(styles["rectangle-fn"]);
+      e.target._icon.classList.remove(styles["elip-fn"]);
+      e.target._icon.classList.remove(styles["circle-fn"]);
+    } else {
+      e.target
+        .getPopup()
+        ._container.classList.remove(styles["group-rectangle"]);
+      e.target.getPopup()._container.classList.add(styles["group-elip"]);
+      e.target._icon.classList.add(styles["elip-fn"]);
+      e.target._icon.classList.remove(styles["rectangle-fn"]);
+      e.target._icon.classList.remove(styles["circle-fn"]);
     }
+
     map.removeLayer(popup);
   };
 

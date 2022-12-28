@@ -14,6 +14,7 @@ import {
   defaulFunction,
   defaultPerson,
   defaultFunctionPerson,
+  markerProblemIndex,
 } from "../marker/Marker";
 import { divFunction, divHouse, divPerson, divThreeDot } from "../marker/Icon";
 import {
@@ -22,6 +23,7 @@ import {
   groupLayout,
   groupLayoutPopup,
   changeGroup,
+  customProblemPopup,
 } from "../popup/Popup";
 
 let y = 1;
@@ -192,7 +194,7 @@ export const Countries = observer(({ SetModal }) => {
           draggable: !STORES.lock,
           group: { group: [], index: groupFnIndex[0] },
           icon: divFunction(
-            [styles["rectangle-fn"], styles["fn--black"]].join(" "),
+            [styles["rectangle-fn"]].join(" "),
             `Group function ${groupFnIndex[0]}`
           ),
         })
@@ -209,6 +211,12 @@ export const Countries = observer(({ SetModal }) => {
             }
           )
           .on("contextmenu", changeGroup.bind(this, map))
+          .on("popupclose", (e) => {
+            e.target._icon.classList.add(`${styles["group-fn-border"]}`);
+          })
+          .on("popupopen", (e) => {
+            e.target._icon.classList.remove(`${styles["group-fn-border"]}`);
+          })
           .openPopup();
         groupFnIndex[0]++;
       };
@@ -245,6 +253,9 @@ export const Countries = observer(({ SetModal }) => {
           <h3 onclick="makeGroupFromCountry()" class=${
             styles["menu-geojson"]
           }>Group Function</h3>
+          <h3 onclick ="handleAddProblem(event,'Problem')" class=${
+            styles["menu-geojson"]
+          }>Problem</h3>
           </div>
          
         `
@@ -274,26 +285,35 @@ export const Countries = observer(({ SetModal }) => {
         map.closePopup();
       };
 
-      window.handleGroup = () => {
+      window.handleAddProblem = (event, name) => {
         L.marker([e.latlng.lat, e.latlng.lng], {
           draggable: !lock,
-          group: [],
+          type: { index: markerProblemIndex[0], title: "problem" },
           icon: divFunction(
-            [styles["rectangle-fn"], styles["fn--black"]].join(" "),
-
-            `Group function ${groupFnIndex[0]}`
+            [styles["rectangle-fn"], styles["fn--red"]].join(" "),
+            name
+              ? `${name} ${markerProblemIndex[0]}`
+              : `Function ${markerProblemIndex[0]}`
           ),
         })
           .addTo(map)
-          .bindPopup(
-            (e) => {
-              return groupLayout(e.options.group);
-            },
-            { className: styles["group-elip"], offset: L.point(30, -12) }
-          )
-          .on("popupopen", popupGroup.bind(this, map, SetModal))
-          .openPopup();
-        groupFnIndex[0]++;
+          .on("contextmenu", customProblemPopup.bind(map))
+          .on("dblclick	", (e) => {
+            if (e.target.options.type.title === "problem") {
+              e.target.options.type.title = "solution";
+              e.target._icon.textContent = `Solution ${e.target.options.type.index}`;
+              e.target._icon.classList.add(styles["fn--green"]);
+              e.target._icon.classList.remove(styles["fn--red"]);
+            } else {
+              e.target.options.type.title = "problem";
+              e.target._icon.textContent = `Problem ${e.target.options.type.index}`;
+              e.target._icon.classList.remove(styles["fn--green"]);
+              e.target._icon.classList.add(styles["fn--red"]);
+            }
+          });
+
+        markerProblemIndex[0]++;
+        map.closePopup();
       };
     };
 

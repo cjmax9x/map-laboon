@@ -118,6 +118,7 @@
   font-weight: 400;
   text-align: center;
 }
+
 .circle-fn {
   border-radius: 50%;
   display: flex;
@@ -135,6 +136,19 @@
   font-size: 13px;
   font-weight: 400;
   text-align: center;
+}
+.circle-fn-1 {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 400;
+  height: 100px !important;
+  text-align: center;
+}
+.group-fn-border {
+  border: 1px solid black;
 }
 .fn--black {
   background-color: Black;
