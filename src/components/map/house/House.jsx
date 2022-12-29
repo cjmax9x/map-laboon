@@ -8,8 +8,20 @@ import { divHouse, divHouseName } from "../marker/Icon";
 
 export const House = observer(({}) => {
   const map = useMap();
-  const { houseView } = STORES;
-
+  const { countryName, houseView } = STORES;
+  useEffect(() => {
+    map.eachLayer((layer) => {
+      if (layer.options?.infor) {
+        if (countryName === "location") {
+          layer.setIcon(
+            divHouseName("1", `Location${layer.options?.infor.index}`)
+          );
+        } else if (countryName === "l") {
+          layer.setIcon(divHouseName("1", `L${layer.options?.infor.index}`));
+        }
+      }
+    });
+  }, [countryName]);
   useEffect(() => {
     map.eachLayer((layer) => {
       if (layer.options?.infor) {

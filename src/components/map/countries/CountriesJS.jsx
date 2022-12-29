@@ -15,6 +15,7 @@ import {
   defaultPerson,
   defaultFunctionPerson,
   markerProblemIndex,
+  markerHouseIndex,
 } from "../marker/Marker";
 import { divFunction, divHouse, divPerson, divThreeDot } from "../marker/Icon";
 import {
@@ -341,16 +342,20 @@ export const Countries = observer(({ SetModal }) => {
             icon: divHouse(),
             infor: {
               name: code,
+              index: markerHouseIndex[0],
             },
           }).addTo(map);
+          markerHouseIndex[0]++;
         } else {
           !addHouse.includes(code) &&
             L.marker([e.latlng.lat, e.latlng.lng], {
               icon: divHouse(),
               infor: {
                 name: code,
+                index: markerHouseIndex[0],
               },
             }).addTo(map);
+          markerHouseIndex[0]++;
         }
         addIconHandle("");
       }

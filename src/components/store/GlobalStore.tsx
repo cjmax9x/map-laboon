@@ -16,6 +16,7 @@ class STORE {
   click: boolean = true;
   lock: boolean = false;
   houseView: string = "";
+  countryName: string = "";
   constructor() {
     makeAutoObservable(this);
   }
@@ -66,5 +67,15 @@ class STORE {
     }
     this.houseView = value;
   };
+  toggleCountryName = (value: string) => {
+    if(value === 'location') {
+      this.countryName = value
+    } else if (value === 'l') {
+      this.countryName = value
+      console.log(this.countryName)
+    } else {
+      this.countryName = ''
+    }
+  }
 }
 export const STORES = new STORE();

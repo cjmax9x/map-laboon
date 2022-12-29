@@ -440,7 +440,7 @@ export const groupLayoutPopup = (group) => {
 //----------------------------------------------------------------------
 
 //for Distance popup
-export function distancePopup(distancePoint, distancePoint1, e) {
+export function routePopup(distancePoint, distancePoint1, e) {
   const popup = L.popup()
     .setLatLng([e.latlng.lat, e.latlng.lng])
     .setContent(
@@ -450,7 +450,7 @@ export function distancePopup(distancePoint, distancePoint1, e) {
           styles["menu-geojson"],
           styles["on-hover-function"],
         ].join(" ")}">
-          Change-Route
+          Change
         </div>
       </div>
     </div>
@@ -459,6 +459,85 @@ export function distancePopup(distancePoint, distancePoint1, e) {
     .addTo(this);
 
   window.changeRoute = () => {
+    let direct;
+    console.log(distancePoint.parentArc);
+    if (distancePoint.getLatLng().lng < distancePoint1.getLatLng().lng) {
+      direct = true;
+    } else {
+      direct = false;
+    }
+    if (
+      distancePoint.parentArc.options.color === "blue" ||
+      distancePoint.parentArc.options.color === "black"
+    ) {
+      this.eachLayer((layer) => {
+        if (layer.options.type === "distance") {
+          layer.parentLine.options.color === "blue" &&
+            layer.parentLine.setStyle({ color: "black" });
+          layer.parentArc.options.color === "blue" &&
+            layer.parentArc.setStyle({ color: "black" });
+        }
+      });
+
+      distancePoint.parentLine.setStyle({
+        color: "blue",
+      });
+      distancePoint.parentArc.setStyle({ color: "transparent" });
+
+      distancePoint.parentArc.setText(null);
+
+      distancePoint.parentLine.setText("Inter-route", {
+        center: true,
+        offset: -3,
+        orientation: !direct ? 180 : 0,
+      });
+    } else {
+      this.eachLayer((layer) => {
+        if (layer.options.type === "distance") {
+          layer.parentLine.options.color === "blue" &&
+            layer.parentLine.setStyle({ color: "black" });
+          layer.parentArc.options.color === "blue" &&
+            layer.parentArc.setStyle({ color: "black" });
+        }
+      });
+
+      distancePoint.parentArc.setStyle({
+        color: "blue",
+      });
+      distancePoint.parentLine.setStyle({ color: "transparent" });
+
+      distancePoint.parentLine.setText(null);
+
+      distancePoint.parentArc.setText("Arc-route", {
+        center: true,
+        offset: -3,
+        orientation: !direct ? 180 : 0,
+      });
+    }
+
+    this.removeLayer(popup);
+  };
+}
+
+export function distancePopup(distancePoint, distancePoint1, e) {
+  const popup = L.popup()
+    .setLatLng([e.latlng.lat, e.latlng.lng])
+    .setContent(
+      `
+      <div style="background-color:#fff;padding:10px;min-width:180px">
+        <div onclick="changeDistance()" class = "${[
+          styles["menu-geojson"],
+          styles["on-hover-function"],
+        ].join(" ")}">
+          Change
+        </div>
+      </div>
+    </div>
+  `
+    )
+    .addTo(this);
+
+  window.changeDistance = () => {
     let direct;
     let name = distancePoint.parentLine._text;
     if (!name) name = distancePoint.parentArc._text;

@@ -33,7 +33,7 @@ const IconList = [
 
 export const TopTool = (): React.ReactElement => {
   const [showSumilation, setShowSumilation] = useState<boolean>(false);
-  const { changePosition, switchMainLand } = STORES;
+  const {toggleCountryName, changePosition, switchMainLand } = STORES;
   return (
     <div className={styles["container"]}>
       {showSumilation && <Modal onClick={setShowSumilation} />}
@@ -118,6 +118,17 @@ export const TopTool = (): React.ReactElement => {
                 className={styles["menu-item"]}
               >
                 Show all areas
+              </span>
+              <span onClick={toggleCountryName.bind(this,'location')}
+                className={styles["menu-item"]}
+              >
+                Location with index
+              </span>
+              <span
+              onClick={toggleCountryName.bind(this,'l')}
+                className={styles["menu-item"]}
+              >
+                L with index
               </span>
             </div>
           </div>

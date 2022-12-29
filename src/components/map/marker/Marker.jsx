@@ -2,6 +2,8 @@
 import L from "leaflet";
 import "@elfalem/leaflet-curve";
 import "leaflet-textpath";
+import "leaflet-arrowheads";
+
 import { observer } from "mobx-react";
 import { useMap, useMapEvents } from "react-leaflet";
 import { STORES } from "../../store/GlobalStore";
@@ -16,11 +18,17 @@ import {
 } from "./Icon";
 import styles from "../../../../styles/map/Map.module.scss";
 import { useEffect } from "react";
-import { changeIcon, distancePopup, changeGroup } from "../popup/Popup";
+import {
+  changeIcon,
+  distancePopup,
+  changeGroup,
+  routePopup,
+} from "../popup/Popup";
 import {
   dragEndHandler,
   dragStartHandlerLine,
   dragHandlerLine,
+  dragHandlerLine_distance,
 } from "../routeDistance/handleDistance";
 
 import * as turf from "@turf/turf";
@@ -28,6 +36,7 @@ import * as turf from "@turf/turf";
 export const markerPersonIndex = [1];
 export const markerFnIndex = [1];
 export const markerProblemIndex = [1];
+export const markerHouseIndex = [1];
 export const groupFnIndex = [1];
 export const groupPersonIndex = [1];
 export const functionSelected = [];
@@ -162,19 +171,22 @@ export const Markers = observer(({ SetModal }) => {
           functionSelected.splice(0, functionSelected.length);
           selectedList.splice(0, selectedList.length);
         };
-        L.popup()
+        const popupScan = L.popup()
           .setLatLng([event.latlng.lat, event.latlng.lng])
           .setContent(
             `
-            <div style="background-color:#fff;padding:10px;min-width:100px;padding-right: 40px;
+            <div onclick="closePopupScan()" style="background-color:#fff;padding:10px;min-width:100px;padding-right: 40px;
             display: flex;
             justify-content: space-between;">
             <div class="group-button" onclick="getSelectedList(event)">Group</div>
+            <div class="group-button" onclick="handleRemoveTempList()">Cancel</div>
             </div>
             `
           )
-          //<div class="group-button" onclick="handleRemoveTempList()">Cancel</div>
           .openOn(map);
+        window.closePopupScan = () => {
+          map.removeLayer(popupScan);
+        };
       }
     }
   };
@@ -294,19 +306,23 @@ export const Markers = observer(({ SetModal }) => {
               selectedList.splice(0, selectedList.length);
             };
 
-            L.popup()
+            const popupScan = L.popup()
               .setLatLng([arr[2][0], arr[2][1]])
               .setContent(
                 `
-                <div style="background-color:#fff;padding:10px;min-width:100px;padding-right: 40px;
+                <div onclick="closePopupScan()" style="background-color:#fff;padding:10px;min-width:100px;padding-right: 40px;
                 display: flex;
                 justify-content: space-between;">
                 <div class="group-button" onclick="getSelectedList(event)">Group</div>
+                <div class="group-button" onclick="handleRemoveTempList()">Cancel</div>
                 </div>
                 `
               )
-              // <div class="group-button" onclick="handleRemoveTempList()">Cancel</div>
               .openOn(map);
+            window.closePopupScan = () => {
+              map.removeLayer(popupScan);
+            };
+
             // .on('remove', () =>
             //   handleRemoveTempList()
             // );
@@ -399,7 +415,6 @@ export const Markers = observer(({ SetModal }) => {
         })
           .on("contextmenu", changeIcon.bind(this, map, SetModal))
           .on("click", (e) => addSelectedItem(e))
-
           .addTo(map);
 
         markerPersonIndex[0]++;
@@ -425,7 +440,7 @@ export const Markers = observer(({ SetModal }) => {
         markerFnIndex[0]++;
         addIconHandle("");
       } else if (addIcon === "inter-route") {
-        // distance-------------------------------------------------
+        // inter-route-------------------------------------------------
 
         const distancePoint = L.marker([e.latlng.lat, e.latlng.lng], {
           icon: divDistancePoint(),
@@ -435,9 +450,7 @@ export const Markers = observer(({ SetModal }) => {
           .on("dragstart", dragStartHandlerLine.bind(this))
           .on("drag", dragHandlerLine.bind(this))
           .on("dragend", dragEndHandler)
-          // .on("click", () => {
-          //   console.log(e.target);
-          // })
+
           .addTo(map);
 
         const distancePoint1 = L.marker([e.latlng.lat, e.latlng.lng + 10], {
@@ -447,6 +460,187 @@ export const Markers = observer(({ SetModal }) => {
         })
           .on("dragstart", dragStartHandlerLine.bind(this))
           .on("drag", dragHandlerLine.bind(this))
+          .on("dragend", dragEndHandler)
+          .addTo(map);
+
+        const polyline = new L.Polyline(
+          [
+            [e.latlng.lat, e.latlng.lng],
+            [e.latlng.lat, e.latlng.lng + 10],
+          ],
+
+          { type: "line", color: "black" }
+        )
+          .setText("Inter-route", {
+            center: true,
+            offset: -3,
+          })
+          .on(
+            "contextmenu",
+            routePopup.bind(this, distancePoint, distancePoint1)
+          )
+          .on("click", (e) => {
+            map.eachLayer((layer) => {
+              if (layer.options.type === "distance") {
+                layer.parentLine.options.color === "blue" &&
+                  layer.parentLine.setStyle({ color: "black" });
+                layer.parentArc.options.color === "blue" &&
+                  layer.parentArc.setStyle({ color: "black" });
+              }
+            });
+
+            e.target.setStyle({ color: "blue" });
+            let direct;
+            if (
+              distancePoint.getLatLng().lng < distancePoint1.getLatLng().lng
+            ) {
+              direct = true;
+            } else {
+              direct = false;
+            }
+
+            if (e.target._text === "Inter-route") {
+              const latLng = e.target.getLatLngs();
+              const distance = map.distance(
+                L.latLng(latLng[0].lat, latLng[0].lng),
+                L.latLng(latLng[1].lat, latLng[1].lng)
+              );
+
+              e.target.setText(null);
+              e.target.setText(`${(distance * 0.001).toFixed()} km`, {
+                center: true,
+                offset: -3,
+                orientation: !direct ? 180 : 0,
+              });
+            } else {
+              e.target.setText(null);
+              e.target.setText("Inter-route", {
+                center: true,
+                offset: -3,
+                orientation: !direct ? 180 : 0,
+              });
+            }
+          })
+          .addTo(map);
+
+        distancePoint.parentLine = polyline;
+        distancePoint1.parentLine = polyline;
+
+        const { midpointLatLng, latlng2, latlng1, pathOptions } =
+          arcRouteInit(e);
+        const curvedPath = L.curve(
+          ["M", latlng1, "Q", midpointLatLng, latlng2],
+          pathOptions
+        )
+          .addTo(map)
+
+          .on(
+            "contextmenu",
+            routePopup.bind(this, distancePoint, distancePoint1)
+          )
+          .on("click", (e) => {
+            map.eachLayer((layer) => {
+              if (layer.options.type === "distance") {
+                layer.parentLine.options.color === "blue" &&
+                  layer.parentLine.setStyle({ color: "black" });
+                layer.parentArc.options.color === "blue" &&
+                  layer.parentArc.setStyle({ color: "black" });
+              }
+            });
+
+            e.target.setStyle({ color: "blue" });
+            let direct;
+
+            if (
+              distancePoint.getLatLng().lng < distancePoint1.getLatLng().lng
+            ) {
+              direct = true;
+            } else {
+              direct = false;
+            }
+
+            if (distancePoint.parentArc._text === "Arc-route") {
+              const latLng = distancePoint.parentLine.getLatLngs();
+              const distance = map.distance(
+                L.latLng(latLng[0].lat, latLng[0].lng),
+                L.latLng(latLng[1].lat, latLng[1].lng)
+              );
+
+              distancePoint.parentArc.setText(null);
+              distancePoint.parentArc.setText(
+                `${(distance * 0.001).toFixed()} km`,
+                {
+                  center: true,
+                  offset: -3,
+                  orientation: !direct ? 180 : 0,
+                }
+              );
+            } else {
+              distancePoint.parentArc.setText(null);
+              distancePoint.parentArc.setText("Arc-route", {
+                center: true,
+                offset: -3,
+                orientation: !direct ? 180 : 0,
+              });
+            }
+          });
+
+        curvedPath.setText = polyline.setText;
+        distancePoint.parentArc = curvedPath;
+        distancePoint1.parentArc = curvedPath;
+        distancePoint.on("click", (e) => {
+          map.eachLayer((layer) => {
+            if (layer.options.type === "distance") {
+              layer.parentLine.options.color === "blue" &&
+                layer.parentLine.setStyle({ color: "black" });
+              layer.parentArc.options.color === "blue" &&
+                layer.parentArc.setStyle({ color: "black" });
+            }
+          });
+          distancePoint.parentLine.options.color === "black" &&
+            distancePoint.parentLine.setStyle({ color: "blue" });
+          distancePoint.parentArc.options.color === "black" &&
+            distancePoint.parentArc.setStyle({ color: "blue" });
+        });
+        distancePoint1.on("click", (e) => {
+          map.eachLayer((layer) => {
+            if (layer.options.type === "distance") {
+              layer.parentLine.options.color === "blue" &&
+                layer.parentLine.setStyle({ color: "black" });
+              layer.parentArc.options.color === "blue" &&
+                layer.parentArc.setStyle({ color: "black" });
+            }
+          });
+          distancePoint1.parentLine.options.color === "black" &&
+            distancePoint1.parentLine.setStyle({ color: "blue" });
+          distancePoint1.parentArc.options.color === "black" &&
+            distancePoint1.parentArc.setStyle({ color: "blue" });
+        });
+
+        ///
+        //
+        //
+      } else if (addIcon === "distance") {
+        // distance-------------------------------------------------
+
+        const distancePoint = L.marker([e.latlng.lat, e.latlng.lng], {
+          icon: divDistancePoint(),
+          draggable: !lock,
+          type: "distance",
+        })
+          .on("dragstart", dragStartHandlerLine.bind(this))
+          .on("drag", dragHandlerLine_distance.bind(this))
+          .on("dragend", dragEndHandler)
+
+          .addTo(map);
+
+        const distancePoint1 = L.marker([e.latlng.lat, e.latlng.lng + 10], {
+          icon: divDistancePoint(),
+          draggable: !lock,
+          type: "distance",
+        })
+          .on("dragstart", dragStartHandlerLine.bind(this))
+          .on("drag", dragHandlerLine_distance.bind(this))
           .on("dragend", dragEndHandler)
           .addTo(map);
 

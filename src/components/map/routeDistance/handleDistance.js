@@ -104,6 +104,107 @@ export function dragHandlerLine(e) {
       offset: -3,
       orientation: 180,
     });
+    if (text === "Inter-route" || text === "Arc-route") {
+    } else {
+      title(null);
+      const distance = this.distance(
+        L.latLng(latLng[0].lat, latLng[0].lng),
+        L.latLng(latLng[1].lat, latLng[1].lng)
+      );
+      title(null);
+      title(`${(distance * 0.001).toFixed()} km`, {
+        center: true,
+        offset: -3,
+        orientation: 180,
+      });
+    }
+  } else {
+    title(null);
+    title(text, {
+      center: true,
+      offset: -3,
+    });
+    if (text === "Inter-route" || text === "Arc-route") {
+    } else {
+      title(null);
+      const distance = this.distance(
+        L.latLng(latLng[0].lat, latLng[0].lng),
+        L.latLng(latLng[1].lat, latLng[1].lng)
+      );
+      title(null);
+      title(`${(distance * 0.001).toFixed()} km`, {
+        center: true,
+        offset: -3,
+      });
+    }
+  }
+}
+
+export function dragHandlerLine_distance(e) {
+  let title = e.target.parentLine.setText.bind(e.target.parentLine);
+  let text = e.target.parentLine._text;
+
+  if (e.target.parentLine.options.color === "transparent") {
+    title = e.target.parentArc.setText.bind(e.target.parentArc);
+    text = e.target.parentArc._text;
+  }
+
+  const polyline = e.target.parentLine;
+  const polyArc = e.target.parentArc;
+  const thetaOffset = 3.14 / 9;
+  const thetaOffsetRev = 3.14 / -9;
+  const latLng = polyline.getLatLngs();
+  let thetaOffsetData;
+
+  const latlngMarker = e.target.getLatLng();
+
+  const latlngPolyArc = polyArc.getLatLngs();
+
+  const latlng1 = latlngPolyArc[1],
+    latlng2 = latlngPolyArc[4];
+
+  const offsetX = latlng2[1] - latlng1[1],
+    offsetY = latlng2[0] - latlng1[0];
+
+  const r = Math.sqrt(Math.pow(offsetX, 2) + Math.pow(offsetY, 2)),
+    theta = Math.atan2(offsetY, offsetX);
+  if (latLng[1].lng < latLng[0].lng) {
+    thetaOffsetData = thetaOffsetRev;
+  } else {
+    thetaOffsetData = thetaOffset;
+  }
+
+  const r2 = r / 2 / Math.cos(thetaOffsetData),
+    theta2 = theta + thetaOffsetData;
+
+  const midpointX = r2 * Math.cos(theta2) + latlng1[1],
+    midpointY = r2 * Math.sin(theta2) + latlng1[0];
+
+  const midpointLatLng = [midpointY, midpointX];
+
+  latlngPolyArc.splice(e.target.polyArcLatlng, 1, [
+    latlngMarker.lat,
+    latlngMarker.lng,
+  ]);
+
+  latlngPolyArc.splice(3, 1, midpointLatLng);
+  polyArc.setLatLngs(latlngPolyArc);
+
+  //---------------------------------------
+
+  const latlngPolyLine = polyline.getLatLngs();
+
+  latlngPolyLine.splice(e.target.polylineLatlng, 1, latlngMarker);
+
+  polyline.setLatLngs(latlngPolyLine);
+
+  if (latLng[1].lng < latLng[0].lng) {
+    title(null);
+    title(text, {
+      center: true,
+      offset: -3,
+      orientation: 180,
+    });
     if (text !== "Distance") {
       title(null);
       const distance = this.distance(
@@ -137,6 +238,7 @@ export function dragHandlerLine(e) {
     }
   }
 }
+
 //------------------------
 export function dragEndHandler() {
   delete this.polylineLatlng;

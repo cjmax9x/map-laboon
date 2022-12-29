@@ -24,7 +24,7 @@ const IconList = [
   { value: "main-set", Icon: MainsetIcon, name: "The Given Set" },
   { value: "house", Icon: HomeIcon, name: "House", ability: true },
   { value: "inter-route", Icon: VectorIcon, name: "Inter-Route", ability: true },
-  { value: "distance", Icon: LocationIcon, name: "Distance" },
+  { value: "distance", Icon: LocationIcon, name: "Distance", ability: true },
   { value: "philosophy", Icon: CircleIcon, name: "Philosophy" },
   {
     value: "welcome-sign",
