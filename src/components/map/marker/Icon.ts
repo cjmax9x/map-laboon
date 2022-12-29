@@ -6,9 +6,8 @@ export const divPerson = (className: string, name: string, image: string) => {
     className: className,
     iconSize: [40, 40],
     iconAnchor: [20, 30],
-    html: `<img src="${
-      image ? image : "../../../../user_md.png"
-    }"  style="position: absolute;left: 50%;transform: translateX(-50%);" alt="person" width="40" height="40">
+    html: `<img src="${image ? image : "../../../../user_md.png"
+      }"  style="position: absolute;left: 50%;transform: translateX(-50%);" alt="person" width="40" height="40">
     <div class="${styles["name-person"]}">${name}</div>
     `,
   });
@@ -74,11 +73,13 @@ export const divHouseWorld = (className: string, name: string) => {
     `,
   });
 };
-export const divDistancePoint = () => {
+export const divDistancePoint = (className: string, id_line: number) => {
+
   return L.divIcon({
-    className: styles['dot-point-distance'],
-    iconSize: [10, 10],
-    iconAnchor: [2, 5],
-    
+    className: styles["dot-point-distance"],
+    html: `
+    <div class='${className} rotate_id_${id_line}'></div>
+    `,
   });
+
 };

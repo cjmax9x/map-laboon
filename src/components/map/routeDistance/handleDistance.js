@@ -30,35 +30,79 @@ export function dragStartHandlerLine(e) {
       e.target.polyArcLatlng = i;
     }
   }
+
+
   const latlngPolyLine = polyline.getLatLngs();
   for (let i = 0; i < latlngPolyLine.length; i++) {
     if (latlngMarker.equals(latlngPolyLine[i])) {
       e.target.polylineLatlng = i;
     }
+    else {
+      e.target.polylineLatlng_y = i;
+    }
   }
 }
 
 //-------------------------------------
-export function dragHandlerLine(e) {
+
+var calcAngle = function (p1, p2, revert) {
+  var lat1 = p1[0] / 180 * Math.PI;
+  var lat2 = p2[0] / 180 * Math.PI;
+  var lng1 = p1[1] / 180 * Math.PI;
+  var lng2 = p2[1] / 180 * Math.PI;
+  var y = Math.sin(lng2 - lng1) * Math.cos(lat2);
+  var x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(lng2 - lng1);
+  // var brng = (Math.atan2(y, x) * 180 / Math.PI + 180).toFixed(0);
+  var brng = (Math.atan2(y, x) * 180 / Math.PI + 360).toFixed(0);
+  if (revert) {
+    brng = (Math.atan2(y, x) * 180 / Math.PI + 180).toFixed(0);
+
+  }
+  else {
+    brng = (Math.atan2(y, x) * 180 / Math.PI + 360).toFixed(0);
+  }
+
+  return (brng % 360);
+}
+export function dragHandlerLine(nameArrow, id_line, e) {
   let title = e.target.parentLine.setText.bind(e.target.parentLine);
   let text = e.target.parentLine._text;
-
   if (e.target.parentLine.options.color === "transparent") {
     title = e.target.parentArc.setText.bind(e.target.parentArc);
     text = e.target.parentArc._text;
   }
-
+  // calcAngle
   const polyline = e.target.parentLine;
   const polyArc = e.target.parentArc;
   const thetaOffset = 3.14 / 9;
   const thetaOffsetRev = 3.14 / -9;
   const latLng = polyline.getLatLngs();
   let thetaOffsetData;
-
   const latlngMarker = e.target.getLatLng();
 
-  const latlngPolyArc = polyArc.getLatLngs();
+  // setTimeout(() => {
+  //   console.log('running...');
+  //   const polyline2 = new L.Polyline(
+  //     [
+  //       polyArc._coords[3],
+  //       Object.values(polyline.getCenter()),
+  //     ],
 
+  //     { type: "line", color: "black" }
+  //   ).addTo(this)
+  // }, 8000);
+
+
+  if (nameArrow === "first-arrow-line") {
+    document.querySelector(`.second-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${calcAngle(Object.values(latLng[0]), Object.values(latLng[1]))}deg)`
+    document.querySelector(`.first-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${calcAngle(Object.values(latLng[0]), Object.values(latLng[1]), true)}deg)`
+
+  } else {
+    document.querySelector(`.first-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${calcAngle(Object.values(latLng[0]), Object.values(latLng[1]), true)}deg)`
+    document.querySelector(`.second-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${calcAngle(Object.values(latLng[0]), Object.values(latLng[1]))}deg)`
+  }
+
+  const latlngPolyArc = polyArc.getLatLngs();
   const latlng1 = latlngPolyArc[1],
     latlng2 = latlngPolyArc[4];
 
