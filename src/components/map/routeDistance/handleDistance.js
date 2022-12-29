@@ -80,19 +80,6 @@ export function dragHandlerLine(nameArrow, id_line, e) {
   let thetaOffsetData;
   const latlngMarker = e.target.getLatLng();
 
-  // setTimeout(() => {
-  //   console.log('running...');
-  //   const polyline2 = new L.Polyline(
-  //     [
-  //       polyArc._coords[3],
-  //       Object.values(polyline.getCenter()),
-  //     ],
-
-  //     { type: "line", color: "black" }
-  //   ).addTo(this)
-  // }, 8000);
-
-
   if (nameArrow === "first-arrow-line") {
     document.querySelector(`.second-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${calcAngle(Object.values(latLng[0]), Object.values(latLng[1]))}deg)`
     document.querySelector(`.first-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${calcAngle(Object.values(latLng[0]), Object.values(latLng[1]), true)}deg)`
@@ -184,7 +171,7 @@ export function dragHandlerLine(nameArrow, id_line, e) {
   }
 }
 
-export function dragHandlerLine_distance(e) {
+export function dragHandlerLine_distance(nameArrow, id_line, e) {
   let title = e.target.parentLine.setText.bind(e.target.parentLine);
   let text = e.target.parentLine._text;
 
@@ -203,7 +190,14 @@ export function dragHandlerLine_distance(e) {
   const latlngMarker = e.target.getLatLng();
 
   const latlngPolyArc = polyArc.getLatLngs();
+  if (nameArrow === "first-arrow-line") {
+    document.querySelector(`.second-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${calcAngle(Object.values(latLng[0]), Object.values(latLng[1]))}deg)`
+    document.querySelector(`.first-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${calcAngle(Object.values(latLng[0]), Object.values(latLng[1]), true)}deg)`
 
+  } else {
+    document.querySelector(`.first-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${calcAngle(Object.values(latLng[0]), Object.values(latLng[1]), true)}deg)`
+    document.querySelector(`.second-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${calcAngle(Object.values(latLng[0]), Object.values(latLng[1]))}deg)`
+  }
   const latlng1 = latlngPolyArc[1],
     latlng2 = latlngPolyArc[4];
 

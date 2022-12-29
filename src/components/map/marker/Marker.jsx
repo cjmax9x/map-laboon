@@ -490,25 +490,27 @@ export const Markers = observer(({ SetModal }) => {
         markerFnIndex[0]++;
         addIconHandle("");
       } else if (addIcon === "inter-route") {
+        id_line++
+
         // distance-------------------------------------------------
         const distancePoint = L.marker([e.latlng.lat, e.latlng.lng], {
-          icon: divDistancePoint(),
+          icon: divDistancePoint("first-arrow-line", id_line),
           draggable: !lock,
           type: "distance",
         })
           .on("dragstart", dragStartHandlerLine.bind(this))
-          .on("drag", dragHandlerLine.bind(this))
+          .on("drag", dragHandlerLine.bind(this, "first-arrow-line", id_line))
           .on("dragend", dragEndHandler)
 
           .addTo(map);
 
         const distancePoint1 = L.marker([e.latlng.lat, e.latlng.lng + 10], {
-          icon: divDistancePoint(),
+          icon: divDistancePoint("second-arrow-line", id_line),
           draggable: !lock,
           type: "distance",
         })
           .on("dragstart", dragStartHandlerLine.bind(this))
-          .on("drag", dragHandlerLine.bind(this))
+          .on("drag", dragHandlerLine.bind(this, "second-arrow-line", id_line))
           .on("dragend", dragEndHandler)
           .addTo(map);
 
