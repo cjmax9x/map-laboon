@@ -72,7 +72,6 @@ class STORE {
       this.countryName = value
     } else if (value === 'l') {
       this.countryName = value
-      console.log(this.countryName)
     } else {
       this.countryName = ''
     }

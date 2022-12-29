@@ -4,11 +4,35 @@ import { useEffect } from "react";
 import { useMap } from "react-leaflet";
 import styles from "../../../../styles/map/Map.module.scss";
 import { STORES } from "../../store/GlobalStore";
-import { divHouse, divHouseName } from "../marker/Icon";
+import { divHouse, divHouseName, divHouseWorld } from "../marker/Icon";
+import { allLayer } from "../marker/Marker";
 
 export const House = observer(({}) => {
   const map = useMap();
-  const { countryName, houseView } = STORES;
+  const { country, countryName, houseView } = STORES;
+
+  useEffect(() => {
+    let World = {};
+    if (country && houseView) {
+      map.eachLayer((layer) => {
+        allLayer.push(layer);
+        map.removeLayer(layer);
+      });
+      World = L.marker([44.96479793033104, -6.416015625000001], {
+        icon: divHouseWorld("1", "WORLD"),
+      }).addTo(map);
+      map.zoomOut(2);
+    } else {
+      allLayer.forEach((layer) => {
+        map.addLayer(layer);
+      });
+    }
+
+    return () => {
+      map.removeLayer(World);
+    };
+  }, [country, houseView]);
+
   useEffect(() => {
     map.eachLayer((layer) => {
       if (layer.options?.infor) {
@@ -22,6 +46,7 @@ export const House = observer(({}) => {
       }
     });
   }, [countryName]);
+
   useEffect(() => {
     map.eachLayer((layer) => {
       if (layer.options?.infor) {
@@ -32,6 +57,6 @@ export const House = observer(({}) => {
         else layer.setIcon(divHouse());
       }
     });
-  }, [houseView]);
+  }, [houseView, country]);
   return null;
 });

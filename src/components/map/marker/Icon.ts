@@ -64,6 +64,16 @@ export const divHouseName = (className: string, name: string) => {
     `,
   });
 };
+export const divHouseWorld = (className: string, name: string) => {
+  return L.divIcon({
+    className: className,
+    iconSize: [300, 300],
+    // iconAnchor: [20, 30],
+    html: `<img src="../../../../house.png" alt="navigation" width="300" height="300">
+    <div class="${styles["name-house"]}">${name}</div>
+    `,
+  });
+};
 export const divDistancePoint = () => {
   return L.divIcon({
     className: styles['dot-point-distance'],

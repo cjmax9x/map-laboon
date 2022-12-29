@@ -262,6 +262,7 @@ export const Countries = observer(({ SetModal }) => {
         `
         )
         .openOn(map);
+      // add single function
 
       window.handleAddFunction = (event, name) => {
         event.preventDefault();
@@ -286,6 +287,7 @@ export const Countries = observer(({ SetModal }) => {
         map.closePopup();
       };
 
+      // add solution/problem
       window.handleAddProblem = (event, name) => {
         L.marker([e.latlng.lat, e.latlng.lng], {
           draggable: !lock,

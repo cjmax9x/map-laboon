@@ -3,18 +3,22 @@ import { divFunction, divFunctionCircle, divPerson } from "../marker/Icon";
 import L, { map } from "leaflet";
 import "@elfalem/leaflet-curve";
 import "leaflet-textpath";
-import { functionSelected, groupFnIndex } from "../marker/Marker";
+import {
+  functionSelected,
+  groupFnIndex,
+  markerProblemIndex,
+} from "../marker/Marker";
 import { STORES } from "../../store/GlobalStore";
 
 // for Function/Person
-export const customPopUp = (SetModal, index, type) => {
+export const customPopUp = (SetModal, index, type, error) => {
   const checked = functionSelected.find((item) => {
     return item === index;
   });
-
   window.openModal = () => {
     SetModal("modal");
   };
+  if (error) window.problem = error;
   return `<div style="background-color:#fff;padding:10px; min-width:180px" class="${
     styles["popup-interact-function"]
   }">
@@ -44,6 +48,23 @@ export const customPopUp = (SetModal, index, type) => {
       </div>
     </div>
   </div>
+
+
+
+
+
+
+
+
+<div onclick="handleAddProblem(problem)" style="display:${
+    error ? "auto" : "none"
+  }" class="${styles.row}">
+${error === "solution" ? "Identify as solution" : "Identify as problem "}
+  </div>
+
+
+
+
   <div class="${[styles.row, styles["on-hover"]].join(" ")}">
       Show Function
     <div  class="${styles["hover-func"]}">
@@ -113,6 +134,8 @@ export const customPersonPopUp = (SetModal) => {
 
 export const changeIcon = (map, SetModal, e) => {
   let type = false;
+  let error = e.target.options.solution;
+  if (!error) error = e.target.options.problem;
   const name = e.target._icon.textContent;
   if (
     name.startsWith("Natural") ||
@@ -125,7 +148,7 @@ export const changeIcon = (map, SetModal, e) => {
   !e.target._icon.classList.contains(styles["person"])
     ? L.popup()
         .setLatLng([e.latlng.lat, e.latlng.lng])
-        .setContent(customPopUp(SetModal, e.target.options.index, type))
+        .setContent(customPopUp(SetModal, e.target.options.index, type, error))
         .openOn(map)
     : L.popup()
         .setLatLng([e.latlng.lat, e.latlng.lng])
@@ -138,6 +161,12 @@ export const changeIcon = (map, SetModal, e) => {
     currentColor = e.target._icon.classList[2],
     currentName = e.target._icon.textContent
   ) => {
+    if (!name || color) {
+      e.target.options.solution && delete e.target.options.solution;
+      e.target.options.problem && delete e.target.options.problem;
+    }
+    if (color === "green" && !type) e.target.options.solution = "solution";
+    if (color === "red") e.target.options.problem = "problem";
     if (e.target._icon.classList.contains(styles["circle-fn"])) {
       e.target.setIcon(
         divFunctionCircle(
@@ -267,6 +296,42 @@ export const changeIcon = (map, SetModal, e) => {
     functionSelected.splice(0, functionSelected.length);
   };
 
+  // replace problem/solution
+  window.handleAddProblem = (name) => {
+    const first = name[0].toUpperCase();
+    const remain = name.slice(1, name.length);
+    L.marker([e.latlng.lat, e.latlng.lng], {
+      draggable: !STORES.lock,
+      type: { index: markerProblemIndex[0], title: "problem" },
+      icon: divFunction(
+        [
+          styles["rectangle-fn"],
+          name === "solution" ? styles["fn--green"] : styles["fn--red"],
+        ].join(" "),
+        `${first}${remain} ${markerProblemIndex[0]}`
+      ),
+    })
+      .addTo(map)
+      .on("contextmenu", customProblemPopup.bind(map))
+      .on("dblclick	", (e) => {
+        if (e.target.options.type.title === "problem") {
+          e.target.options.type.title = "solution";
+          e.target._icon.textContent = `Solution ${e.target.options.type.index}`;
+          e.target._icon.classList.add(styles["fn--green"]);
+          e.target._icon.classList.remove(styles["fn--red"]);
+        } else {
+          e.target.options.type.title = "problem";
+          e.target._icon.textContent = `Problem ${e.target.options.type.index}`;
+          e.target._icon.classList.remove(styles["fn--green"]);
+          e.target._icon.classList.add(styles["fn--red"]);
+        }
+      });
+
+    markerProblemIndex[0]++;
+    map.removeLayer(e.target);
+    map.closePopup();
+  };
+
   window.deleteItem = () => {
     map.removeLayer(e.target);
     map.closePopup();
@@ -389,11 +454,6 @@ export const groupContext = (index, popup, map, e) => {
   </div>`;
 };
 
-/* <span  onclick="addFnToGroup()"  class="${
-  styles["button-group"]
-}"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="10px" height="10px" viewBox="0 0 122.875 122.648" enable-background="new 0 0 122.875 122.648" xml:space="preserve"><g><path fill-rule="evenodd" clip-rule="evenodd" d="M108.993,47.079c7.683-0.059,13.898,6.12,13.882,13.805 c-0.018,7.683-6.26,13.959-13.942,14.019L75.24,75.138l-0.235,33.73c-0.063,7.619-6.338,13.789-14.014,13.78 c-7.678-0.01-13.848-6.197-13.785-13.818l0.233-33.497l-33.558,0.235C6.2,75.628-0.016,69.448,0,61.764 c0.018-7.683,6.261-13.959,13.943-14.018l33.692-0.236l0.236-33.73C47.935,6.161,54.209-0.009,61.885,0 c7.678,0.009,13.848,6.197,13.784,13.818l-0.233,33.497L108.993,47.079L108.993,47.079z"/></g></svg></span> */
-// oncontextmenu="makeEvent(event,${item})"
-
 export const groupLayoutPopup = (group) => {
   return `
   <div class="${styles["group-function"]}">
@@ -406,36 +466,6 @@ export const groupLayoutPopup = (group) => {
   </div>
   `;
 };
-
-// export const popupGroup = (map, SetModal, e) => {
-//   window.addFnToGroup = () => {
-//     if (e.target.options.group.length < 9) {
-//       e.target.closePopup();
-//       e.target.unbindPopup();
-//       e.target.options.group.push(markerFnIndex[0]);
-//       markerFnIndex[0]++;
-//       e.target.bindPopup(groupLayout(e.target.options.group), {
-//         autoClose: false,
-//         className: styles["group-elip"],
-//         offset: L.point(30, -12),
-//       });
-//       e.target.togglePopup();
-//     }
-//   };
-
-//   window.makeEvent = (event, index) => {
-//     event.preventDefault();
-
-//     const latlng = map.containerPointToLatLng(
-//       L.point(event.layerX, event.layerY)
-//     );
-
-//     L.popup({ offset: L.point(-130, 0) })
-//       .setLatLng([latlng.lat, latlng.lng])
-//       .setContent(customPopUp(SetModal, index))
-//       .openOn(map);
-//   };
-// };
 
 //----------------------------------------------------------------------
 

@@ -44,6 +44,9 @@ export const defaulFunction = ["20"];
 export const defaultPerson = ["20"];
 export const defaultFunctionPerson = ["20"];
 export let selectedList = [];
+export const allLayer = [];
+
+const popupWorld = L.popup();
 
 const arcRouteInit = (e) => {
   const thetaOffset = 3.14 / 9;
@@ -73,7 +76,16 @@ const arcRouteInit = (e) => {
   };
 };
 export const Markers = observer(({ SetModal }) => {
-  const { click, lock, addIcon, addIconHandle } = STORES;
+  const {
+    country,
+    click,
+    lock,
+    addIcon,
+    houseView,
+    addIconHandle,
+    toggleHouseView,
+    switchCountry,
+  } = STORES;
   const map = useMap();
   let areaSelection;
   const addSelectedItem = (event) => {
@@ -405,6 +417,44 @@ export const Markers = observer(({ SetModal }) => {
   }, [click, addIcon]);
 
   useMapEvents({
+    contextmenu(e) {
+      if (country) {
+        map.removeLayer(popupWorld);
+        popupWorld
+          .setLatLng([e.latlng.lat, e.latlng.lng])
+          .setContent(
+            `<div style="background-color:#fff;padding:10px; min-width:180px" class="${
+              styles["popup-interact-function"]
+            }">
+                <div class="${[styles.row, "world", styles["on-hover"]].join(
+                  " "
+                )}">
+                  Show World as house
+                </div>
+                <div class="${[styles.row, "country", styles["on-hover"]].join(
+                  " "
+                )}">
+                  Show all Countries as house
+                </div>
+            </div>
+    `
+          )
+          .addTo(map);
+
+        const world = document.querySelector(".world");
+        const country = document.querySelector(".country");
+        world.onclick = () => {
+          toggleHouseView("house-name");
+          map.removeLayer(popupWorld);
+        };
+        country.onclick = () => {
+          !houseView && toggleHouseView("house-name");
+          switchCountry();
+          map.removeLayer(popupWorld);
+        };
+      }
+    },
+
     click(e) {
       addIconHandle("");
       if (addIcon === "person" && click) {
