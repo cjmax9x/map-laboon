@@ -5,7 +5,7 @@ import { STORES, house } from "../../store/GlobalStore";
 import { IconProps } from "../rearTool/RearIconList";
 
 export const TopToolIconList = observer(({ Icon }: IconProps) => {
-  const { country,houseView, toggleHouseView } = STORES;
+  const { houseView, toggleHouseView } = STORES;
   return (
     <span
       style={
@@ -21,7 +21,7 @@ export const TopToolIconList = observer(({ Icon }: IconProps) => {
       >
         <span
           onClick={() => {
-            Icon.name === "House View" && country ? toggleHouseView("house-world"):toggleHouseView("house-name")
+            Icon.name === "House View" && toggleHouseView("house-name");
           }}
           className={styles["top-tool-icon"]}
         >
