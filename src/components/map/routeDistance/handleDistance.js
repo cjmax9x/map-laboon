@@ -45,26 +45,36 @@ export function dragStartHandlerLine(e) {
 
 //-------------------------------------
 
-var calcAngle = function (p1, p2, revert) {
-  var lat1 = p1[0] / 180 * Math.PI;
-  var lat2 = p2[0] / 180 * Math.PI;
-  var lng1 = p1[1] / 180 * Math.PI;
-  var lng2 = p2[1] / 180 * Math.PI;
-  var y = Math.sin(lng2 - lng1) * Math.cos(lat2);
-  var x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(lng2 - lng1);
-  // var brng = (Math.atan2(y, x) * 180 / Math.PI + 180).toFixed(0);
-  var brng = (Math.atan2(y, x) * 180 / Math.PI + 360).toFixed(0);
+
+function angleFromCoordinate(lat1, lon1, lat2, lon2, revert) {
+
+  var p1 = {
+    x: lat1,
+    y: lon1
+  };
+
+  var p2 = {
+    x: lat2,
+    y: lon2
+  };
+  const angle = (anchor, point) => Math.atan2(anchor.y - point.y, anchor.x - point.x) * 180 / Math.PI + 180;
+  angle(p1, p2); // 225
+  let angleDeg = 0
   if (revert) {
-    brng = (Math.atan2(y, x) * 180 / Math.PI + 180).toFixed(0);
+    angleDeg = Math.atan2(p1.y - p2.y, p1.x - p2.x) * 180 / Math.PI + 360; // 45
 
   }
   else {
-    brng = (Math.atan2(y, x) * 180 / Math.PI + 360).toFixed(0);
+    angleDeg = Math.atan2(p1.y - p2.y, p1.x - p2.x) * 180 / Math.PI + 180; // 45
+
   }
 
-  return (brng % 360);
+  return angleDeg.toFixed(0);
+
 }
 export function dragHandlerLine(nameArrow, id_line, e) {
+
+
   let title = e.target.parentLine.setText.bind(e.target.parentLine);
   let text = e.target.parentLine._text;
   if (e.target.parentLine.options.color === "transparent") {
@@ -81,13 +91,13 @@ export function dragHandlerLine(nameArrow, id_line, e) {
   const latlngMarker = e.target.getLatLng();
 
   if (nameArrow === "first-arrow-line") {
-    document.querySelector(`.second-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${calcAngle(Object.values(latLng[0]), Object.values(latLng[1]))}deg)`
-    document.querySelector(`.first-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${calcAngle(Object.values(latLng[0]), Object.values(latLng[1]), true)}deg)`
-
+    document.querySelector(`.second-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${angleFromCoordinate(latLng[0].lat, latLng[0].lng, latLng[1].lat, latLng[1].lng)}deg)`
+    document.querySelector(`.first-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${angleFromCoordinate(latLng[0].lat, latLng[0].lng, latLng[1].lat, latLng[1].lng, true)}deg)`
   } else {
-    document.querySelector(`.first-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${calcAngle(Object.values(latLng[0]), Object.values(latLng[1]), true)}deg)`
-    document.querySelector(`.second-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${calcAngle(Object.values(latLng[0]), Object.values(latLng[1]))}deg)`
+    document.querySelector(`.first-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${angleFromCoordinate(latLng[0].lat, latLng[0].lng, latLng[1].lat, latLng[1].lng, true)}deg)`
+    document.querySelector(`.second-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${angleFromCoordinate(latLng[0].lat, latLng[0].lng, latLng[1].lat, latLng[1].lng)}deg)`
   }
+
 
   const latlngPolyArc = polyArc.getLatLngs();
   const latlng1 = latlngPolyArc[1],
@@ -191,13 +201,13 @@ export function dragHandlerLine_distance(nameArrow, id_line, e) {
 
   const latlngPolyArc = polyArc.getLatLngs();
   if (nameArrow === "first-arrow-line") {
-    document.querySelector(`.second-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${calcAngle(Object.values(latLng[0]), Object.values(latLng[1]))}deg)`
-    document.querySelector(`.first-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${calcAngle(Object.values(latLng[0]), Object.values(latLng[1]), true)}deg)`
-
+    document.querySelector(`.second-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${angleFromCoordinate(latLng[0].lat, latLng[0].lng, latLng[1].lat, latLng[1].lng)}deg)`
+    document.querySelector(`.first-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${angleFromCoordinate(latLng[0].lat, latLng[0].lng, latLng[1].lat, latLng[1].lng, true)}deg)`
   } else {
-    document.querySelector(`.first-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${calcAngle(Object.values(latLng[0]), Object.values(latLng[1]), true)}deg)`
-    document.querySelector(`.second-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${calcAngle(Object.values(latLng[0]), Object.values(latLng[1]))}deg)`
+    document.querySelector(`.first-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${angleFromCoordinate(latLng[0].lat, latLng[0].lng, latLng[1].lat, latLng[1].lng, true)}deg)`
+    document.querySelector(`.second-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${angleFromCoordinate(latLng[0].lat, latLng[0].lng, latLng[1].lat, latLng[1].lng)}deg)`
   }
+
   const latlng1 = latlngPolyArc[1],
     latlng2 = latlngPolyArc[4];
 

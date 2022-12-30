@@ -16,7 +16,7 @@ a {
 .first-arrow-line {
   position: absolute;
   top: -4px;
-  left: -6px;
+  left: -4px;
   border-left: 9px solid transparent;
   border-right: 9px solid transparent;
   border-bottom: 20px solid rgba(0, 0, 0, 1);
@@ -25,7 +25,7 @@ a {
 .second-arrow-line {
   position: absolute;
   top: -4px;
-  left: -6px;
+  left: -4px;
   border-left: 9px solid transparent;
   border-right: 9px solid transparent;
   border-bottom: 20px solid rgba(0, 0, 0, 1);
