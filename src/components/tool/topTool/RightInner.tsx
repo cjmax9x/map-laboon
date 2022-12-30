@@ -19,6 +19,7 @@ export const RightInner = observer((): React.ReactElement => {
   const [defaultCode, setDefaultCode] = useState<boolean>(false);
 
   const {
+    houseView,
     code,
     grid,
     country: map,
@@ -29,7 +30,8 @@ export const RightInner = observer((): React.ReactElement => {
 
   const handleOnChange = (code: string) => {
     setSearchValue(totalList);
-
+    console.log(houseView);
+    console.log(1);
     totalList.forEach((item) => {
       if (item === code) {
         setSearchValue([code]);
@@ -67,7 +69,7 @@ export const RightInner = observer((): React.ReactElement => {
                     onClick={() => {
                       setSearchValue(totalList);
                       setHideSearch(false);
-                      changeCode(value);
+                      !houseView&& changeCode(value);
                     }}
                     key={index}
                     className={styles["search-result"]}
@@ -84,7 +86,7 @@ export const RightInner = observer((): React.ReactElement => {
               ref={inputRef}
               onFocus={setHideSearch.bind(this, true)}
               onChange={(e) => {
-                inputRef.current?.value &&
+                inputRef.current?.value &&  
                   handleOnChange(inputRef.current?.value);
               }}
               placeholder="Search"
@@ -96,7 +98,7 @@ export const RightInner = observer((): React.ReactElement => {
       )}
       <div style={{ textAlign: "center" }}>
         <SwitchIcon
-          state={{ map, setMap }}
+          state={{ houseView,map, setMap }}
           title={{ on: "WORLD", off: "Country" }}
           className={styles["switch"]}
         />
@@ -144,9 +146,11 @@ export const RightInner = observer((): React.ReactElement => {
                 {searchValue.map((value, index) => {
                   return (
                     <span
-                      onClick={() => {
+                      onClick={() => { if(!houseView){
+
                         changeCode(value);
                         localStorage.setItem("dfLocation", value);
+                      }
                         setDefaultCode(false);
                       }}
                       key={index}

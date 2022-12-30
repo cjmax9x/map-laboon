@@ -21,7 +21,7 @@ export const TopToolIconList = observer(({ Icon }: IconProps) => {
       >
         <span
           onClick={() => {
-            Icon.name === "House View" && country ? toggleHouseView("house-world") :  toggleHouseView("house-name");
+            Icon.name === "House View" && (country ? toggleHouseView("house-world") :  toggleHouseView("house-country"));
           }}
           className={styles["top-tool-icon"]}
         >

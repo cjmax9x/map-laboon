@@ -40,6 +40,7 @@ export const markerHouseIndex = [1];
 export const groupFnIndex = [1];
 export const groupPersonIndex = [1];
 export const functionSelected = [];
+export const personSelected = [];
 export const defaulFunction = ["20"];
 export const defaultPerson = ["20"];
 export const defaultFunctionPerson = ["20"];
@@ -269,7 +270,7 @@ export const Markers = observer(({ SetModal }) => {
                   index: groupFnIndex[0],
                 },
                 icon: divFunction(
-                  [styles["rectangle-fn"]].join(" "),
+                  [styles["rectangle-fn"], styles["group-fn-border"]].join(" "),
                   `Group function ${groupFnIndex[0]}`
                 ),
               })
@@ -296,10 +297,12 @@ export const Markers = observer(({ SetModal }) => {
                 )
                 .on("contextmenu", changeGroup.bind(this, map))
                 .on("popupclose", (e) => {
-                  e.target._icon.classList.add(`${styles["group-fn-border"]}`);
+                  e.target?._icon?.classList.add(
+                    `${styles["group-fn-border"]}`
+                  );
                 })
                 .on("popupopen", (e) => {
-                  e.target._icon.classList.remove(
+                  e.target?._icon?.classList.remove(
                     `${styles["group-fn-border"]}`
                   );
                 })

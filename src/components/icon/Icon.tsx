@@ -8,6 +8,7 @@ interface SwitchProps {
   className: string;
   title: { on: string; off: string };
   state: {
+    houseView?: string;
     map?: boolean;
     setMap?: (state: boolean) => void;
     grid?: boolean;
@@ -25,12 +26,7 @@ export const LogoIcon = ({ className }: Props): React.ReactElement => {
       fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <rect
-        width="50"
-        height="50"
-        rx="5"
-        fill="currentColor"
-      />
+      <rect width="50" height="50" rx="5" fill="currentColor" />
       <path
         d="M9.05682 30V21.2727H10.1136V29.0625H14.1705V30H9.05682ZM22.8306 25.6364C22.8306 26.5568 22.6644 27.3523 22.332 28.0227C21.9996 28.6932 21.5437 29.2102 20.9641 29.5739C20.3846 29.9375 19.7227 30.1193 18.9783 30.1193C18.234 30.1193 17.5721 29.9375 16.9925 29.5739C16.413 29.2102 15.957 28.6932 15.6246 28.0227C15.2923 27.3523 15.1261 26.5568 15.1261 25.6364C15.1261 24.7159 15.2923 23.9205 15.6246 23.25C15.957 22.5795 16.413 22.0625 16.9925 21.6989C17.5721 21.3352 18.234 21.1534 18.9783 21.1534C19.7227 21.1534 20.3846 21.3352 20.9641 21.6989C21.5437 22.0625 21.9996 22.5795 22.332 23.25C22.6644 23.9205 22.8306 24.7159 22.8306 25.6364ZM21.8079 25.6364C21.8079 24.8807 21.6815 24.2429 21.4286 23.723C21.1786 23.2031 20.8391 22.8097 20.4102 22.5426C19.984 22.2756 19.5067 22.142 18.9783 22.142C18.4499 22.142 17.9712 22.2756 17.5423 22.5426C17.1161 22.8097 16.7766 23.2031 16.5238 23.723C16.2738 24.2429 16.1488 24.8807 16.1488 25.6364C16.1488 26.392 16.2738 27.0298 16.5238 27.5497C16.7766 28.0696 17.1161 28.4631 17.5423 28.7301C17.9712 28.9972 18.4499 29.1307 18.9783 29.1307C19.5067 29.1307 19.984 28.9972 20.4102 28.7301C20.8391 28.4631 21.1786 28.0696 21.4286 27.5497C21.6815 27.0298 21.8079 26.392 21.8079 25.6364ZM30.5735 24C30.4798 23.7131 30.3562 23.456 30.2028 23.2287C30.0522 22.9986 29.8718 22.8026 29.6616 22.6406C29.4542 22.4787 29.2184 22.3551 28.9542 22.2699C28.69 22.1847 28.4002 22.142 28.0849 22.142C27.5678 22.142 27.0977 22.2756 26.6744 22.5426C26.2511 22.8097 25.9144 23.2031 25.6644 23.723C25.4144 24.2429 25.2894 24.8807 25.2894 25.6364C25.2894 26.392 25.4158 27.0298 25.6687 27.5497C25.9215 28.0696 26.2638 28.4631 26.6957 28.7301C27.1275 28.9972 27.6133 29.1307 28.1531 29.1307C28.6531 29.1307 29.0934 29.0241 29.4741 28.8111C29.8576 28.5952 30.1559 28.2912 30.369 27.8991C30.5849 27.5043 30.6928 27.0398 30.6928 26.5057L31.0167 26.5739H28.3917V25.6364H31.7156V26.5739C31.7156 27.2926 31.5621 27.9176 31.2553 28.4489C30.9513 28.9801 30.5309 29.392 29.994 29.6847C29.4599 29.9744 28.8462 30.1193 28.1531 30.1193C27.3803 30.1193 26.7013 29.9375 26.1161 29.5739C25.5337 29.2102 25.0792 28.6932 24.7525 28.0227C24.4286 27.3523 24.2667 26.5568 24.2667 25.6364C24.2667 24.946 24.359 24.3253 24.5437 23.7741C24.7312 23.2202 24.9954 22.7486 25.3363 22.3594C25.6772 21.9702 26.0806 21.6719 26.5465 21.4645C27.0124 21.2571 27.5252 21.1534 28.0849 21.1534C28.5451 21.1534 28.9741 21.223 29.3718 21.3622C29.7724 21.4986 30.1289 21.6932 30.4414 21.946C30.7567 22.196 31.0195 22.4957 31.2298 22.8452C31.44 23.1918 31.5849 23.5767 31.6644 24H30.5735ZM40.8892 25.6364C40.8892 26.5568 40.723 27.3523 40.3906 28.0227C40.0582 28.6932 39.6023 29.2102 39.0227 29.5739C38.4432 29.9375 37.7813 30.1193 37.0369 30.1193C36.2926 30.1193 35.6307 29.9375 35.0511 29.5739C34.4716 29.2102 34.0156 28.6932 33.6832 28.0227C33.3509 27.3523 33.1847 26.5568 33.1847 25.6364C33.1847 24.7159 33.3509 23.9205 33.6832 23.25C34.0156 22.5795 34.4716 22.0625 35.0511 21.6989C35.6307 21.3352 36.2926 21.1534 37.0369 21.1534C37.7813 21.1534 38.4432 21.3352 39.0227 21.6989C39.6023 22.0625 40.0582 22.5795 40.3906 23.25C40.723 23.9205 40.8892 24.7159 40.8892 25.6364ZM39.8665 25.6364C39.8665 24.8807 39.7401 24.2429 39.4872 23.723C39.2372 23.2031 38.8977 22.8097 38.4688 22.5426C38.0426 22.2756 37.5653 22.142 37.0369 22.142C36.5085 22.142 36.0298 22.2756 35.6009 22.5426C35.1747 22.8097 34.8352 23.2031 34.5824 23.723C34.3324 24.2429 34.2074 24.8807 34.2074 25.6364C34.2074 26.392 34.3324 27.0298 34.5824 27.5497C34.8352 28.0696 35.1747 28.4631 35.6009 28.7301C36.0298 28.9972 36.5085 29.1307 37.0369 29.1307C37.5653 29.1307 38.0426 28.9972 38.4688 28.7301C38.8977 28.4631 39.2372 28.0696 39.4872 27.5497C39.7401 27.0298 39.8665 26.392 39.8665 25.6364Z"
         fill="white"
@@ -81,11 +77,7 @@ export const SettingIcon = ({ className }: Props): React.ReactElement => {
       </g>
       <defs>
         <clipPath id="clip0_8_24">
-          <rect
-            width="24"
-            height="24"
-            fill="currentColor"
-          />
+          <rect width="24" height="24" fill="currentColor" />
         </clipPath>
       </defs>
     </svg>
@@ -129,11 +121,7 @@ export const PeopleIcon = ({ className }: Props): React.ReactElement => {
       </g>
       <defs>
         <clipPath id="clip0_8_71">
-          <rect
-            width="24"
-            height="24"
-            fill="currentColor"
-          />
+          <rect width="24" height="24" fill="currentColor" />
         </clipPath>
       </defs>
     </svg>
@@ -161,11 +149,7 @@ export const TwoGearIcon = ({ className }: Props): React.ReactElement => {
       </g>
       <defs>
         <clipPath id="clip0_8_48">
-          <rect
-            width="24"
-            height="24"
-            fill="currentColor"
-          />
+          <rect width="24" height="24" fill="currentColor" />
         </clipPath>
       </defs>
     </svg>
@@ -201,11 +185,7 @@ export const MessageIcon = ({ className }: Props): React.ReactElement => {
       </g>
       <defs>
         <clipPath id="clip0_8_79">
-          <rect
-            width="24"
-            height="24"
-            fill="white"
-          />
+          <rect width="24" height="24" fill="white" />
         </clipPath>
       </defs>
     </svg>
@@ -229,11 +209,7 @@ export const LayerIcon = ({ className }: Props): React.ReactElement => {
       </g>
       <defs>
         <clipPath id="clip0_8_84">
-          <rect
-            width="24.0001"
-            height="24"
-            fill="currentColor"
-          />
+          <rect width="24.0001" height="24" fill="currentColor" />
         </clipPath>
       </defs>
     </svg>
@@ -272,13 +248,7 @@ export const VectorIcon = ({ className }: Props): React.ReactElement => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <line
-        x1="0.75"
-        y1="1.875"
-        x2="29.25"
-        y2="1.875"
-        stroke="currentColor"
-      />
+      <line x1="0.75" y1="1.875" x2="29.25" y2="1.875" stroke="currentColor" />
       <path
         d="M0.870162 1.99213L2.14526 0.732143C2.21234 0.665455 2.25 0.575244 2.25 0.481213C2.25 0.387182 2.21234 0.296971 2.14526 0.230283C2.11177 0.196922 2.07193 0.170443 2.02804 0.152373C1.98415 0.134303 1.93707 0.125 1.88952 0.125C1.84197 0.125 1.79489 0.134303 1.75099 0.152373C1.7071 0.170443 1.66726 0.196922 1.63378 0.230283L0.106546 1.73942C0.0727849 1.77251 0.0459884 1.81188 0.0277017 1.85525C0.00941499 1.89862 0 1.94514 0 1.99213C0 2.03912 0.00941499 2.08564 0.0277017 2.12901C0.0459884 2.17239 0.0727849 2.21175 0.106546 2.24484L1.63378 3.77177C1.66744 3.80476 1.70735 3.83086 1.75124 3.84857C1.79512 3.86629 1.84211 3.87526 1.88952 3.87499C1.93692 3.87526 1.98391 3.86629 2.0278 3.84857C2.07169 3.83086 2.1116 3.80476 2.14526 3.77177C2.21234 3.70509 2.25 3.61488 2.25 3.52084C2.25 3.42681 2.21234 3.3366 2.14526 3.26991L0.870162 1.99213Z"
         fill="currentColor"
@@ -361,11 +331,7 @@ export const LocationIcon = ({ className }: Props): React.ReactElement => {
       </g>
       <defs>
         <clipPath id="clip0_8_146">
-          <rect
-            width="30"
-            height="22.5"
-            fill="white"
-          />
+          <rect width="30" height="22.5" fill="white" />
         </clipPath>
       </defs>
     </svg>
@@ -381,12 +347,7 @@ export const CircleIcon = ({ className }: Props): React.ReactElement => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <circle
-        cx="15"
-        cy="11"
-        r="11"
-        fill="currentColor"
-      />
+      <circle cx="15" cy="11" r="11" fill="currentColor" />
     </svg>
   );
 };
@@ -408,11 +369,7 @@ export const MainsetIcon = ({ className }: Props): React.ReactElement => {
       </g>
       <defs>
         <clipPath id="clip0_8_210">
-          <rect
-            width="30"
-            height="22.5"
-            fill="white"
-          />
+          <rect width="30" height="22.5" fill="white" />
         </clipPath>
       </defs>
     </svg>
@@ -428,13 +385,7 @@ export const ElipIcon = ({ className }: Props): React.ReactElement => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <ellipse
-        cx="15"
-        cy="11.25"
-        rx="15"
-        ry="11.25"
-        fill="currentColor"
-      />
+      <ellipse cx="15" cy="11.25" rx="15" ry="11.25" fill="currentColor" />
     </svg>
   );
 };
@@ -494,11 +445,7 @@ export const WelcomeSignIcon = ({ className }: Props): React.ReactElement => {
       </g>
       <defs>
         <clipPath id="clip0_461_1139">
-          <rect
-            width="30"
-            height="30"
-            fill="currentColor"
-          />
+          <rect width="30" height="30" fill="currentColor" />
         </clipPath>
       </defs>
     </svg>
@@ -548,11 +495,7 @@ export const ThreeGearIcon = ({ className }: Props): React.ReactElement => {
       </g>
       <defs>
         <clipPath id="clip0_43_4196">
-          <rect
-            width="24"
-            height="24"
-            fill="currentColor"
-          />
+          <rect width="24" height="24" fill="currentColor" />
         </clipPath>
       </defs>
     </svg>
@@ -568,12 +511,7 @@ export const SimulationIcon = ({ className }: Props): React.ReactElement => {
       fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <rect
-        width="24"
-        height="24"
-        rx="2"
-        fill="currentColor"
-      />
+      <rect width="24" height="24" rx="2" fill="currentColor" />
       <path
         d="M19.6656 13.7841C19.6648 13.7833 19.6634 13.7827 19.6628 13.7814L18.5873 12.8394C18.6237 12.5553 18.6426 12.274 18.6426 12C18.6426 11.726 18.6237 11.4447 18.5873 11.1606L19.6656 10.2159C20.0214 9.89661 20.1026 9.39001 19.8614 8.97937L18.6748 7.02332C18.437 6.62 17.9202 6.42798 17.4469 6.56873L16.0512 6.98865C15.5779 6.63733 15.0674 6.35461 14.5303 6.14661L14.208 4.78064C14.1024 4.32861 13.6737 4 13.1885 4H10.8112C10.3258 4 9.89725 4.32861 9.79162 4.78003L9.46923 6.14661C8.93226 6.35461 8.42179 6.63733 7.94845 6.98865L6.55134 6.56873C6.08081 6.42932 5.56266 6.61938 5.32772 7.01929L4.13623 8.98328C3.89707 9.39001 3.97811 9.89661 4.33763 10.2186L5.41299 11.1606C5.37599 11.4447 5.35704 11.726 5.35704 12C5.35704 12.274 5.37599 12.5553 5.41235 12.8394L4.33405 13.7841C3.97811 14.1034 3.89707 14.61 4.13828 15.02L5.3249 16.976C5.56266 17.38 6.07864 17.5713 6.55275 17.4313L7.94845 17.0114C8.42179 17.3627 8.93226 17.6454 9.46923 17.8534L9.79162 19.2186C9.89725 19.6714 10.3258 20 10.8112 20H13.1885C13.6737 20 14.1024 19.6714 14.208 19.22L14.5303 17.8534C15.0674 17.6454 15.5779 17.3633 16.0512 17.0114L17.4483 17.4313C17.9202 17.572 18.437 17.38 18.6726 16.98L19.8642 15.016C20.1026 14.61 20.0214 14.1034 19.6656 13.7841ZM11.9998 15.3334C10.072 15.3334 8.5036 13.838 8.5036 12C8.5036 10.162 10.072 8.66663 11.9998 8.66663C13.9276 8.66663 15.4961 10.162 15.4961 12C15.4961 13.838 13.9276 15.3334 11.9998 15.3334Z"
         fill="#fff"
@@ -734,10 +672,7 @@ export const SimulationSettingIcon = ({
           gradientUnits="userSpaceOnUse"
         >
           <stop stopColor="#EEF4FF" />
-          <stop
-            offset="1"
-            stopColor="#CFE7FD"
-          />
+          <stop offset="1" stopColor="#CFE7FD" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_52_559"
@@ -747,14 +682,8 @@ export const SimulationSettingIcon = ({
           y2="6.92445"
           gradientUnits="userSpaceOnUse"
         >
-          <stop
-            stopColor="#8AAADC"
-            stopOpacity="0"
-          />
-          <stop
-            offset="1"
-            stopColor="#8AAADC"
-          />
+          <stop stopColor="#8AAADC" stopOpacity="0" />
+          <stop offset="1" stopColor="#8AAADC" />
         </linearGradient>
         <linearGradient
           id="paint2_linear_52_559"
@@ -764,14 +693,8 @@ export const SimulationSettingIcon = ({
           y2="6.88981"
           gradientUnits="userSpaceOnUse"
         >
-          <stop
-            stopColor="#8AAADC"
-            stopOpacity="0"
-          />
-          <stop
-            offset="1"
-            stopColor="#8AAADC"
-          />
+          <stop stopColor="#8AAADC" stopOpacity="0" />
+          <stop offset="1" stopColor="#8AAADC" />
         </linearGradient>
         <linearGradient
           id="paint3_linear_52_559"
@@ -781,14 +704,8 @@ export const SimulationSettingIcon = ({
           y2="15.247"
           gradientUnits="userSpaceOnUse"
         >
-          <stop
-            stopColor="#8AAADC"
-            stopOpacity="0"
-          />
-          <stop
-            offset="1"
-            stopColor="#8AAADC"
-          />
+          <stop stopColor="#8AAADC" stopOpacity="0" />
+          <stop offset="1" stopColor="#8AAADC" />
         </linearGradient>
         <linearGradient
           id="paint4_linear_52_559"
@@ -798,14 +715,8 @@ export const SimulationSettingIcon = ({
           y2="15.247"
           gradientUnits="userSpaceOnUse"
         >
-          <stop
-            stopColor="#8AAADC"
-            stopOpacity="0"
-          />
-          <stop
-            offset="1"
-            stopColor="#8AAADC"
-          />
+          <stop stopColor="#8AAADC" stopOpacity="0" />
+          <stop offset="1" stopColor="#8AAADC" />
         </linearGradient>
         <linearGradient
           id="paint5_linear_52_559"
@@ -815,14 +726,8 @@ export const SimulationSettingIcon = ({
           y2="23.6736"
           gradientUnits="userSpaceOnUse"
         >
-          <stop
-            stopColor="#8AAADC"
-            stopOpacity="0"
-          />
-          <stop
-            offset="1"
-            stopColor="#8AAADC"
-          />
+          <stop stopColor="#8AAADC" stopOpacity="0" />
+          <stop offset="1" stopColor="#8AAADC" />
         </linearGradient>
         <linearGradient
           id="paint6_linear_52_559"
@@ -833,10 +738,7 @@ export const SimulationSettingIcon = ({
           gradientUnits="userSpaceOnUse"
         >
           <stop stopColor="#EEF4FF" />
-          <stop
-            offset="1"
-            stopColor="#CFE7FD"
-          />
+          <stop offset="1" stopColor="#CFE7FD" />
         </linearGradient>
         <linearGradient
           id="paint7_linear_52_559"
@@ -846,14 +748,8 @@ export const SimulationSettingIcon = ({
           y2="8.28475"
           gradientUnits="userSpaceOnUse"
         >
-          <stop
-            stopColor="#8AAADC"
-            stopOpacity="0"
-          />
-          <stop
-            offset="1"
-            stopColor="#8AAADC"
-          />
+          <stop stopColor="#8AAADC" stopOpacity="0" />
+          <stop offset="1" stopColor="#8AAADC" />
         </linearGradient>
         <linearGradient
           id="paint8_linear_52_559"
@@ -863,14 +759,8 @@ export const SimulationSettingIcon = ({
           y2="15.5469"
           gradientUnits="userSpaceOnUse"
         >
-          <stop
-            stopColor="#8AAADC"
-            stopOpacity="0"
-          />
-          <stop
-            offset="1"
-            stopColor="#8AAADC"
-          />
+          <stop stopColor="#8AAADC" stopOpacity="0" />
+          <stop offset="1" stopColor="#8AAADC" />
         </linearGradient>
         <linearGradient
           id="paint9_linear_52_559"
@@ -881,14 +771,8 @@ export const SimulationSettingIcon = ({
           gradientUnits="userSpaceOnUse"
         >
           <stop stopColor="#76CCF8" />
-          <stop
-            offset="0.833"
-            stopColor="#518EF8"
-          />
-          <stop
-            offset="1"
-            stopColor="#4981F8"
-          />
+          <stop offset="0.833" stopColor="#518EF8" />
+          <stop offset="1" stopColor="#4981F8" />
         </linearGradient>
         <linearGradient
           id="paint10_linear_52_559"
@@ -898,14 +782,8 @@ export const SimulationSettingIcon = ({
           y2="18.9684"
           gradientUnits="userSpaceOnUse"
         >
-          <stop
-            stopColor="#4071F7"
-            stopOpacity="0"
-          />
-          <stop
-            offset="1"
-            stopColor="#30569F"
-          />
+          <stop stopColor="#4071F7" stopOpacity="0" />
+          <stop offset="1" stopColor="#30569F" />
         </linearGradient>
         <linearGradient
           id="paint11_linear_52_559"
@@ -915,14 +793,8 @@ export const SimulationSettingIcon = ({
           y2="21.5073"
           gradientUnits="userSpaceOnUse"
         >
-          <stop
-            stopColor="#8AAADC"
-            stopOpacity="0"
-          />
-          <stop
-            offset="1"
-            stopColor="#8AAADC"
-          />
+          <stop stopColor="#8AAADC" stopOpacity="0" />
+          <stop offset="1" stopColor="#8AAADC" />
         </linearGradient>
         <linearGradient
           id="paint12_linear_52_559"
@@ -932,21 +804,11 @@ export const SimulationSettingIcon = ({
           y2="21.5168"
           gradientUnits="userSpaceOnUse"
         >
-          <stop
-            stopColor="#8AAADC"
-            stopOpacity="0"
-          />
-          <stop
-            offset="1"
-            stopColor="#8AAADC"
-          />
+          <stop stopColor="#8AAADC" stopOpacity="0" />
+          <stop offset="1" stopColor="#8AAADC" />
         </linearGradient>
         <clipPath id="clip0_52_559">
-          <rect
-            width="24"
-            height="24"
-            fill="white"
-          />
+          <rect width="24" height="24" fill="white" />
         </clipPath>
       </defs>
     </svg>
@@ -977,11 +839,7 @@ export const UserIcon = ({ className, onClick }: Props): React.ReactElement => {
       </g>
       <defs>
         <clipPath id="clip0_172_1429">
-          <rect
-            width="24"
-            height="24"
-            fill="white"
-          />
+          <rect width="24" height="24" fill="white" />
         </clipPath>
       </defs>
     </svg>
@@ -1007,11 +865,7 @@ export const PointerIcon = ({
       </g>
       <defs>
         <clipPath id="clip0_164_2621">
-          <rect
-            width="24"
-            height="24"
-            fill="white"
-          />
+          <rect width="24" height="24" fill="white" />
         </clipPath>
       </defs>
     </svg>
@@ -1081,10 +935,7 @@ export const ExtenderIcon = ({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path
-        d="M0 8V0L8 8H0Z"
-        fill="#3D3D3D"
-      />
+      <path d="M0 8V0L8 8H0Z" fill="#3D3D3D" />
     </svg>
   );
 };
@@ -1100,12 +951,7 @@ export const EllipseIcon = ({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <circle
-        cx="12"
-        cy="12"
-        r="12"
-        fill="#3D3D3D"
-      />
+      <circle cx="12" cy="12" r="12" fill="#3D3D3D" />
     </svg>
   );
 };
@@ -1121,19 +967,9 @@ export const PlalletIcon = ({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path
-        d="M3 3H21V21"
-        stroke="#3D3D3D"
-        strokeWidth="2"
-      />
-      <path
-        d="M4 6V0L1 3L4 6Z"
-        fill="#EB5757"
-      />
-      <path
-        d="M18 20H24L21 23L18 20Z"
-        fill="#EB5757"
-      />
+      <path d="M3 3H21V21" stroke="#3D3D3D" strokeWidth="2" />
+      <path d="M4 6V0L1 3L4 6Z" fill="#EB5757" />
+      <path d="M18 20H24L21 23L18 20Z" fill="#EB5757" />
     </svg>
   );
 };
@@ -1149,19 +985,9 @@ export const PlalletIcon2 = ({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path
-        d="M22 20H4V2"
-        stroke="#3D3D3D"
-        strokeWidth="2"
-      />
-      <path
-        d="M21 17V23L24 20L21 17Z"
-        fill="#EB5757"
-      />
-      <path
-        d="M7 3L1 3L4 0L7 3Z"
-        fill="#EB5757"
-      />
+      <path d="M22 20H4V2" stroke="#3D3D3D" strokeWidth="2" />
+      <path d="M21 17V23L24 20L21 17Z" fill="#EB5757" />
+      <path d="M7 3L1 3L4 0L7 3Z" fill="#EB5757" />
     </svg>
   );
 };
@@ -1177,19 +1003,9 @@ export const PlalletIcon3 = ({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path
-        d="M3 3H12V21H21"
-        stroke="#3D3D3D"
-        strokeWidth="2"
-      />
-      <path
-        d="M4 6V0L1 3L4 6Z"
-        fill="#EB5757"
-      />
-      <path
-        d="M20 24V18L23 21L20 24Z"
-        fill="#EB5757"
-      />
+      <path d="M3 3H12V21H21" stroke="#3D3D3D" strokeWidth="2" />
+      <path d="M4 6V0L1 3L4 6Z" fill="#EB5757" />
+      <path d="M20 24V18L23 21L20 24Z" fill="#EB5757" />
     </svg>
   );
 };
@@ -1205,19 +1021,9 @@ export const PlalletIcon4 = ({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path
-        d="M3 2L3 11L21 11L21 20"
-        stroke="#3D3D3D"
-        strokeWidth="2"
-      />
-      <path
-        d="M6 3L0 3L3 0L6 3Z"
-        fill="#EB5757"
-      />
-      <path
-        d="M24 19L18 19L21 22L24 19Z"
-        fill="#EB5757"
-      />
+      <path d="M3 2L3 11L21 11L21 20" stroke="#3D3D3D" strokeWidth="2" />
+      <path d="M6 3L0 3L3 0L6 3Z" fill="#EB5757" />
+      <path d="M24 19L18 19L21 22L24 19Z" fill="#EB5757" />
     </svg>
   );
 };
@@ -1240,14 +1046,35 @@ export const DotIcon = ({ className, onClick }: Props): React.ReactElement => {
       <g>
         <path d="M27.25,4.655C20.996-1.571,10.88-1.546,4.656,4.706C-1.571,10.96-1.548,21.076,4.705,27.3   c6.256,6.226,16.374,6.203,22.597-0.051C33.526,20.995,33.505,10.878,27.25,4.655z" />{" "}
         <path d="M13.288,23.896l-1.768,5.207c2.567,0.829,5.331,0.886,7.926,0.17l-0.665-5.416   C17.01,24.487,15.067,24.5,13.288,23.896z M8.12,13.122l-5.645-0.859c-0.741,2.666-0.666,5.514,0.225,8.143l5.491-1.375   C7.452,17.138,7.426,15.029,8.12,13.122z M28.763,11.333l-4.965,1.675c0.798,2.106,0.716,4.468-0.247,6.522l5.351,0.672   C29.827,17.319,29.78,14.193,28.763,11.333z M11.394,2.883l1.018,5.528c2.027-0.954,4.356-1.05,6.442-0.288l1.583-5.137   C17.523,1.94,14.328,1.906,11.394,2.883z" />{" "}
-        <circle
-          cx="15.979"
-          cy="15.977"
-          r="6.117"
-        />
+        <circle cx="15.979" cy="15.977" r="6.117" />
       </g>
       <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g>{" "}
       <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g>{" "}
+    </svg>
+  );
+};
+
+export const CheckIcon = ({
+  className,
+  onClick,
+}: Props): React.ReactElement => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+      height="10px"
+      width="10px"
+      version="1.1"
+      id="Capa_1"
+      viewBox="0 0 17.837 17.837"
+      xmlSpace="preserve"
+    >
+      <g>
+        <path
+          style={{ fill: "#fff" }}
+          d="M16.145,2.571c-0.272-0.273-0.718-0.273-0.99,0L6.92,10.804l-4.241-4.27   c-0.272-0.274-0.715-0.274-0.989,0L0.204,8.019c-0.272,0.271-0.272,0.717,0,0.99l6.217,6.258c0.272,0.271,0.715,0.271,0.99,0   L17.63,5.047c0.276-0.273,0.276-0.72,0-0.994L16.145,2.571z"
+        />
+      </g>
     </svg>
   );
 };
@@ -1259,7 +1086,7 @@ export const SwitchIcon = ({
   state,
 }: SwitchProps): React.ReactElement => {
   const handleOnChange = () => {
-    state.setMap && state.setMap(!state.map);
+    state.setMap && !state.houseView && state.setMap(!state.map);
     state.setGrid && state.setGrid(!state.grid);
   };
   return (

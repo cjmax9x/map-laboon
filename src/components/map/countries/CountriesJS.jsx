@@ -1,7 +1,7 @@
 import L from "leaflet";
 import * as turf from "@turf/turf";
 import "leaflet-boundary-canvas";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useMap } from "react-leaflet";
 import { STORES } from "../../store/GlobalStore";
 import { observer } from "mobx-react";
@@ -16,8 +16,15 @@ import {
   defaultFunctionPerson,
   markerProblemIndex,
   markerHouseIndex,
+  groupPersonIndex,
 } from "../marker/Marker";
-import { divFunction, divHouse, divPerson, divThreeDot } from "../marker/Icon";
+import {
+  divFunction,
+  divHouse,
+  divHouseName,
+  divPerson,
+  divThreeDot,
+} from "../marker/Icon";
 import {
   changeIcon,
   popupGroup,
@@ -28,10 +35,29 @@ import {
 } from "../popup/Popup";
 
 let y = 1;
-
+const allLayer = [];
 export const Countries = observer(({ SetModal }) => {
-  const { houseView, lock, code, mainLand, addIconHandle } = STORES;
+  const countryHouse = useRef({});
+  const { country, houseView, lock, code, mainLand, addIconHandle } = STORES;
   const map = useMap();
+  let cellSide;
+
+  // House Icon
+  useEffect(() => {
+    let geoJsonCenter = GeoJson[code].features[0].geometry.coordinates[0];
+    if (code === "us") {
+      geoJsonCenter = GeoJson[code].features[0].geometry.coordinates[5][0];
+    } else if (code === "gbr") {
+      geoJsonCenter = GeoJson[code].features[0].geometry.coordinates[1][0];
+    }
+    const center = turf.center(turf.points(geoJsonCenter)).geometry.coordinates;
+
+    countryHouse.current = L.marker(center.reverse(), {
+      icon: divHouseName("1", code.toUpperCase()),
+    });
+  }, [code]);
+  //----------------------
+
   let geoJson = JSON.parse(JSON.stringify(GeoJson[code]));
 
   const geoBounds = L.geoJSON(geoJson).getBounds();
@@ -57,7 +83,6 @@ export const Countries = observer(({ SetModal }) => {
     geoBounds.getNorthEast().lat,
     geoBounds.getNorthEast().lng,
   ];
-  let cellSide;
 
   if (code === "us") {
     cellSide = 400;
@@ -190,13 +215,18 @@ export const Countries = observer(({ SetModal }) => {
         SetModal({ code });
       };
 
-      window.makeGroupFromCountry = () => {
+      window.makeGroupFromCountry = (type) => {
         L.marker([e.latlng.lat, e.latlng.lng], {
           draggable: !STORES.lock,
-          group: { group: [], index: groupFnIndex[0] },
+          group: {
+            group: [],
+            index: type === "function" ? groupFnIndex[0] : groupPersonIndex[0],
+          },
           icon: divFunction(
-            [styles["rectangle-fn"]].join(" "),
-            `Group function ${groupFnIndex[0]}`
+            [styles["rectangle-fn"], styles["group-fn-border"]].join(" "),
+            `${type === "function" ? "Group function" : "Group Person"} ${
+              type === "function" ? groupFnIndex[0] : groupPersonIndex[0]
+            }`
           ),
         })
           .addTo(map)
@@ -213,13 +243,13 @@ export const Countries = observer(({ SetModal }) => {
           )
           .on("contextmenu", changeGroup.bind(this, map))
           .on("popupclose", (e) => {
-            e.target._icon.classList.add(`${styles["group-fn-border"]}`);
+            e.target?._icon?.classList.add(`${styles["group-fn-border"]}`);
           })
           .on("popupopen", (e) => {
-            e.target._icon.classList.remove(`${styles["group-fn-border"]}`);
+            e.target?._icon?.classList.remove(`${styles["group-fn-border"]}`);
           })
           .openPopup();
-        groupFnIndex[0]++;
+        type === "function" ? groupFnIndex[0]++ : groupPersonIndex[0]++;
       };
 
       L.popup()
@@ -251,14 +281,19 @@ export const Countries = observer(({ SetModal }) => {
           <h3 onclick="openPopulateModal()" class = ${
             styles["menu-geojson"]
           }>Populate Property</h3>
-          <h3 onclick="makeGroupFromCountry()" class=${
+          <h3 onclick="makeGroupFromCountry('function')" class=${
             styles["menu-geojson"]
           }>Group Function</h3>
+          <h3 onclick="makeGroupFromCountry('person')" class=${
+            styles["menu-geojson"]
+          }>Group Person</h3>
           <h3 onclick ="handleAddProblem(event,'Problem')" class=${
             styles["menu-geojson"]
           }>Problem</h3>
+          <h3 onclick ="handleAddProblem(event,'Solution')" class=${
+            styles["menu-geojson"]
+          }>Solution</h3>
           </div>
-         
         `
         )
         .openOn(map);
@@ -293,7 +328,10 @@ export const Countries = observer(({ SetModal }) => {
           draggable: !lock,
           type: { index: markerProblemIndex[0], title: "problem" },
           icon: divFunction(
-            [styles["rectangle-fn"], styles["fn--red"]].join(" "),
+            [
+              styles["rectangle-fn"],
+              name === "Solution" ? styles["fn--green"] : styles["fn--red"],
+            ].join(" "),
             name
               ? `${name} ${markerProblemIndex[0]}`
               : `Function ${markerProblemIndex[0]}`
@@ -322,6 +360,7 @@ export const Countries = observer(({ SetModal }) => {
 
     //add Geojson border
     const countryGeo = L.geoJSON(geoJson, {
+      options: "countryGeo",
       onEachFeature(feature, layer) {
         layer.on("contextmenu", makeEvent);
       },
@@ -367,19 +406,43 @@ export const Countries = observer(({ SetModal }) => {
     const countryLand = L.TileLayer.boundaryCanvas(
       "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
       {
+        options: "countryLand",
         noWrap: true,
         boundary: geoJson,
         zIndex: 0,
         attribution: "Mile-2-23112022",
       }
     );
-    !houseView && countryGeo.addTo(map) && countryLand.addTo(map);
+    countryGeo.addTo(map) && countryLand.addTo(map);
     map.fitBounds(countryGeo.getBounds(), map.getZoom());
     return () => {
       countryGeo && map.removeLayer(countryGeo);
       countryLand && map.removeLayer(countryLand);
     };
-  }, [houseView, code, mainLand, lock]);
+  }, [code, mainLand, lock]);
+
+  useEffect(() => {
+    if (houseView === "house-country") {
+      map.eachLayer((layer) => {
+        allLayer.push(layer);
+      });
+
+      map.eachLayer((layer) => {
+        map.removeLayer(layer);
+      });
+
+      map.addLayer(countryHouse.current);
+    } else {
+      map.removeLayer(countryHouse.current);
+      allLayer.forEach((layer) => {
+        map.addLayer(layer);
+      });
+      allLayer.splice(0, allLayer.length);
+    }
+    return () => {
+      map.removeLayer(countryHouse.current);
+    };
+  }, [houseView, code]);
 
   return null;
 });

@@ -32,6 +32,7 @@ function LocationMarker() {
       iconUrl: "../../../../location-2955.png",
     }),
     iconAnchor: [20, 30],
+    options: "location",
   });
 
   useEffect(() => {
@@ -41,20 +42,6 @@ function LocationMarker() {
       location && map.removeLayer(location);
     };
   }, [code]);
-
-  // const [position, setPosition] = useState<
-  //   { lat: number; lng: number } | undefined
-  // >(undefined);
-  // const map = useMapEvents({
-  //   locationfound(e) {
-  //     setPosition(e.latlng);
-  //     map.flyTo(e.latlng, 4);
-  //   },
-  // });
-
-  // useEffect(() => {
-  //   !position && map.locate();
-  // }, []);
 
   return null;
 }

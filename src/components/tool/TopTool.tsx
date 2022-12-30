@@ -3,6 +3,7 @@ import "tippy.js/dist/tippy.css";
 import styles from "../../../styles/tool/Toptool.module.scss";
 import {
   BookIcon,
+  CheckIcon,
   LayerIcon,
   LogoIcon,
   MenuIcon,
@@ -20,6 +21,7 @@ import { RightInner } from "./topTool/RightInner";
 import { useState } from "react";
 import { STORES } from "../store/GlobalStore";
 import { TopToolIconList } from "./topTool/TopToolIconList";
+import { observer } from "mobx-react";
 
 const IconList = [
   { value: "", Icon: SettingIcon, name: "House View" },
@@ -31,9 +33,10 @@ const IconList = [
   { value: "", Icon: BookIcon, name: "Table View" },
 ];
 
-export const TopTool = (): React.ReactElement => {
+export const TopTool = observer((): React.ReactElement => {
   const [showSumilation, setShowSumilation] = useState<boolean>(false);
-  const {toggleCountryName, changePosition, switchMainLand } = STORES;
+  const { countryName, toggleCountryName, changePosition, switchMainLand } =
+    STORES;
   return (
     <div className={styles["container"]}>
       {showSumilation && <Modal onClick={setShowSumilation} />}
@@ -55,12 +58,7 @@ export const TopTool = (): React.ReactElement => {
           </div>
 
           {IconList.map((icon, index) => {
-            return (
-              <TopToolIconList
-                key={index}
-                Icon={icon}
-              />
-            );
+            return <TopToolIconList key={index} Icon={icon} />;
           })}
 
           <div className={styles["menu-wrapper"]}>
@@ -119,16 +117,30 @@ export const TopTool = (): React.ReactElement => {
               >
                 Show all areas
               </span>
-              <span onClick={toggleCountryName.bind(this,'location')}
+              <span
+                onClick={toggleCountryName.bind(this, "location")}
                 className={styles["menu-item"]}
               >
-                Location with index
+                Replace Location with index{" "}
+                {countryName === "location" && (
+                  <CheckIcon className={styles["check-icon"]} />
+                )}
               </span>
               <span
-              onClick={toggleCountryName.bind(this,'l')}
+                onClick={toggleCountryName.bind(this, "l")}
                 className={styles["menu-item"]}
               >
-                L with index
+                Replace L with index{" "}
+                {countryName === "l" && (
+                  <CheckIcon className={styles["check-icon"]} />
+                )}
+              </span>
+              <span
+                onClick={toggleCountryName.bind(this, "")}
+                className={styles["menu-item"]}
+              >
+                Origin{" "}
+                {!countryName && <CheckIcon className={styles["check-icon"]} />}
               </span>
             </div>
           </div>
@@ -137,4 +149,4 @@ export const TopTool = (): React.ReactElement => {
       </div>
     </div>
   );
-};
+});
