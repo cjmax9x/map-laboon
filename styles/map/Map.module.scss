@@ -33,25 +33,26 @@
   color: white;
 }
 // populate modal
-.selection{
+.selection {
   width: 170px;
   font-size: 12px;
 }
-.infor-selection{
+.infor-selection {
   display: flex;
   justify-content: space-between;
   padding: 0 20px;
   align-items: center;
   margin-bottom: 10px;
 }
-.infor,.selection-title{
+.infor,
+.selection-title {
   font-size: 16px;
   font-weight: 400;
 }
-.infor{
+.infor {
   text-align: left;
 }
-.input-infor{
+.input-infor {
   border: none;
   background-color: transparent;
   border-bottom: 1px solid black;
@@ -514,10 +515,8 @@
   color: white;
 }
 
-
-
 // point distance
-.dot-point-distance{
-  background-color: black;
-  border-radius: 50%;
+.dot-point-distance {
+  width: 0;
+  height: 0;
 }

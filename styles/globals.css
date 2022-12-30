@@ -13,6 +13,24 @@ a {
   text-decoration: none;
 }
 
+.first-arrow-line {
+  position: absolute;
+  top: -4px;
+  left: -6px;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-bottom: 20px solid rgba(0, 0, 0, 1);
+  transform: rotate(270deg);
+}
+.second-arrow-line {
+  position: absolute;
+  top: -4px;
+  left: -6px;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-bottom: 20px solid rgba(0, 0, 0, 1);
+  transform: rotate(90deg);
+}
 * {
   box-sizing: border-box;
 }

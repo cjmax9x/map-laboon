@@ -44,6 +44,7 @@ export const defaulFunction = ["20"];
 export const defaultPerson = ["20"];
 export const defaultFunctionPerson = ["20"];
 export let selectedList = [];
+let id_line = 0
 export const allLayer = [];
 
 const popupWorld = L.popup();
@@ -278,11 +279,11 @@ export const Markers = observer(({ SetModal }) => {
                     return `
                       <div class="${styles["group-function"]}">
                       ${e.options.group.group.map((item) => {
-                        return `<div  class="${[
-                          styles["rectangle-fn-gr"],
-                          styles["fn--black"],
-                        ].join(" ")}">Function ${item} </div>`;
-                      })}
+                      return `<div  class="${[
+                        styles["rectangle-fn-gr"],
+                        styles["fn--black"],
+                      ].join(" ")}">Function ${item} </div>`;
+                    })}
                       </div>
                       `;
                   },
@@ -423,17 +424,16 @@ export const Markers = observer(({ SetModal }) => {
         popupWorld
           .setLatLng([e.latlng.lat, e.latlng.lng])
           .setContent(
-            `<div style="background-color:#fff;padding:10px; min-width:180px" class="${
-              styles["popup-interact-function"]
+            `<div style="background-color:#fff;padding:10px; min-width:180px" class="${styles["popup-interact-function"]
             }">
                 <div class="${[styles.row, "world", styles["on-hover"]].join(
-                  " "
-                )}">
+              " "
+            )}">
                   Show World as house
                 </div>
                 <div class="${[styles.row, "country", styles["on-hover"]].join(
-                  " "
-                )}">
+              " "
+            )}">
                   Show all Countries as house
                 </div>
             </div>
@@ -490,26 +490,27 @@ export const Markers = observer(({ SetModal }) => {
         markerFnIndex[0]++;
         addIconHandle("");
       } else if (addIcon === "inter-route") {
-        // inter-route-------------------------------------------------
+        id_line++
 
+        // distance-------------------------------------------------
         const distancePoint = L.marker([e.latlng.lat, e.latlng.lng], {
-          icon: divDistancePoint(),
+          icon: divDistancePoint("first-arrow-line", id_line),
           draggable: !lock,
           type: "distance",
         })
           .on("dragstart", dragStartHandlerLine.bind(this))
-          .on("drag", dragHandlerLine.bind(this))
+          .on("drag", dragHandlerLine.bind(this, "first-arrow-line", id_line))
           .on("dragend", dragEndHandler)
 
           .addTo(map);
 
         const distancePoint1 = L.marker([e.latlng.lat, e.latlng.lng + 10], {
-          icon: divDistancePoint(),
+          icon: divDistancePoint("second-arrow-line", id_line),
           draggable: !lock,
           type: "distance",
         })
           .on("dragstart", dragStartHandlerLine.bind(this))
-          .on("drag", dragHandlerLine.bind(this))
+          .on("drag", dragHandlerLine.bind(this, "second-arrow-line", id_line))
           .on("dragend", dragEndHandler)
           .addTo(map);
 
@@ -672,25 +673,26 @@ export const Markers = observer(({ SetModal }) => {
         //
       } else if (addIcon === "distance") {
         // distance-------------------------------------------------
+        id_line++
 
         const distancePoint = L.marker([e.latlng.lat, e.latlng.lng], {
-          icon: divDistancePoint(),
+          icon: divDistancePoint("first-arrow-line", id_line),
           draggable: !lock,
           type: "distance",
         })
           .on("dragstart", dragStartHandlerLine.bind(this))
-          .on("drag", dragHandlerLine_distance.bind(this))
+          .on("drag", dragHandlerLine_distance.bind(this, "first-arrow-line", id_line))
           .on("dragend", dragEndHandler)
 
           .addTo(map);
 
         const distancePoint1 = L.marker([e.latlng.lat, e.latlng.lng + 10], {
-          icon: divDistancePoint(),
+          icon: divDistancePoint("second-arrow-line", id_line),
           draggable: !lock,
           type: "distance",
         })
           .on("dragstart", dragStartHandlerLine.bind(this))
-          .on("drag", dragHandlerLine_distance.bind(this))
+          .on("drag", dragHandlerLine_distance.bind(this, "second-arrow-line", id_line))
           .on("dragend", dragEndHandler)
           .addTo(map);
 
