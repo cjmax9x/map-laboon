@@ -444,12 +444,11 @@ export const Markers = observer(({ SetModal }) => {
         const world = document.querySelector(".world");
         const country = document.querySelector(".country");
         world.onclick = () => {
-          toggleHouseView("house-name");
+          toggleHouseView("house-world");
           map.removeLayer(popupWorld);
         };
         country.onclick = () => {
-          !houseView && toggleHouseView("house-name");
-          switchCountry();
+          toggleHouseView("house-countries");
           map.removeLayer(popupWorld);
         };
       }
@@ -634,7 +633,14 @@ export const Markers = observer(({ SetModal }) => {
               });
             }
           });
+        console.log(curvedPath.getCenter());
 
+        L.marker([
+          curvedPath.getCenter().lat,
+          curvedPath.getCenter().lng,
+        ]).addTo(map);
+
+        // console.log(curvedPath.updateCurveCanvas());
         curvedPath.setText = polyline.setText;
         distancePoint.parentArc = curvedPath;
         distancePoint1.parentArc = curvedPath;
