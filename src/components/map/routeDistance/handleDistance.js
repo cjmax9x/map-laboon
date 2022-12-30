@@ -68,8 +68,15 @@ function angleFromCoordinate(lat1, lon1, lat2, lon2, revert) {
     angleDeg = Math.atan2(p1.y - p2.y, p1.x - p2.x) * 180 / Math.PI + 180; // 45
 
   }
+  const first = (deg) => {
+    if (deg > 0 && deg <= 70) {
+      // console.log(Number(deg) - (deg / 4.5));
+      return (Number(deg) - (deg / 4.2))
+    }
 
-  return angleDeg.toFixed(0);
+    return deg
+  }
+  return first(angleDeg.toFixed(0));
 
 }
 export function dragHandlerLine(nameArrow, id_line, e) {
