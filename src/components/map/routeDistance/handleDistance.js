@@ -45,7 +45,40 @@ export function dragStartHandlerLine(e) {
 
 //-------------------------------------
 
+const first = (deg) => {
 
+  if (deg > 0 && deg <= 70) {
+    console.log(1, deg, Number(deg) - (deg / 4.2));
+
+    return (Number(deg) - (deg / 4.2))
+  }
+  else if (deg > 70 && deg <= 80) {
+    console.log(2, deg, Number(deg) - (deg / 5.2));
+
+    return (Number(deg) - (deg / 5.2))
+  }
+  else if (deg > 100 && deg <= 160) {
+    // console.log(2, deg, Number(deg) + (deg / 10));
+
+    return (Number(deg) + (deg / 10))
+  }
+  else if (deg > 170 && deg <= 240) {
+    console.log(4, deg, Number(deg) - (deg / 25));
+
+    return (Number(deg) - (deg / 25))
+  }
+  else if (deg > 280 && deg <= 350) {
+    console.log(5, deg, Number(deg) + (deg / 25));
+
+    return (Number(deg) + (deg / 25))
+  }
+  // else if (deg > 75 && deg <= 80) {
+  //   console.log(deg, Number(deg) - (deg / 12));
+
+  //   return (Number(deg) - (deg / 5.2))
+  // }
+  return deg
+}
 function angleFromCoordinate(lat1, lon1, lat2, lon2, revert) {
 
   var p1 = {
@@ -68,14 +101,7 @@ function angleFromCoordinate(lat1, lon1, lat2, lon2, revert) {
     angleDeg = Math.atan2(p1.y - p2.y, p1.x - p2.x) * 180 / Math.PI + 180; // 45
 
   }
-  const first = (deg) => {
-    if (deg > 0 && deg <= 70) {
-      // console.log(Number(deg) - (deg / 4.5));
-      return (Number(deg) - (deg / 4.2))
-    }
 
-    return deg
-  }
   return first(angleDeg.toFixed(0));
 
 }
