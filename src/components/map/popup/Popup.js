@@ -457,16 +457,32 @@ export const groupContext = (index, popup, map, e) => {
 export const groupLayoutPopup = (group) => {
   return `
   <div class="${styles["group-function"]}">
-  ${group.map((item) => {
-    return `<div  class="${[
-      styles["rectangle-fn-gr"],
-      styles["fn--black"],
-    ].join(" ")}">Function ${item} </div>`;
-  })}
+  ${group
+    .map((item) => {
+      return `<div  class="${[
+        styles["rectangle-fn-gr"],
+        styles["fn--black"],
+      ].join(" ")}">Function ${item} </div>`;
+    })
+    .join("")}
   </div>
   `;
 };
 
+export const groupPersonLayoutPopup = (group) => {
+  return `
+  <div class="${styles["group-function"]}">
+    ${group
+      .map((item) => {
+        return `<div style="margin-right:6px">
+      <img src="/../user_md.png" alt="person" width="40" height="40">
+      <div class="">Person ${item}</div>
+    </div>`;
+      })
+      .join("")}
+  </div>
+  `;
+};
 //----------------------------------------------------------------------
 
 //for Distance popup

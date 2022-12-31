@@ -27,11 +27,10 @@ import {
 } from "../marker/Icon";
 import {
   changeIcon,
-  popupGroup,
-  groupLayout,
   groupLayoutPopup,
   changeGroup,
   customProblemPopup,
+  groupPersonLayoutPopup,
 } from "../popup/Popup";
 
 let y = 1;
@@ -232,7 +231,9 @@ export const Countries = observer(({ SetModal }) => {
           .addTo(map)
           .bindPopup(
             (e) => {
-              return groupLayoutPopup(e.options.group.group);
+              return type === "function"
+                ? groupLayoutPopup(e.options.group.group)
+                : groupPersonLayoutPopup(e.options.group.group);
             },
             {
               className: `${styles["group-rectangle"]} id-group-${groupFnIndex[0]}`,

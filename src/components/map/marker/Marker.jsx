@@ -23,6 +23,8 @@ import {
   distancePopup,
   changeGroup,
   routePopup,
+  groupLayoutPopup,
+  groupPersonLayoutPopup,
 } from "../popup/Popup";
 import {
   dragEndHandler,
@@ -144,21 +146,12 @@ export const Markers = observer(({ SetModal }) => {
             .addTo(map)
             .bindPopup(
               (e) => {
-                return `
-                <div class="${styles["group-function"]}">
-                ${e.options.group.group.map((item) => {
-                  return `<div  class="${[
-                    styles["rectangle-fn-gr"],
-                    styles["fn--black"],
-                  ].join(" ")}">Function ${item} </div>`;
-                })}
-                </div>
-                `;
+                return groupLayoutPopup(e.options.group.group);
+                // : groupPersonLayoutPopup(e.options.group.group);
               },
               {
                 className: `${styles["group-rectangle"]} id-group-${groupFnIndex[0]}`,
                 offset: L.point(30, -12),
-                id: "check",
                 autoClose: false,
                 closeOnClick: false,
               }
@@ -238,7 +231,7 @@ export const Markers = observer(({ SetModal }) => {
                   turf.polygon([[...arr, arr[0]]])
                 )
               ) {
-                if (layer.options.index) {
+                if (layer.options.index || layer.options.target) {
                   selectedList.push(layer);
                   layer._icon.classList.add("selected-icon");
                   index++;
@@ -260,65 +253,110 @@ export const Markers = observer(({ SetModal }) => {
               _event.preventDefault();
 
               selectedList.forEach((e) => {
-                functionSelected.push(e.options.index);
-              });
-
-              const groupMarker = L.marker([arr[2][0], arr[2][1]], {
-                draggable: !STORES.lock,
-                group: {
-                  group: [...functionSelected].sort(),
-                  index: groupFnIndex[0],
-                },
-                icon: divFunction(
-                  [styles["rectangle-fn"], styles["group-fn-border"]].join(" "),
-                  `Group function ${groupFnIndex[0]}`
-                ),
-              })
-                .addTo(map)
-                .bindPopup(
-                  (e) => {
-                    return `
-                      <div class="${styles["group-function"]}">
-                      ${e.options.group.group.map((item) => {
-                        return `<div  class="${[
-                          styles["rectangle-fn-gr"],
-                          styles["fn--black"],
-                        ].join(" ")}">Function ${item} </div>`;
-                      })}
-                      </div>
-                      `;
-                  },
-                  {
-                    className: `${styles["group-rectangle"]} id-group-${groupFnIndex[0]}`,
-                    offset: L.point(30, -12),
-                    autoClose: false,
-                    closeOnClick: false,
-                  }
-                )
-                .on("contextmenu", changeGroup.bind(this, map))
-                .on("popupclose", (e) => {
-                  e.target?._icon?.classList.add(
-                    `${styles["group-fn-border"]}`
-                  );
-                })
-                .on("popupopen", (e) => {
-                  e.target?._icon?.classList.remove(
-                    `${styles["group-fn-border"]}`
-                  );
-                })
-                .openPopup();
-
-              groupFnIndex[0]++;
-              map.eachLayer((layer) => {
-                if (layer.options.index) {
-                  functionSelected.forEach((element) => {
-                    if (element === layer.options.index) {
-                      layer.remove();
-                    }
-                  });
+                if (e.options.target?.type) {
+                  personSelected.push(e.options.target.index);
+                  console.log(personSelected);
+                } else {
+                  functionSelected.push(e.options.index);
+                  console.log(functionSelected);
                 }
               });
-              functionSelected.splice(0, functionSelected.length);
+
+              functionSelected.length > 0 &&
+                L.marker([arr[2][0], arr[2][1]], {
+                  draggable: !STORES.lock,
+                  group: {
+                    group: [...functionSelected].sort(),
+                    index: groupFnIndex[0],
+                  },
+                  icon: divFunction(
+                    [styles["rectangle-fn"], styles["group-fn-border"]].join(
+                      " "
+                    ),
+                    `Group function ${groupFnIndex[0]}`
+                  ),
+                })
+                  .addTo(map)
+                  .bindPopup(
+                    (e) => {
+                      return groupLayoutPopup(e.options.group.group);
+                    },
+                    {
+                      className: `${styles["group-rectangle"]} id-group-${groupFnIndex[0]}`,
+                      offset: L.point(30, -12),
+                      autoClose: false,
+                      closeOnClick: false,
+                    }
+                  )
+                  .on("contextmenu", changeGroup.bind(this, map))
+                  .on("popupclose", (e) => {
+                    e.target?._icon?.classList.add(
+                      `${styles["group-fn-border"]}`
+                    );
+                  })
+                  .on("popupopen", (e) => {
+                    e.target?._icon?.classList.remove(
+                      `${styles["group-fn-border"]}`
+                    );
+                  })
+                  .openPopup();
+
+              personSelected.length > 0 &&
+                L.marker(
+                  [
+                    arr[2][0],
+                    functionSelected.length > 0 ? arr[2][1] + 10 : arr[2][1],
+                  ],
+                  {
+                    draggable: !STORES.lock,
+                    group: {
+                      group: [...personSelected].sort(),
+                      index: groupPersonIndex[0],
+                    },
+                    icon: divFunction(
+                      [styles["rectangle-fn"], styles["group-fn-border"]].join(
+                        " "
+                      ),
+                      `Group person ${groupPersonIndex[0]}`
+                    ),
+                  }
+                )
+                  .addTo(map)
+                  .bindPopup(
+                    (e) => {
+                      return groupPersonLayoutPopup(e.options.group.group);
+                    },
+                    {
+                      className: `${styles["group-rectangle"]} id-group-${groupFnIndex[0]}`,
+                      offset: L.point(30, -12),
+                      autoClose: false,
+                      closeOnClick: false,
+                    }
+                  )
+                  .on("contextmenu", changeGroup.bind(this, map))
+                  .on("popupclose", (e) => {
+                    e.target?._icon?.classList.add(
+                      `${styles["group-fn-border"]}`
+                    );
+                  })
+                  .on("popupopen", (e) => {
+                    e.target?._icon?.classList.remove(
+                      `${styles["group-fn-border"]}`
+                    );
+                  })
+                  .openPopup();
+
+              if (functionSelected.length > 0) {
+                groupFnIndex[0]++;
+                functionSelected.splice(0, functionSelected.length);
+              }
+              if (personSelected.length > 0) {
+                groupPersonIndex[0]++;
+                personSelected.splice(0, personSelected.length);
+              }
+              selectedList.forEach((item) => {
+                map.removeLayer(item);
+              });
               selectedList.splice(0, selectedList.length);
             };
 
@@ -462,7 +500,7 @@ export const Markers = observer(({ SetModal }) => {
       addIconHandle("");
       if (addIcon === "person" && click) {
         L.marker([e.latlng.lat, e.latlng.lng], {
-          index: markerPersonIndex[0],
+          target: { type: "person", index: markerPersonIndex[0] },
           draggable: !lock,
           icon: divPerson(styles["person"], `Person ${markerPersonIndex[0]}`),
         })
