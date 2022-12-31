@@ -568,8 +568,21 @@ export function routePopup(distancePoint, distancePoint1, e) {
 export function distancePopup(distancePoint, distancePoint1, e) {
   //---------------------------- Two point center-----------------
   const point = distancePoint.parentArc.trace([0.1, 0.9]);
-  L.marker([point[0].lat, point[0].lng]).addTo(this);
-  L.marker([point[1].lat, point[1].lng]).addTo(this);
+
+  L.polyline(
+    [
+      [point[0].lat, point[0].lng],
+      [distancePoint.getLatLng().lat, distancePoint.getLatLng().lng],
+    ],
+    { color: "red" }
+  ).addTo(this);
+  L.polyline(
+    [
+      [point[1].lat, point[1].lng],
+      [distancePoint1.getLatLng().lat, distancePoint1.getLatLng().lng],
+    ],
+    { color: "red" }
+  ).addTo(this);
   //-------------------------------------------------------------
   const popup = L.popup()
     .setLatLng([e.latlng.lat, e.latlng.lng])
