@@ -566,6 +566,11 @@ export function routePopup(distancePoint, distancePoint1, e) {
 }
 
 export function distancePopup(distancePoint, distancePoint1, e) {
+  //---------------------------- Two point center-----------------
+  const point = distancePoint.parentArc.trace([0.1, 0.9]);
+  L.marker([point[0].lat, point[0].lng]).addTo(this);
+  L.marker([point[1].lat, point[1].lng]).addTo(this);
+  //-------------------------------------------------------------
   const popup = L.popup()
     .setLatLng([e.latlng.lat, e.latlng.lng])
     .setContent(
