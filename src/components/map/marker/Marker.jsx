@@ -80,16 +80,8 @@ const arcRouteInit = (e) => {
   };
 };
 export const Markers = observer(({ SetModal }) => {
-  const {
-    country,
-    click,
-    lock,
-    addIcon,
-    houseView,
-    addIconHandle,
-    toggleHouseView,
-    switchCountry,
-  } = STORES;
+  const { country, click, lock, addIcon, addIconHandle, toggleHouseView } =
+    STORES;
   const map = useMap();
   let areaSelection;
   const addSelectedItem = (event) => {
@@ -103,11 +95,6 @@ export const Markers = observer(({ SetModal }) => {
         selectedList.push(event.target);
         event.target._icon.classList.add("selected-icon");
       } else {
-        // const index = selectedList.indexOf(isExistItem);
-        // console.log("remove selected item from list", index);
-        // selectedList.splice(index, 1);
-
-        // remove selected item from list
         selectedList.forEach((item, index) => {
           if (isExistItem === item) {
             selectedList.splice(index, 1);
@@ -122,7 +109,6 @@ export const Markers = observer(({ SetModal }) => {
             selectedList[index]._icon.classList.remove("selected-icon");
           }
           selectedList = [];
-          // map.closePopup();
         };
 
         window.getSelectedList = (_event) => {
@@ -130,52 +116,100 @@ export const Markers = observer(({ SetModal }) => {
           _event.preventDefault();
 
           selectedList.forEach((e) => {
-            functionSelected.push(e.options.index);
-          });
-          L.marker([event.latlng.lat, event.latlng.lng], {
-            draggable: !STORES.lock,
-            group: {
-              group: [...functionSelected].sort(),
-              index: groupFnIndex[0],
-            },
-            icon: divFunction(
-              [styles["rectangle-fn"]].join(" "),
-              `Group function ${groupFnIndex[0]}`
-            ),
-          })
-            .addTo(map)
-            .bindPopup(
-              (e) => {
-                return groupLayoutPopup(e.options.group.group);
-                // : groupPersonLayoutPopup(e.options.group.group);
-              },
-              {
-                className: `${styles["group-rectangle"]} id-group-${groupFnIndex[0]}`,
-                offset: L.point(30, -12),
-                autoClose: false,
-                closeOnClick: false,
-              }
-            )
-            .on("contextmenu", changeGroup.bind(this, map))
-            .on("popupclose", (e) => {
-              e.target._icon.classList.add(`${styles["group-fn-border"]}`);
-            })
-            .on("popupopen", (e) => {
-              e.target._icon.classList.remove(`${styles["group-fn-border"]}`);
-            })
-            .openPopup();
-
-          groupFnIndex[0]++;
-          map.eachLayer((layer) => {
-            if (layer.options.index) {
-              functionSelected.forEach((element) => {
-                if (element === layer.options.index) {
-                  layer.remove();
-                }
-              });
+            if (e.options.target?.type) {
+              personSelected.push(e.options.target.index);
+            } else {
+              functionSelected.push(e.options.index);
             }
           });
-          functionSelected.splice(0, functionSelected.length);
+
+          functionSelected.length > 0 &&
+            L.marker([event.latlng.lat, event.latlng.lng], {
+              draggable: !STORES.lock,
+              group: {
+                group: [...functionSelected].sort(),
+                index: groupFnIndex[0],
+              },
+              icon: divFunction(
+                [styles["rectangle-fn"]].join(" "),
+                `Group function ${groupFnIndex[0]}`
+              ),
+            })
+              .addTo(map)
+              .bindPopup(
+                (e) => {
+                  return groupLayoutPopup(e.options.group.group);
+                },
+                {
+                  className: `${styles["group-rectangle"]} id-group-${groupFnIndex[0]}`,
+                  offset: L.point(30, -12),
+                  autoClose: false,
+                  closeOnClick: false,
+                }
+              )
+              .on("contextmenu", changeGroup.bind(this, map))
+              .on("popupclose", (e) => {
+                e.target._icon.classList.add(`${styles["group-fn-border"]}`);
+              })
+              .on("popupopen", (e) => {
+                e.target._icon.classList.remove(`${styles["group-fn-border"]}`);
+              })
+              .openPopup();
+
+          personSelected.length > 0 &&
+            L.marker(
+              [
+                event.latlng.lat,
+                functionSelected.length > 0
+                  ? event.latlng.lng + 10
+                  : event.latlng.lng,
+              ],
+              {
+                draggable: !STORES.lock,
+                group: {
+                  group: [...personSelected].sort(),
+                  index: groupPersonIndex[0],
+                },
+                icon: divFunction(
+                  [styles["rectangle-fn"], styles["group-fn-border"]].join(" "),
+                  `Group person ${groupPersonIndex[0]}`
+                ),
+              }
+            )
+              .addTo(map)
+              .bindPopup(
+                (e) => {
+                  return groupPersonLayoutPopup(e.options.group.group);
+                },
+                {
+                  className: `${styles["group-rectangle"]} id-group-${groupFnIndex[0]}`,
+                  offset: L.point(30, -12),
+                  autoClose: false,
+                  closeOnClick: false,
+                }
+              )
+              .on("contextmenu", changeGroup.bind(this, map))
+              .on("popupclose", (e) => {
+                e.target?._icon?.classList.add(`${styles["group-fn-border"]}`);
+              })
+              .on("popupopen", (e) => {
+                e.target?._icon?.classList.remove(
+                  `${styles["group-fn-border"]}`
+                );
+              })
+              .openPopup();
+
+          if (functionSelected.length > 0) {
+            groupFnIndex[0]++;
+            functionSelected.splice(0, functionSelected.length);
+          }
+          if (personSelected.length > 0) {
+            groupPersonIndex[0]++;
+            personSelected.splice(0, personSelected.length);
+          }
+          selectedList.forEach((item) => {
+            map.removeLayer(item);
+          });
           selectedList.splice(0, selectedList.length);
         };
         const popupScan = L.popup()
@@ -255,10 +289,8 @@ export const Markers = observer(({ SetModal }) => {
               selectedList.forEach((e) => {
                 if (e.options.target?.type) {
                   personSelected.push(e.options.target.index);
-                  console.log(personSelected);
                 } else {
                   functionSelected.push(e.options.index);
-                  console.log(functionSelected);
                 }
               });
 
