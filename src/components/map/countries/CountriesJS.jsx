@@ -1,6 +1,7 @@
 import L from "leaflet";
 import * as turf from "@turf/turf";
 import "leaflet-boundary-canvas";
+import "leaflet-textpath";
 import { useEffect, useRef } from "react";
 import { useMap } from "react-leaflet";
 import { STORES } from "../../store/GlobalStore";
@@ -17,6 +18,7 @@ import {
   markerProblemIndex,
   markerHouseIndex,
   groupPersonIndex,
+  textPath,
 } from "../marker/Marker";
 import {
   divFunction,
@@ -423,7 +425,7 @@ export const Countries = observer(({ SetModal }) => {
   }, [code, mainLand, lock]);
 
   useEffect(() => {
-    if (houseView === "house-country") {
+    if (!country && houseView === "house-country") {
       map.eachLayer((layer) => {
         allLayer.push(layer);
       });
@@ -431,13 +433,57 @@ export const Countries = observer(({ SetModal }) => {
       map.eachLayer((layer) => {
         map.removeLayer(layer);
       });
-
       map.addLayer(countryHouse.current);
-    } else {
+    } else if (!country && houseView === "") {
+      let direct;
+      let point_1;
+      let point_2;
+      let name;
       map.removeLayer(countryHouse.current);
+
       allLayer.forEach((layer) => {
+        layer._text && delete layer._text;
+
         map.addLayer(layer);
       });
+      map.eachLayer((layer) => {
+        if (
+          layer.setText &&
+          layer.options.color !== "transparent" &&
+          (layer.options.type === "arc" || layer.options.type === "line")
+        ) {
+          if (layer.options.kind === "distance") {
+            name = "Distance";
+          } else {
+            if (layer.options.type === "arc") {
+              name = "Arc-route";
+            } else {
+              name = "Inter-route";
+            }
+          }
+
+          if (layer.options.type === "line") {
+            point_1 = layer.getLatLngs()[0].lng;
+            point_2 = layer.getLatLngs()[1].lng;
+          } else {
+            point_1 = layer.getLatLngs()[1][1];
+            point_2 = layer.getLatLngs()[4][1];
+          }
+
+          if (point_1 < point_2) {
+            direct = true;
+          } else {
+            direct = false;
+          }
+
+          layer.setText(name, {
+            center: true,
+            offset: -3,
+            orientation: !direct ? 180 : 0,
+          });
+        }
+      });
+
       allLayer.splice(0, allLayer.length);
     }
     return () => {

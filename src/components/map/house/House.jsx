@@ -57,9 +57,51 @@ export const House = observer(({}) => {
         countriesLayer.push(country);
         name && index++;
       }
-    } else {
+    } else if (country && houseView === "") {
+      let direct;
+      let point_1;
+      let point_2;
+      let name;
       allLayer.forEach((layer) => {
+        layer._text && delete layer._text;
         map.addLayer(layer);
+      });
+      map.eachLayer((layer) => {
+        if (
+          layer.setText &&
+          layer.options.color !== "transparent" &&
+          (layer.options.type === "arc" || layer.options.type === "line")
+        ) {
+          if (layer.options.kind === "distance") {
+            name = "Distance";
+          } else {
+            if (layer.options.type === "arc") {
+              name = "Arc-route";
+            } else {
+              name = "Inter-route";
+            }
+          }
+
+          if (layer.options.type === "line") {
+            point_1 = layer.getLatLngs()[0].lng;
+            point_2 = layer.getLatLngs()[1].lng;
+          } else {
+            point_1 = layer.getLatLngs()[1][1];
+            point_2 = layer.getLatLngs()[4][1];
+          }
+
+          if (point_1 < point_2) {
+            direct = true;
+          } else {
+            direct = false;
+          }
+
+          layer.setText(name, {
+            center: true,
+            offset: -3,
+            orientation: !direct ? 180 : 0,
+          });
+        }
       });
       allLayer.splice(0, allLayer.length);
     }
@@ -72,30 +114,5 @@ export const House = observer(({}) => {
     };
   }, [country, houseView, countryName]);
 
-  // useEffect(() => {
-  //   map.eachLayer((layer) => {
-  //     if (layer.options?.infor) {
-  //       if (countryName === "location") {
-  //         layer.setIcon(
-  //           divHouseName("1", `Location${layer.options?.infor.index}`)
-  //         );
-  //       } else if (countryName === "l") {
-  //         layer.setIcon(divHouseName("1", `L${layer.options?.infor.index}`));
-  //       }
-  //     }
-  //   });
-  // }, [countryName]);
-
-  // useEffect(() => {
-  //   map.eachLayer((layer) => {
-  //     if (layer.options?.infor) {
-  //       if (houseView)
-  //         layer.setIcon(
-  //           divHouseName("1", layer.options?.infor.name.toUpperCase())
-  //         );
-  //       else layer.setIcon(divHouse());
-  //     }
-  //   });
-  // }, [houseView, country]);
   return null;
 });

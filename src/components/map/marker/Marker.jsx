@@ -46,6 +46,7 @@ export const personSelected = [];
 export const defaulFunction = ["20"];
 export const defaultPerson = ["20"];
 export const defaultFunctionPerson = ["20"];
+export const textPath = [];
 export let selectedList = [];
 let id_line = 0;
 export const allLayer = [];
@@ -565,7 +566,7 @@ export const Markers = observer(({ SetModal }) => {
       } else if (addIcon === "inter-route") {
         id_line++;
 
-        // distance-------------------------------------------------
+        // inter-route-------------------------------------------------
         const distancePoint = L.marker([e.latlng.lat, e.latlng.lng], {
           icon: divDistancePoint("first-arrow-line", id_line),
           draggable: !lock,
@@ -593,7 +594,7 @@ export const Markers = observer(({ SetModal }) => {
             [e.latlng.lat, e.latlng.lng + 10],
           ],
 
-          { type: "line", color: "black" }
+          { kind: "inter-route", type: "line", color: "black" }
         )
           .setText("Inter-route", {
             center: true,
@@ -652,6 +653,8 @@ export const Markers = observer(({ SetModal }) => {
 
         const { midpointLatLng, latlng2, latlng1, pathOptions } =
           arcRouteInit(e);
+        pathOptions.kind = "inter-route";
+
         const curvedPath = L.curve(
           ["M", latlng1, "Q", midpointLatLng, latlng2],
           pathOptions
@@ -781,7 +784,7 @@ export const Markers = observer(({ SetModal }) => {
             [e.latlng.lat, e.latlng.lng + 10],
           ],
 
-          { type: "line", color: "black" }
+          { kind: "distance", type: "line", color: "black" }
         )
           .setText("Distance", {
             center: true,
@@ -834,12 +837,13 @@ export const Markers = observer(({ SetModal }) => {
             }
           })
           .addTo(map);
-
         distancePoint.parentLine = polyline;
         distancePoint1.parentLine = polyline;
 
         const { midpointLatLng, latlng2, latlng1, pathOptions } =
           arcRouteInit(e);
+
+        pathOptions.kind = "distance";
         const curvedPath = L.curve(
           ["M", latlng1, "Q", midpointLatLng, latlng2],
           pathOptions

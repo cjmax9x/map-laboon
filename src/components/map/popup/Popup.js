@@ -506,7 +506,6 @@ export function routePopup(distancePoint, distancePoint1, e) {
 
   window.changeRoute = () => {
     let direct;
-    console.log(distancePoint.parentArc);
     if (distancePoint.getLatLng().lng < distancePoint1.getLatLng().lng) {
       direct = true;
     } else {
