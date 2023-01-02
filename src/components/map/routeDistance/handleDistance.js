@@ -45,66 +45,66 @@ export function dragStartHandlerLine(e) {
 
 //-------------------------------------
 
-const first = (deg) => {
+// const first = (deg) => {
 
-  if (deg > 0 && deg <= 70) {
-    console.log(1, deg, Number(deg) - (deg / 4.2));
+//   if (deg > 0 && deg <= 70) {
+//     console.log(1, deg, Number(deg) - (deg / 4.2));
 
-    return (Number(deg) - (deg / 4.2))
-  }
-  else if (deg > 70 && deg <= 80) {
-    console.log(2, deg, Number(deg) - (deg / 5.2));
+//     return (Number(deg) - (deg / 4.2))
+//   }
+//   else if (deg > 70 && deg <= 80) {
+//     console.log(2, deg, Number(deg) - (deg / 5.2));
 
-    return (Number(deg) - (deg / 5.2))
-  }
-  else if (deg > 100 && deg <= 160) {
-    // console.log(2, deg, Number(deg) + (deg / 10));
+//     return (Number(deg) - (deg / 5.2))
+//   }
+//   else if (deg > 100 && deg <= 160) {
+//     // console.log(2, deg, Number(deg) + (deg / 10));
 
-    return (Number(deg) + (deg / 10))
-  }
-  else if (deg > 170 && deg <= 240) {
-    console.log(4, deg, Number(deg) - (deg / 25));
+//     return (Number(deg) + (deg / 10))
+//   }
+//   else if (deg > 170 && deg <= 240) {
+//     console.log(4, deg, Number(deg) - (deg / 25));
 
-    return (Number(deg) - (deg / 25))
-  }
-  else if (deg > 280 && deg <= 350) {
-    console.log(5, deg, Number(deg) + (deg / 25));
+//     return (Number(deg) - (deg / 25))
+//   }
+//   else if (deg > 280 && deg <= 350) {
+//     console.log(5, deg, Number(deg) + (deg / 25));
 
-    return (Number(deg) + (deg / 25))
-  }
-  // else if (deg > 75 && deg <= 80) {
-  //   console.log(deg, Number(deg) - (deg / 12));
+//     return (Number(deg) + (deg / 25))
+//   }
+//   // else if (deg > 75 && deg <= 80) {
+//   //   console.log(deg, Number(deg) - (deg / 12));
 
-  //   return (Number(deg) - (deg / 5.2))
-  // }
-  return deg
-}
-function angleFromCoordinate(lat1, lon1, lat2, lon2, revert) {
+//   //   return (Number(deg) - (deg / 5.2))
+//   // }
+//   return deg
+// }
+// function angleFromCoordinate(lat1, lon1, lat2, lon2, revert) {
 
-  var p1 = {
-    x: lat1,
-    y: lon1
-  };
+//   var p1 = {
+//     x: lat1,
+//     y: lon1
+//   };
 
-  var p2 = {
-    x: lat2,
-    y: lon2
-  };
-  const angle = (anchor, point) => Math.atan2(anchor.y - point.y, anchor.x - point.x) * 180 / Math.PI + 180;
-  angle(p1, p2); // 225
-  let angleDeg = 0
-  if (revert) {
-    angleDeg = Math.atan2(p1.y - p2.y, p1.x - p2.x) * 180 / Math.PI + 360; // 45
+//   var p2 = {
+//     x: lat2,
+//     y: lon2
+//   };
+//   const angle = (anchor, point) => Math.atan2(anchor.y - point.y, anchor.x - point.x) * 180 / Math.PI + 180;
+//   angle(p1, p2); // 225
+//   let angleDeg = 0
+//   if (revert) {
+//     angleDeg = Math.atan2(p1.y - p2.y, p1.x - p2.x) * 180 / Math.PI + 360; // 45
 
-  }
-  else {
-    angleDeg = Math.atan2(p1.y - p2.y, p1.x - p2.x) * 180 / Math.PI + 180; // 45
+//   }
+//   else {
+//     angleDeg = Math.atan2(p1.y - p2.y, p1.x - p2.x) * 180 / Math.PI + 180; // 45
 
-  }
+//   }
 
-  return first(angleDeg.toFixed(0));
+//   return first(angleDeg.toFixed(0));
 
-}
+// }
 export function dragHandlerLine(nameArrow, id_line, e) {
 
 
@@ -123,13 +123,13 @@ export function dragHandlerLine(nameArrow, id_line, e) {
   let thetaOffsetData;
   const latlngMarker = e.target.getLatLng();
 
-  if (nameArrow === "first-arrow-line") {
-    document.querySelector(`.second-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${angleFromCoordinate(latLng[0].lat, latLng[0].lng, latLng[1].lat, latLng[1].lng)}deg)`
-    document.querySelector(`.first-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${angleFromCoordinate(latLng[0].lat, latLng[0].lng, latLng[1].lat, latLng[1].lng, true)}deg)`
-  } else {
-    document.querySelector(`.first-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${angleFromCoordinate(latLng[0].lat, latLng[0].lng, latLng[1].lat, latLng[1].lng, true)}deg)`
-    document.querySelector(`.second-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${angleFromCoordinate(latLng[0].lat, latLng[0].lng, latLng[1].lat, latLng[1].lng)}deg)`
-  }
+  // if (nameArrow === "first-arrow-line") {
+  //   document.querySelector(`.second-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${angleFromCoordinate(latLng[0].lat, latLng[0].lng, latLng[1].lat, latLng[1].lng)}deg)`
+  //   document.querySelector(`.first-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${angleFromCoordinate(latLng[0].lat, latLng[0].lng, latLng[1].lat, latLng[1].lng, true)}deg)`
+  // } else {
+  //   document.querySelector(`.first-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${angleFromCoordinate(latLng[0].lat, latLng[0].lng, latLng[1].lat, latLng[1].lng, true)}deg)`
+  //   document.querySelector(`.second-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${angleFromCoordinate(latLng[0].lat, latLng[0].lng, latLng[1].lat, latLng[1].lng)}deg)`
+  // }
 
 
   const latlngPolyArc = polyArc.getLatLngs();
