@@ -31,13 +31,11 @@ export function dragStartHandlerLine(e) {
     }
   }
 
-
   const latlngPolyLine = polyline.getLatLngs();
   for (let i = 0; i < latlngPolyLine.length; i++) {
     if (latlngMarker.equals(latlngPolyLine[i])) {
       e.target.polylineLatlng = i;
-    }
-    else {
+    } else {
       e.target.polylineLatlng_y = i;
     }
   }
@@ -105,9 +103,7 @@ export function dragStartHandlerLine(e) {
 //   return first(angleDeg.toFixed(0));
 
 // }
-export function dragHandlerLine(nameArrow, id_line, e) {
-
-
+export function dragHandlerLine(e) {
   let title = e.target.parentLine.setText.bind(e.target.parentLine);
   let text = e.target.parentLine._text;
   if (e.target.parentLine.options.color === "transparent") {
@@ -130,7 +126,6 @@ export function dragHandlerLine(nameArrow, id_line, e) {
   //   document.querySelector(`.first-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${angleFromCoordinate(latLng[0].lat, latLng[0].lng, latLng[1].lat, latLng[1].lng, true)}deg)`
   //   document.querySelector(`.second-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${angleFromCoordinate(latLng[0].lat, latLng[0].lng, latLng[1].lat, latLng[1].lng)}deg)`
   // }
-
 
   const latlngPolyArc = polyArc.getLatLngs();
   const latlng1 = latlngPolyArc[1],
@@ -214,7 +209,7 @@ export function dragHandlerLine(nameArrow, id_line, e) {
   }
 }
 
-export function dragHandlerLine_distance(nameArrow, id_line, e) {
+export function dragHandlerLine_distance(e) {
   let title = e.target.parentLine.setText.bind(e.target.parentLine);
   let text = e.target.parentLine._text;
 
@@ -233,13 +228,13 @@ export function dragHandlerLine_distance(nameArrow, id_line, e) {
   const latlngMarker = e.target.getLatLng();
 
   const latlngPolyArc = polyArc.getLatLngs();
-  if (nameArrow === "first-arrow-line") {
-    document.querySelector(`.second-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${angleFromCoordinate(latLng[0].lat, latLng[0].lng, latLng[1].lat, latLng[1].lng)}deg)`
-    document.querySelector(`.first-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${angleFromCoordinate(latLng[0].lat, latLng[0].lng, latLng[1].lat, latLng[1].lng, true)}deg)`
-  } else {
-    document.querySelector(`.first-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${angleFromCoordinate(latLng[0].lat, latLng[0].lng, latLng[1].lat, latLng[1].lng, true)}deg)`
-    document.querySelector(`.second-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${angleFromCoordinate(latLng[0].lat, latLng[0].lng, latLng[1].lat, latLng[1].lng)}deg)`
-  }
+  // if (nameArrow === "first-arrow-line") {
+  //   document.querySelector(`.second-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${angleFromCoordinate(latLng[0].lat, latLng[0].lng, latLng[1].lat, latLng[1].lng)}deg)`
+  //   document.querySelector(`.first-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${angleFromCoordinate(latLng[0].lat, latLng[0].lng, latLng[1].lat, latLng[1].lng, true)}deg)`
+  // } else {
+  //   document.querySelector(`.first-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${angleFromCoordinate(latLng[0].lat, latLng[0].lng, latLng[1].lat, latLng[1].lng, true)}deg)`
+  //   document.querySelector(`.second-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${angleFromCoordinate(latLng[0].lat, latLng[0].lng, latLng[1].lat, latLng[1].lng)}deg)`
+  // }
 
   const latlng1 = latlngPolyArc[1],
     latlng2 = latlngPolyArc[4];

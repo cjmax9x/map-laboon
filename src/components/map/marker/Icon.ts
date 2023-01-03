@@ -73,13 +73,10 @@ export const divHouseWorld = (className: string, name: string) => {
     `,
   });
 };
-export const divDistancePoint = (className: string, id_line: number) => {
+export const divDistancePoint = () => {
 
   return L.divIcon({
     className: styles["dot-point-distance"],
-    html: `
-    <div class='${className} rotate_id_${id_line}'></div>
-    `,
   });
 
 };

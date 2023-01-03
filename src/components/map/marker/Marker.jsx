@@ -568,23 +568,23 @@ export const Markers = observer(({ SetModal }) => {
 
         // inter-route-------------------------------------------------
         const distancePoint = L.marker([e.latlng.lat, e.latlng.lng], {
-          icon: divDistancePoint("first-arrow-line", id_line),
+          icon: divDistancePoint(),
           draggable: !lock,
           type: "distance",
         })
           .on("dragstart", dragStartHandlerLine.bind(this))
-          .on("drag", dragHandlerLine.bind(this, "first-arrow-line", id_line))
+          .on("drag", dragHandlerLine.bind(this))
           .on("dragend", dragEndHandler)
 
           .addTo(map);
 
         const distancePoint1 = L.marker([e.latlng.lat, e.latlng.lng + 10], {
-          icon: divDistancePoint("second-arrow-line", id_line),
+          icon: divDistancePoint(),
           draggable: !lock,
           type: "distance",
         })
           .on("dragstart", dragStartHandlerLine.bind(this))
-          .on("drag", dragHandlerLine.bind(this, "second-arrow-line", id_line))
+          .on("drag", dragHandlerLine.bind(this))
           .on("dragend", dragEndHandler)
           .addTo(map);
 
@@ -752,29 +752,23 @@ export const Markers = observer(({ SetModal }) => {
         id_line++;
 
         const distancePoint = L.marker([e.latlng.lat, e.latlng.lng], {
-          icon: divDistancePoint("first-arrow-line", id_line),
+          icon: divDistancePoint(),
           draggable: !lock,
           type: "distance",
         })
           .on("dragstart", dragStartHandlerLine.bind(this))
-          .on(
-            "drag",
-            dragHandlerLine_distance.bind(this, "first-arrow-line", id_line)
-          )
+          .on("drag", dragHandlerLine_distance.bind(this))
           .on("dragend", dragEndHandler)
 
           .addTo(map);
 
         const distancePoint1 = L.marker([e.latlng.lat, e.latlng.lng + 10], {
-          icon: divDistancePoint("second-arrow-line", id_line),
+          icon: divDistancePoint(),
           draggable: !lock,
           type: "distance",
         })
           .on("dragstart", dragStartHandlerLine.bind(this))
-          .on(
-            "drag",
-            dragHandlerLine_distance.bind(this, "second-arrow-line", id_line)
-          )
+          .on("drag", dragHandlerLine_distance.bind(this))
           .on("dragend", dragEndHandler)
           .addTo(map);
 
