@@ -1,5 +1,6 @@
 //-------------------------------------
 export function dragStartHandlerLine(e) {
+  // active when click
   this.eachLayer((layer) => {
     if (layer.options.type === "distance") {
       layer.parentLine.options.color === "blue" &&
@@ -13,7 +14,7 @@ export function dragStartHandlerLine(e) {
     e.target.parentLine.setStyle({ color: "blue" });
   e.target.parentArc.options.color === "black" &&
     e.target.parentArc.setStyle({ color: "blue" });
-
+  //------------------
   const polyline = e.target.parentLine;
   const polyline_1 = e.target.parentLine_1;
   const polyArc = e.target.parentArc;
@@ -47,66 +48,6 @@ export function dragStartHandlerLine(e) {
 
 //-------------------------------------
 
-// const first = (deg) => {
-
-//   if (deg > 0 && deg <= 70) {
-//     console.log(1, deg, Number(deg) - (deg / 4.2));
-
-//     return (Number(deg) - (deg / 4.2))
-//   }
-//   else if (deg > 70 && deg <= 80) {
-//     console.log(2, deg, Number(deg) - (deg / 5.2));
-
-//     return (Number(deg) - (deg / 5.2))
-//   }
-//   else if (deg > 100 && deg <= 160) {
-//     // console.log(2, deg, Number(deg) + (deg / 10));
-
-//     return (Number(deg) + (deg / 10))
-//   }
-//   else if (deg > 170 && deg <= 240) {
-//     console.log(4, deg, Number(deg) - (deg / 25));
-
-//     return (Number(deg) - (deg / 25))
-//   }
-//   else if (deg > 280 && deg <= 350) {
-//     console.log(5, deg, Number(deg) + (deg / 25));
-
-//     return (Number(deg) + (deg / 25))
-//   }
-//   // else if (deg > 75 && deg <= 80) {
-//   //   console.log(deg, Number(deg) - (deg / 12));
-
-//   //   return (Number(deg) - (deg / 5.2))
-//   // }
-//   return deg
-// }
-// function angleFromCoordinate(lat1, lon1, lat2, lon2, revert) {
-
-//   var p1 = {
-//     x: lat1,
-//     y: lon1
-//   };
-
-//   var p2 = {
-//     x: lat2,
-//     y: lon2
-//   };
-//   const angle = (anchor, point) => Math.atan2(anchor.y - point.y, anchor.x - point.x) * 180 / Math.PI + 180;
-//   angle(p1, p2); // 225
-//   let angleDeg = 0
-//   if (revert) {
-//     angleDeg = Math.atan2(p1.y - p2.y, p1.x - p2.x) * 180 / Math.PI + 360; // 45
-
-//   }
-//   else {
-//     angleDeg = Math.atan2(p1.y - p2.y, p1.x - p2.x) * 180 / Math.PI + 180; // 45
-
-//   }
-
-//   return first(angleDeg.toFixed(0));
-
-// }
 export function dragHandlerLine(e) {
   let title = e.target.parentLine.setText.bind(e.target.parentLine);
   let text = e.target.parentLine._text;
@@ -123,14 +64,6 @@ export function dragHandlerLine(e) {
   const latLng = polyline.getLatLngs();
   let thetaOffsetData;
   const latlngMarker = e.target.getLatLng();
-
-  // if (nameArrow === "first-arrow-line") {
-  //   document.querySelector(`.second-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${angleFromCoordinate(latLng[0].lat, latLng[0].lng, latLng[1].lat, latLng[1].lng)}deg)`
-  //   document.querySelector(`.first-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${angleFromCoordinate(latLng[0].lat, latLng[0].lng, latLng[1].lat, latLng[1].lng, true)}deg)`
-  // } else {
-  //   document.querySelector(`.first-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${angleFromCoordinate(latLng[0].lat, latLng[0].lng, latLng[1].lat, latLng[1].lng, true)}deg)`
-  //   document.querySelector(`.second-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${angleFromCoordinate(latLng[0].lat, latLng[0].lng, latLng[1].lat, latLng[1].lng)}deg)`
-  // }
 
   const latlngPolyArc = polyArc.getLatLngs();
   const latlng1 = latlngPolyArc[1],
@@ -162,6 +95,29 @@ export function dragHandlerLine(e) {
 
   latlngPolyArc.splice(3, 1, midpointLatLng);
   polyArc.setLatLngs(latlngPolyArc);
+
+  // arc arrow rotate
+  const point = polyArc.trace([0, 0.1, 0.9, 1]);
+  if (e.target.parrentArcArrow && e.target.polyArcLatlng === 1) {
+    e.target.parrentArcArrow.setLatLngs([
+      [point[1].lat, point[1].lng],
+      latlngMarker,
+    ]);
+    e.target.parrentArcArrow_1.setLatLngs([
+      [point[2].lat, point[2].lng],
+      [point[3].lat, point[3].lng],
+    ]);
+  } else if (e.target.parrentArcArrow_1 && e.target.polyArcLatlng === 4) {
+    e.target.parrentArcArrow_1.setLatLngs([
+      [point[2].lat, point[2].lng],
+      latlngMarker,
+    ]);
+    e.target.parrentArcArrow.setLatLngs([
+      [point[1].lat, point[1].lng],
+      [point[0].lat, point[0].lng],
+    ]);
+  }
+  //-----------------
 
   //---------------------------------------
 
@@ -217,6 +173,8 @@ export function dragHandlerLine(e) {
 }
 
 export function dragHandlerLine_distance(e) {
+  const polyline_1 = e.target.parentLine_1;
+
   let title = e.target.parentLine.setText.bind(e.target.parentLine);
   let text = e.target.parentLine._text;
 
@@ -235,13 +193,6 @@ export function dragHandlerLine_distance(e) {
   const latlngMarker = e.target.getLatLng();
 
   const latlngPolyArc = polyArc.getLatLngs();
-  // if (nameArrow === "first-arrow-line") {
-  //   document.querySelector(`.second-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${angleFromCoordinate(latLng[0].lat, latLng[0].lng, latLng[1].lat, latLng[1].lng)}deg)`
-  //   document.querySelector(`.first-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${angleFromCoordinate(latLng[0].lat, latLng[0].lng, latLng[1].lat, latLng[1].lng, true)}deg)`
-  // } else {
-  //   document.querySelector(`.first-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${angleFromCoordinate(latLng[0].lat, latLng[0].lng, latLng[1].lat, latLng[1].lng, true)}deg)`
-  //   document.querySelector(`.second-arrow-line.rotate_id_${id_line}`).style.transform = `rotate(${angleFromCoordinate(latLng[0].lat, latLng[0].lng, latLng[1].lat, latLng[1].lng)}deg)`
-  // }
 
   const latlng1 = latlngPolyArc[1],
     latlng2 = latlngPolyArc[4];
@@ -273,13 +224,38 @@ export function dragHandlerLine_distance(e) {
   latlngPolyArc.splice(3, 1, midpointLatLng);
   polyArc.setLatLngs(latlngPolyArc);
 
-  //---------------------------------------
+  // arc arrow rotate
+  const point = polyArc.trace([0, 0.1, 0.9, 1]);
+  if (e.target.parrentArcArrow && e.target.polyArcLatlng === 1) {
+    e.target.parrentArcArrow.setLatLngs([
+      [point[1].lat, point[1].lng],
+      latlngMarker,
+    ]);
+    e.target.parrentArcArrow_1.setLatLngs([
+      [point[2].lat, point[2].lng],
+      [point[3].lat, point[3].lng],
+    ]);
+  } else if (e.target.parrentArcArrow_1 && e.target.polyArcLatlng === 4) {
+    e.target.parrentArcArrow_1.setLatLngs([
+      [point[2].lat, point[2].lng],
+      latlngMarker,
+    ]);
+    e.target.parrentArcArrow.setLatLngs([
+      [point[1].lat, point[1].lng],
+      [point[0].lat, point[0].lng],
+    ]);
+  }
+  //-----------------
+
+  //Polyline
 
   const latlngPolyLine = polyline.getLatLngs();
-
+  const latlngPolyLine_1 = polyline_1.getLatLngs();
   latlngPolyLine.splice(e.target.polylineLatlng, 1, latlngMarker);
+  latlngPolyLine_1.splice(e.target.polylineLatlng_1, 1, latlngMarker);
 
   polyline.setLatLngs(latlngPolyLine);
+  polyline_1.setLatLngs(latlngPolyLine_1);
 
   if (latLng[1].lng < latLng[0].lng) {
     title(null);

@@ -597,7 +597,7 @@ export const Markers = observer(({ SetModal }) => {
           { color: "transparent" }
         )
 
-          .arrowheads({ color: "black", type: "arrow" })
+          .arrowheads({ size: "5%", color: "black", type: "arrow" })
           .addTo(map);
 
         const polyline = new L.Polyline(
@@ -615,6 +615,7 @@ export const Markers = observer(({ SetModal }) => {
           .arrowheads({
             color: "black",
             type: "arrow",
+            size: "5%",
           })
           .on(
             "contextmenu",
@@ -789,6 +790,18 @@ export const Markers = observer(({ SetModal }) => {
           .on("dragend", dragEndHandler)
           .addTo(map);
 
+        const polyline_1 = new L.Polyline(
+          [
+            [e.latlng.lat, e.latlng.lng + 10],
+            [e.latlng.lat, e.latlng.lng],
+          ],
+
+          { color: "transparent" }
+        )
+
+          .arrowheads({ color: "black", type: "arrow", size: "5%" })
+          .addTo(map);
+
         const polyline = new L.Polyline(
           [
             [e.latlng.lat, e.latlng.lng],
@@ -800,6 +813,11 @@ export const Markers = observer(({ SetModal }) => {
           .setText("Distance", {
             center: true,
             offset: -3,
+          })
+          .arrowheads({
+            color: "black",
+            type: "arrow",
+            size: "5%",
           })
           .on(
             "contextmenu",
@@ -848,8 +866,12 @@ export const Markers = observer(({ SetModal }) => {
             }
           })
           .addTo(map);
+
         distancePoint.parentLine = polyline;
+        distancePoint.parentLine_1 = polyline_1;
+
         distancePoint1.parentLine = polyline;
+        distancePoint1.parentLine_1 = polyline_1;
 
         const { midpointLatLng, latlng2, latlng1, pathOptions } =
           arcRouteInit(e);

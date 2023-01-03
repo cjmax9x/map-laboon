@@ -3,6 +3,7 @@ import { divFunction, divFunctionCircle, divPerson } from "../marker/Icon";
 import L, { map } from "leaflet";
 import "@elfalem/leaflet-curve";
 import "leaflet-textpath";
+import "leaflet-arrowheads";
 import {
   functionSelected,
   groupFnIndex,
@@ -528,7 +529,8 @@ export function routePopup(distancePoint, distancePoint1, e) {
         color: "blue",
       });
       distancePoint.parentArc.setStyle({ color: "transparent" });
-
+      distancePoint.parrentArcArrow.remove();
+      distancePoint.parrentArcArrow_1.remove();
       distancePoint.parentArc.setText(null);
 
       distancePoint.parentLine.setText("Inter-route", {
@@ -536,7 +538,50 @@ export function routePopup(distancePoint, distancePoint1, e) {
         offset: -3,
         orientation: !direct ? 180 : 0,
       });
+
+      this.removeLayer(distancePoint.parentLine);
+      this.removeLayer(distancePoint.parentLine_1);
+      distancePoint.parentLine_1
+        .arrowheads({
+          color: "black",
+          type: "arrow",
+          size: "5%",
+        })
+        .addTo(this);
+      distancePoint.parentLine
+        .arrowheads({
+          color: "black",
+          type: "arrow",
+          size: "5%",
+        })
+        .addTo(this);
     } else {
+      const point = distancePoint.parentArc.trace([0.1, 0.9]);
+
+      const arcArow = L.polyline(
+        [
+          [point[0].lat, point[0].lng],
+          [distancePoint.getLatLng().lat, distancePoint.getLatLng().lng],
+        ],
+        { color: "transparent" }
+      )
+        .arrowheads({ color: "black" })
+        .addTo(this);
+      const arcArow_1 = L.polyline(
+        [
+          [point[1].lat, point[1].lng],
+          [distancePoint1.getLatLng().lat, distancePoint1.getLatLng().lng],
+        ],
+        { color: "transparent" }
+      )
+        .arrowheads({ color: "black" })
+        .addTo(this);
+
+      distancePoint.parrentArcArrow = arcArow;
+      distancePoint.parrentArcArrow_1 = arcArow_1;
+      distancePoint1.parrentArcArrow = arcArow;
+      distancePoint1.parrentArcArrow_1 = arcArow_1;
+
       this.eachLayer((layer) => {
         if (layer.options.type === "distance") {
           layer.parentLine.options.color === "blue" &&
@@ -552,6 +597,8 @@ export function routePopup(distancePoint, distancePoint1, e) {
       distancePoint.parentLine.setStyle({ color: "transparent" });
 
       distancePoint.parentLine.setText(null);
+      distancePoint.parentLine_1.deleteArrowheads();
+      distancePoint.parentLine.deleteArrowheads();
 
       distancePoint.parentArc.setText("Arc-route", {
         center: true,
@@ -565,24 +612,6 @@ export function routePopup(distancePoint, distancePoint1, e) {
 }
 
 export function distancePopup(distancePoint, distancePoint1, e) {
-  //---------------------------- Two point center-----------------
-  const point = distancePoint.parentArc.trace([0.1, 0.9]);
-
-  L.polyline(
-    [
-      [point[0].lat, point[0].lng],
-      [distancePoint.getLatLng().lat, distancePoint.getLatLng().lng],
-    ],
-    { color: "red" }
-  ).addTo(this);
-  L.polyline(
-    [
-      [point[1].lat, point[1].lng],
-      [distancePoint1.getLatLng().lat, distancePoint1.getLatLng().lng],
-    ],
-    { color: "red" }
-  ).addTo(this);
-  //-------------------------------------------------------------
   const popup = L.popup()
     .setLatLng([e.latlng.lat, e.latlng.lng])
     .setContent(
@@ -625,8 +654,10 @@ export function distancePopup(distancePoint, distancePoint1, e) {
       distancePoint.parentLine.setStyle({
         color: "blue",
       });
-      distancePoint.parentArc.setStyle({ color: "transparent" });
 
+      distancePoint.parentArc.setStyle({ color: "transparent" });
+      distancePoint.parrentArcArrow.remove();
+      distancePoint.parrentArcArrow_1.remove();
       distancePoint.parentArc.setText(null);
 
       distancePoint.parentLine.setText(name, {
@@ -634,7 +665,50 @@ export function distancePopup(distancePoint, distancePoint1, e) {
         offset: -3,
         orientation: !direct ? 180 : 0,
       });
+
+      this.removeLayer(distancePoint.parentLine);
+      this.removeLayer(distancePoint.parentLine_1);
+      distancePoint.parentLine_1
+        .arrowheads({
+          color: "black",
+          type: "arrow",
+          size: "5%",
+        })
+        .addTo(this);
+      distancePoint.parentLine
+        .arrowheads({
+          color: "black",
+          type: "arrow",
+          size: "5%",
+        })
+        .addTo(this);
     } else {
+      const point = distancePoint.parentArc.trace([0.1, 0.9]);
+
+      const arcArow = L.polyline(
+        [
+          [point[0].lat, point[0].lng],
+          [distancePoint.getLatLng().lat, distancePoint.getLatLng().lng],
+        ],
+        { color: "transparent" }
+      )
+        .arrowheads({ color: "black" })
+        .addTo(this);
+      const arcArow_1 = L.polyline(
+        [
+          [point[1].lat, point[1].lng],
+          [distancePoint1.getLatLng().lat, distancePoint1.getLatLng().lng],
+        ],
+        { color: "transparent" }
+      )
+        .arrowheads({ color: "black" })
+        .addTo(this);
+
+      distancePoint.parrentArcArrow = arcArow;
+      distancePoint.parrentArcArrow_1 = arcArow_1;
+      distancePoint1.parrentArcArrow = arcArow;
+      distancePoint1.parrentArcArrow_1 = arcArow_1;
+
       this.eachLayer((layer) => {
         if (layer.options.type === "distance") {
           layer.parentLine.options.color === "blue" &&
@@ -648,6 +722,11 @@ export function distancePopup(distancePoint, distancePoint1, e) {
         color: "blue",
       });
       distancePoint.parentLine.setStyle({ color: "transparent" });
+
+      distancePoint.parentLine_1.deleteArrowheads();
+      distancePoint.parentLine.deleteArrowheads();
+
+      this.invalidateSize();
 
       distancePoint.parentLine.setText(null);
 
