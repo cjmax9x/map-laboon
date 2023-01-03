@@ -419,6 +419,11 @@ export const groupContext = (index, popup, map, e) => {
     map.removeLayer(popup);
   };
 
+  window.deleteGroup = () => {
+    map.removeLayer(e.target);
+    map.removeLayer(popup);
+  };
+
   return `<div style="background-color:#fff;padding:10px; min-width:180px" class="${
     styles["popup-interact-function"]
   }">
@@ -449,7 +454,7 @@ export const groupContext = (index, popup, map, e) => {
       </div>
     </div>
   </div>
-  <div class="${[styles.row].join(" ")}">
+  <div onclick="deleteGroup()" class="${[styles.row].join(" ")}">
     Delete
   </div>
   </div>`;
@@ -499,11 +504,31 @@ export function routePopup(distancePoint, distancePoint1, e) {
         ].join(" ")}">
           Change
         </div>
+        <div onclick="deleteInterRoute()" class = "${[
+          styles["menu-geojson"],
+          styles["on-hover-function"],
+        ].join(" ")}">
+          Delete item
+        </div>
       </div>
     </div>
   `
     )
     .addTo(this);
+
+  window.deleteInterRoute = () => {
+    this.removeLayer(distancePoint.parentLine);
+    this.removeLayer(distancePoint.parentLine_1);
+    this.removeLayer(distancePoint.parentArc);
+    distancePoint.parrentArcArrow &&
+      this.removeLayer(distancePoint.parrentArcArrow);
+    distancePoint.parrentArcArrow_1 &&
+      this.removeLayer(distancePoint.parrentArcArrow_1);
+
+    this.removeLayer(distancePoint);
+    this.removeLayer(distancePoint1);
+    this.removeLayer(popup);
+  };
 
   window.changeRoute = () => {
     let direct;
@@ -623,11 +648,31 @@ export function distancePopup(distancePoint, distancePoint1, e) {
         ].join(" ")}">
           Change
         </div>
+        <div onclick="deleteDistanceLine()" class = "${[
+          styles["menu-geojson"],
+          styles["on-hover-function"],
+        ].join(" ")}">
+          Delete item
+        </div>
       </div>
     </div>
   `
     )
     .addTo(this);
+
+  window.deleteDistanceLine = () => {
+    this.removeLayer(distancePoint.parentLine);
+    this.removeLayer(distancePoint.parentLine_1);
+    this.removeLayer(distancePoint.parentArc);
+    distancePoint.parrentArcArrow &&
+      this.removeLayer(distancePoint.parrentArcArrow);
+    distancePoint.parrentArcArrow_1 &&
+      this.removeLayer(distancePoint.parrentArcArrow_1);
+
+    this.removeLayer(distancePoint);
+    this.removeLayer(distancePoint1);
+    this.removeLayer(popup);
+  };
 
   window.changeDistance = () => {
     let direct;

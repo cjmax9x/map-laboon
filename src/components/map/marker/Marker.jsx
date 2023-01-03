@@ -547,7 +547,30 @@ export const Markers = observer(({ SetModal }) => {
         L.marker([e.latlng.lat, e.latlng.lng], {
           icon: divNavigationSigns(),
           draggable: !lock,
-        }).addTo(map);
+        })
+          .on("contextmenu", (e) => {
+            const welcomePopup = L.popup()
+              .setContent(
+                `
+              <div style="background-color:#fff;padding:10px;min-width:180px">
+                <div onclick="deleteWelcome()" class = "${[
+                  styles["menu-geojson"],
+                  styles["on-hover-function"],
+                ].join(" ")}">
+                  Delete item
+                </div>
+              </div>
+            </div>
+          `
+              )
+              .setLatLng([e.latlng.lat, e.latlng.lng])
+              .addTo(map);
+            window.deleteWelcome = () => {
+              map.removeLayer(e.target);
+              map.removeLayer(welcomePopup);
+            };
+          })
+          .addTo(map);
         addIconHandle("");
       } else if (addIcon === "function" && click) {
         L.marker([e.latlng.lat, e.latlng.lng], {
