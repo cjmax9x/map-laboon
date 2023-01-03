@@ -100,11 +100,12 @@ export const House = observer(({}) => {
             direct = false;
           }
 
-          layer.setText(name, {
-            center: true,
-            offset: -3,
-            orientation: !direct ? 180 : 0,
-          });
+          !layer._text &&
+            layer.setText(name, {
+              center: true,
+              offset: -3,
+              orientation: !direct ? 180 : 0,
+            });
         }
       });
       allLayer.splice(0, allLayer.length);

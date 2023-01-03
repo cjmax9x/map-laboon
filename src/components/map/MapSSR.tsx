@@ -44,8 +44,9 @@ const Map = () => {
       <GridLayer grid={grid} />
       <Markers SetModal={SetModal} />
       {modal === "modal" && <Modal SetModal={SetModal} />}
-      {typeof modal === 'object' && <PopulateModal modal={modal} SetModal={SetModal} />}
-
+      {typeof modal === "object" && (
+        <PopulateModal modal={modal} SetModal={SetModal} />
+      )}
 
       <House />
     </MapContainer>
