@@ -373,36 +373,37 @@ export const Countries = observer(({ SetModal }) => {
           color: "black",
         };
       },
-    }).on("click", (e) => {
-      if (STORES.addIcon === "house") {
-        const addHouse = [];
-        map.eachLayer((layer) => {
-          layer.options?.infor && addHouse.push(layer.options.infor.name);
-        });
-
-        if (addHouse.length === 0) {
-          L.marker([e.latlng.lat, e.latlng.lng], {
-            icon: divHouse(),
-            infor: {
-              name: code,
-              index: markerHouseIndex[0],
-            },
-          }).addTo(map);
-          markerHouseIndex[0]++;
-        } else {
-          !addHouse.includes(code) &&
-            L.marker([e.latlng.lat, e.latlng.lng], {
-              icon: divHouse(),
-              infor: {
-                name: code,
-                index: markerHouseIndex[0],
-              },
-            }).addTo(map);
-          markerHouseIndex[0]++;
-        }
-        addIconHandle("");
-      }
     });
+    // .on("click", (e) => {
+    //   if (STORES.addIcon === "house") {
+    //     const addHouse = [];
+    //     map.eachLayer((layer) => {
+    //       layer.options?.infor && addHouse.push(layer.options.infor.name);
+    //     });
+
+    //     if (addHouse.length === 0) {
+    //       L.marker([e.latlng.lat, e.latlng.lng], {
+    //         icon: divHouse(),
+    //         infor: {
+    //           name: code,
+    //           index: markerHouseIndex[0],
+    //         },
+    //       }).addTo(map);
+    //       markerHouseIndex[0]++;
+    //     } else {
+    //       !addHouse.includes(code) &&
+    //         L.marker([e.latlng.lat, e.latlng.lng], {
+    //           icon: divHouse(),
+    //           infor: {
+    //             name: code,
+    //             index: markerHouseIndex[0],
+    //           },
+    //         }).addTo(map);
+    //       markerHouseIndex[0]++;
+    //     }
+    //     addIconHandle("");
+    //   }
+    // });
 
     //cut Geojson country
     const countryLand = L.TileLayer.boundaryCanvas(

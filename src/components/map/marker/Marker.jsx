@@ -15,6 +15,7 @@ import {
   divPerson,
   divNavigationSigns,
   divDistancePoint,
+  divHouse,
 } from "./Icon";
 import styles from "../../../../styles/map/Map.module.scss";
 import { useEffect } from "react";
@@ -583,6 +584,34 @@ export const Markers = observer(({ SetModal }) => {
           .on("contextmenu", changeIcon.bind(this, map, SetModal))
           .on("click", (e) => addSelectedItem(e));
         markerFnIndex[0]++;
+        addIconHandle("");
+      } else if (addIcon === "house" && click) {
+        L.marker([e.latlng.lat, e.latlng.lng], {
+          icon: divHouse(),
+        })
+          .on("contextmenu", (e) => {
+            const housePopup = L.popup()
+              .setContent(
+                `
+            <div style="background-color:#fff;padding:10px;min-width:180px">
+              <div onclick="deleteHouse()" class = "${[
+                styles["menu-geojson"],
+                styles["on-hover-function"],
+              ].join(" ")}">
+                Delete item
+              </div>
+            </div>
+          </div>
+        `
+              )
+              .setLatLng([e.latlng.lat, e.latlng.lng])
+              .addTo(map);
+            window.deleteHouse = () => {
+              map.removeLayer(e.target);
+              map.removeLayer(housePopup);
+            };
+          })
+          .addTo(map);
         addIconHandle("");
       } else if (addIcon === "inter-route") {
         // inter-route-------------------------------------------------
