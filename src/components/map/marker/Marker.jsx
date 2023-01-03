@@ -588,6 +588,18 @@ export const Markers = observer(({ SetModal }) => {
           .on("dragend", dragEndHandler)
           .addTo(map);
 
+        const polyline_1 = new L.Polyline(
+          [
+            [e.latlng.lat, e.latlng.lng + 10],
+            [e.latlng.lat, e.latlng.lng],
+          ],
+
+          { color: "transparent" }
+        )
+
+          .arrowheads({ color: "black", type: "arrow" })
+          .addTo(map);
+
         const polyline = new L.Polyline(
           [
             [e.latlng.lat, e.latlng.lng],
@@ -599,6 +611,10 @@ export const Markers = observer(({ SetModal }) => {
           .setText("Inter-route", {
             center: true,
             offset: -3,
+          })
+          .arrowheads({
+            color: "black",
+            type: "arrow",
           })
           .on(
             "contextmenu",
@@ -650,7 +666,8 @@ export const Markers = observer(({ SetModal }) => {
 
         distancePoint.parentLine = polyline;
         distancePoint1.parentLine = polyline;
-
+        distancePoint.parentLine_1 = polyline_1;
+        distancePoint1.parentLine_1 = polyline_1;
         const { midpointLatLng, latlng2, latlng1, pathOptions } =
           arcRouteInit(e);
         pathOptions.kind = "inter-route";

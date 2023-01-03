@@ -427,9 +427,9 @@ export const Countries = observer(({ SetModal }) => {
   useEffect(() => {
     if (!country && houseView === "house-country") {
       map.eachLayer((layer) => {
+        layer._arrowheads && layer.remove();
         allLayer.push(layer);
       });
-
       map.eachLayer((layer) => {
         map.removeLayer(layer);
       });
@@ -443,7 +443,6 @@ export const Countries = observer(({ SetModal }) => {
 
       allLayer.forEach((layer) => {
         layer._text && delete layer._text;
-
         map.addLayer(layer);
       });
       map.eachLayer((layer) => {
@@ -483,7 +482,6 @@ export const Countries = observer(({ SetModal }) => {
           });
         }
       });
-
       allLayer.splice(0, allLayer.length);
     }
     return () => {

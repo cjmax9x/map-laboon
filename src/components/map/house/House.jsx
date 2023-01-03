@@ -25,6 +25,8 @@ export const House = observer(({}) => {
     const countriesLayer = [];
     if (country && houseView === "house-world") {
       map.eachLayer((layer) => {
+        layer._arrowheads && layer.remove();
+
         allLayer.push(layer);
       });
       map.eachLayer((layer) => {
@@ -36,6 +38,8 @@ export const House = observer(({}) => {
       map.zoomOut(2);
     } else if (country && houseView === "house-countries") {
       map.eachLayer((layer) => {
+        layer._arrowheads && layer.remove();
+
         allLayer.push(layer);
       });
       map.eachLayer((layer) => {

@@ -15,13 +15,12 @@ export function dragStartHandlerLine(e) {
     e.target.parentArc.setStyle({ color: "blue" });
 
   const polyline = e.target.parentLine;
-
+  const polyline_1 = e.target.parentLine_1;
   const polyArc = e.target.parentArc;
 
   const latlngMarker = e.target.getLatLng();
 
   const latlngPolyArc = polyArc.getLatLngs();
-
   for (let i = 0; i < latlngPolyArc.length; i++) {
     if (
       Array.isArray(latlngPolyArc[i]) &&
@@ -35,8 +34,13 @@ export function dragStartHandlerLine(e) {
   for (let i = 0; i < latlngPolyLine.length; i++) {
     if (latlngMarker.equals(latlngPolyLine[i])) {
       e.target.polylineLatlng = i;
-    } else {
-      e.target.polylineLatlng_y = i;
+    }
+  }
+
+  const latlngPolyLine_1 = polyline_1.getLatLngs();
+  for (let i = 0; i < latlngPolyLine.length; i++) {
+    if (latlngMarker.equals(latlngPolyLine_1[i])) {
+      e.target.polylineLatlng_1 = i;
     }
   }
 }
@@ -112,6 +116,7 @@ export function dragHandlerLine(e) {
   }
   // calcAngle
   const polyline = e.target.parentLine;
+  const polyline_1 = e.target.parentLine_1;
   const polyArc = e.target.parentArc;
   const thetaOffset = 3.14 / 9;
   const thetaOffsetRev = 3.14 / -9;
@@ -161,10 +166,12 @@ export function dragHandlerLine(e) {
   //---------------------------------------
 
   const latlngPolyLine = polyline.getLatLngs();
-
+  const latlngPolyLine_1 = polyline_1.getLatLngs();
   latlngPolyLine.splice(e.target.polylineLatlng, 1, latlngMarker);
+  latlngPolyLine_1.splice(e.target.polylineLatlng_1, 1, latlngMarker);
 
   polyline.setLatLngs(latlngPolyLine);
+  polyline_1.setLatLngs(latlngPolyLine_1);
 
   if (latLng[1].lng < latLng[0].lng) {
     title(null);
@@ -318,5 +325,6 @@ export function dragHandlerLine_distance(e) {
 //------------------------
 export function dragEndHandler() {
   delete this.polylineLatlng;
+  delete this.polylineLatlng_1;
   delete this.polyArcLatlng;
 }
