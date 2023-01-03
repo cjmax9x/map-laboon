@@ -8,6 +8,7 @@ import {
   functionSelected,
   groupFnIndex,
   markerProblemIndex,
+  popupWorld,
 } from "../marker/Marker";
 import { STORES } from "../../store/GlobalStore";
 
@@ -493,6 +494,9 @@ export const groupPersonLayoutPopup = (group) => {
 
 //for Distance popup
 export function routePopup(distancePoint, distancePoint1, e) {
+  setTimeout(() => {
+    popupWorld && this.removeLayer(popupWorld);
+  }, 0);
   const popup = L.popup()
     .setLatLng([e.latlng.lat, e.latlng.lng])
     .setContent(
@@ -637,6 +641,9 @@ export function routePopup(distancePoint, distancePoint1, e) {
 }
 
 export function distancePopup(distancePoint, distancePoint1, e) {
+  setTimeout(() => {
+    popupWorld && this.removeLayer(popupWorld);
+  }, 0);
   const popup = L.popup()
     .setLatLng([e.latlng.lat, e.latlng.lng])
     .setContent(

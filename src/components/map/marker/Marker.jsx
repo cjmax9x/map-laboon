@@ -48,11 +48,9 @@ export const defaultPerson = ["20"];
 export const defaultFunctionPerson = ["20"];
 export const textPath = [];
 export let selectedList = [];
-let id_line = 0;
+
 export const allLayer = [];
-
-const popupWorld = L.popup();
-
+export const popupWorld = L.popup();
 const arcRouteInit = (e) => {
   const thetaOffset = 3.14 / 9;
   const latlng1 = [e.latlng.lat, e.latlng.lng],
@@ -493,8 +491,8 @@ export const Markers = observer(({ SetModal }) => {
 
   useMapEvents({
     contextmenu(e) {
+      console.log(2);
       if (country) {
-        map.removeLayer(popupWorld);
         popupWorld
           .setLatLng([e.latlng.lat, e.latlng.lng])
           .setContent(
@@ -587,8 +585,6 @@ export const Markers = observer(({ SetModal }) => {
         markerFnIndex[0]++;
         addIconHandle("");
       } else if (addIcon === "inter-route") {
-        id_line++;
-
         // inter-route-------------------------------------------------
         const distancePoint = L.marker([e.latlng.lat, e.latlng.lng], {
           icon: divDistancePoint(),
@@ -790,7 +786,6 @@ export const Markers = observer(({ SetModal }) => {
         //
       } else if (addIcon === "distance") {
         // distance-------------------------------------------------
-        id_line++;
 
         const distancePoint = L.marker([e.latlng.lat, e.latlng.lng], {
           icon: divDistancePoint(),
