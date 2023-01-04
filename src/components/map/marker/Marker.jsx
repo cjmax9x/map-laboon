@@ -509,6 +509,7 @@ export const Markers = observer(({ SetModal }) => {
             draggable: !lock,
           })
             .on("contextmenu", changeIcon.bind(this, map, SetModal))
+            .on("click", (e) => addSelectedItem(e))
             .addTo(map);
           markerPersonIndex[0]++;
           addIconHandle("");
@@ -517,6 +518,7 @@ export const Markers = observer(({ SetModal }) => {
             icon: divNavigationSigns(),
             draggable: !lock,
           }).addTo(map);
+
           addIconHandle("");
         } else if (addIcon === "function") {
           L.marker([latlng.lat, latlng.lng], {
@@ -531,8 +533,9 @@ export const Markers = observer(({ SetModal }) => {
             ),
             draggable: !lock,
           })
-            .addTo(map)
-            .on("contextmenu", changeIcon.bind(this, map, SetModal));
+            .on("contextmenu", changeIcon.bind(this, map, SetModal))
+            .on("click", (e) => addSelectedItem(e))
+            .addTo(map);
           markerFnIndex[0]++;
           addIconHandle("");
         }
