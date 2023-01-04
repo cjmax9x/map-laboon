@@ -17,7 +17,9 @@ export const House = observer(({}) => {
         if (
           layer.options.target?.status === "add" ||
           layer.options.status === "add" ||
-          layer.options.type === "distance"
+          layer.options.type === "distance" ||
+          layer.options.group?.status === "add" ||
+          layer.options.type?.status === "add"
         ) {
           map.removeLayer(layer);
         }

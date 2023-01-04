@@ -280,7 +280,7 @@ export const changeIcon = (map, SetModal, e) => {
     const remain = name.slice(1, name.length);
     L.marker([e.latlng.lat, e.latlng.lng], {
       draggable: !STORES.lock,
-      type: { index: markerProblemIndex[0], title: "problem" },
+      type: { index: markerProblemIndex[0], title: "problem", status: "add" },
       icon: divFunction(
         [
           styles["rectangle-fn"],

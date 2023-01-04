@@ -145,6 +145,7 @@ export const Markers = observer(({ SetModal }) => {
               group: {
                 group: [...functionSelected],
                 index: groupFnIndex[0],
+                status: "add",
               },
               icon: divFunction(
                 [
@@ -192,6 +193,7 @@ export const Markers = observer(({ SetModal }) => {
                 group: {
                   group: [...personSelected].sort(),
                   index: groupPersonIndex[0],
+                  status: "add",
                 },
                 icon: divFunction(
                   [styles["rectangle-fn"], styles["group-fn-border"]].join(" "),
@@ -343,6 +345,7 @@ export const Markers = observer(({ SetModal }) => {
                   group: {
                     group: [...functionSelected],
                     index: groupFnIndex[0],
+                    status: "add",
                   },
                   icon: divFunction(
                     [
@@ -390,6 +393,7 @@ export const Markers = observer(({ SetModal }) => {
                     group: {
                       group: [...personSelected].sort(),
                       index: groupPersonIndex[0],
+                      status: "add",
                     },
                     icon: divFunction(
                       [styles["rectangle-fn"], styles["group-fn-border"]].join(

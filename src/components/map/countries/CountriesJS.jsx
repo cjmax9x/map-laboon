@@ -236,6 +236,7 @@ export const Countries = observer(({ SetModal }) => {
           group: {
             group: [],
             index: type === "function" ? groupFnIndex[0] : groupPersonIndex[0],
+            status: "add",
           },
           icon: divFunction(
             [styles["rectangle-fn"], styles["group-fn-border"]].join(" "),
@@ -346,7 +347,11 @@ export const Countries = observer(({ SetModal }) => {
       window.handleAddProblem = (event, name) => {
         L.marker([e.latlng.lat, e.latlng.lng], {
           draggable: !lock,
-          type: { index: markerProblemIndex[0], title: "problem" },
+          type: {
+            index: markerProblemIndex[0],
+            title: "problem",
+            status: "add",
+          },
           icon: divFunction(
             [
               styles["rectangle-fn"],
