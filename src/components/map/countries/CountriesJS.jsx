@@ -9,23 +9,20 @@ import { observer } from "mobx-react";
 import { GeoJson } from "./GeoJson";
 import styles from "../../../../styles/map/Map.module.scss";
 import {
-  markerPersonIndex,
-  markerFnIndex,
   groupFnIndex,
   defaulFunction,
   defaultPerson,
   defaultFunctionPerson,
   markerProblemIndex,
-  markerHouseIndex,
   groupPersonIndex,
 } from "../marker/Marker";
 import {
   divFunction,
-  divHouse,
   divHouseName,
   divPerson,
   divThreeDot,
 } from "../marker/Icon";
+import { markerPersonIndex, markerFnIndex } from "../variable/variables";
 import {
   changeIcon,
   groupLayoutPopup,
@@ -265,10 +262,10 @@ export const Countries = observer(({ SetModal }) => {
             ].join(" ")}">
           Function
           <div class="${styles["hover-func"]}">
-          <div onclick="handleAddFunction(event, 'Natural function')">Natural function</div>
-          <div onclick="handleAddFunction(event, 'Non-natural function')">Non-natural function</div>
-          <div onclick="handleAddFunction(event, 'Added function')">Added function</div>
-          <div onclick="handleAddFunction(event, 'Existing function')">Existing function</div>
+          <div onclick="handleAddFunction(event, 'Natural function',natural)">Natural function</div>
+          <div onclick="handleAddFunction(event, 'Non-natural function',nonNatural)">Non-natural function</div>
+          <div onclick="handleAddFunction(event, 'Added function',addedFunction)">Added function</div>
+          <div onclick="handleAddFunction(event, 'Existing function',existingFunction)">Existing function</div>
           </div>
           </div>
           <h3 onclick ="handlePopulateFn('function',${
@@ -301,7 +298,7 @@ export const Countries = observer(({ SetModal }) => {
         .openOn(map);
       // add single function
 
-      window.handleAddFunction = (event, name) => {
+      window.handleAddFunction = (event, name, index) => {
         event.preventDefault();
         event.stopPropagation();
         L.marker([e.latlng.lat, e.latlng.lng], {
@@ -313,14 +310,12 @@ export const Countries = observer(({ SetModal }) => {
               styles["fn--black"],
               name ? styles["width-max-content"] : "",
             ].join(" "),
-            name
-              ? `${name} ${markerFnIndex[0]}`
-              : `Function ${markerFnIndex[0]}`
+            name ? `${name} ${index[0]}` : `Function ${markerFnIndex[0]}`
           ),
         })
           .addTo(map)
           .on("contextmenu", changeIcon.bind(this, map, SetModal));
-        markerFnIndex[0]++;
+        index ? index[0]++ : markerFnIndex[0]++;
         map.closePopup();
       };
 
@@ -366,7 +361,7 @@ export const Countries = observer(({ SetModal }) => {
       onEachFeature(feature, layer) {
         layer.on("contextmenu", makeEvent);
       },
-      style: (feature) => {
+      style: () => {
         return {
           weight: 1,
           fillColor: "#fff",
@@ -374,36 +369,6 @@ export const Countries = observer(({ SetModal }) => {
         };
       },
     });
-    // .on("click", (e) => {
-    //   if (STORES.addIcon === "house") {
-    //     const addHouse = [];
-    //     map.eachLayer((layer) => {
-    //       layer.options?.infor && addHouse.push(layer.options.infor.name);
-    //     });
-
-    //     if (addHouse.length === 0) {
-    //       L.marker([e.latlng.lat, e.latlng.lng], {
-    //         icon: divHouse(),
-    //         infor: {
-    //           name: code,
-    //           index: markerHouseIndex[0],
-    //         },
-    //       }).addTo(map);
-    //       markerHouseIndex[0]++;
-    //     } else {
-    //       !addHouse.includes(code) &&
-    //         L.marker([e.latlng.lat, e.latlng.lng], {
-    //           icon: divHouse(),
-    //           infor: {
-    //             name: code,
-    //             index: markerHouseIndex[0],
-    //           },
-    //         }).addTo(map);
-    //       markerHouseIndex[0]++;
-    //     }
-    //     addIconHandle("");
-    //   }
-    // });
 
     //cut Geojson country
     const countryLand = L.TileLayer.boundaryCanvas(

@@ -11,6 +11,16 @@ import {
   popupWorld,
 } from "../marker/Marker";
 import { STORES } from "../../store/GlobalStore";
+import {
+  addedFunction,
+  aFunction,
+  eFunction,
+  existingFunction,
+  handleName,
+  HnT,
+  markerFnIndex,
+  UnT,
+} from "../variable/variables";
 
 // for Function/Person
 export const customPopUp = (SetModal, index, type, error) => {
@@ -27,15 +37,15 @@ export const customPopUp = (SetModal, index, type, error) => {
   <div class="${[styles.row, styles["on-hover-rename"]].join(" ")}">
     Function type
     <div class="${styles["hover-func"]}">
-      <div onclick="edittingItem('black','Function ${index}')">Function with index</div>
-      <div onclick="edittingItem('black','eFunction ${index}')">eFunction with index</div>
-      <div onclick="edittingItem('black','aFunction ${index}')">aFunction with index</div>
-      <div onclick="edittingItem('black','Natural function')">Natural function</div>
-      <div onclick="edittingItem('black','Non-natural function')">Non-natural function</div>
-      <div onclick="edittingItem('black','Added Function ${index}')">Added Function with index</div>
-      <div onclick="edittingItem('black','Existing Function ${index}')">Existing Function with index</div>
-      <div onclick="edittingItem('black','u<sub>${index}</sub>(t)')">u<sub>n</sub>(t)</div>
-      <div onclick="edittingItem('black','h<sub>${index}</sub>(t)')">h<sub>n</sub>(t)</div>
+      <div onclick="edittingItem('black','Function ${markerFnIndex}')">Function with index</div>
+      <div onclick="edittingItem('black','eFunction', eFunction)">eFunction with index</div>
+      <div onclick="edittingItem('black','aFunction ',aFunction)">aFunction with index</div>
+      <div onclick="edittingItem('black','Natural function',natural)">Natural function</div>
+      <div onclick="edittingItem('black','Non-natural function',nonNatural)">Non-natural function</div>
+      <div onclick="edittingItem('black','Added Function',addedFunction)">Added Function with index</div>
+      <div onclick="edittingItem('black','Existing Function',existingFunction)">Existing Function with index</div>
+      <div onclick="edittingItem('black','u<sub></sub>(t)',UnT)">u<sub>n</sub>(t)</div>
+      <div onclick="edittingItem('black','h<sub></sub>(t)',HnT)">h<sub>n</sub>(t)</div>
     </div>
   </div>
   <div class="${[styles.row].join(" ")}" onclick="openModal()">Rename</div>
@@ -51,21 +61,11 @@ export const customPopUp = (SetModal, index, type, error) => {
     </div>
   </div>
 
-
-
-
-
-
-
-
 <div onclick="handleAddProblem(problem)" style="display:${
     error ? "auto" : "none"
   }" class="${styles.row}">
 ${error === "solution" ? "Identify as solution" : "Identify as problem "}
   </div>
-
-
-
 
   <div class="${[styles.row, styles["on-hover"]].join(" ")}">
       Show Function
@@ -160,6 +160,7 @@ export const changeIcon = (map, SetModal, e) => {
   window.edittingItem = (
     color,
     name,
+    index,
     currentColor = e.target._icon.classList[2],
     currentName = e.target._icon.textContent
   ) => {
@@ -176,7 +177,7 @@ export const changeIcon = (map, SetModal, e) => {
             styles["circle-fn"],
             color ? styles[`fn--${color}`] : currentColor,
           ].join(" "),
-          name ? name : currentName
+          handleName(name, index, currentName)
         )
       );
     } else if (e.target._icon.classList.contains(styles["person"])) {
@@ -189,7 +190,7 @@ export const changeIcon = (map, SetModal, e) => {
             styles["rectangle-fn"],
             color ? styles[`fn--${color}`] : currentColor,
           ].join(" "),
-          name ? name : currentName
+          handleName(name, index, currentName)
         )
       );
     } else if (e.target._icon.classList.contains(styles["elip-fn"])) {
@@ -199,7 +200,7 @@ export const changeIcon = (map, SetModal, e) => {
             styles["elip-fn"],
             color ? styles[`fn--${color}`] : currentColor,
           ].join(" "),
-          name ? name : currentName
+          handleName(name, index, currentName)
         )
       );
     }

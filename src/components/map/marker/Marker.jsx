@@ -33,11 +33,10 @@ import {
   dragHandlerLine,
   dragHandlerLine_distance,
 } from "../routeDistance/handleDistance";
+import { markerPersonIndex, markerFnIndex } from "../variable/variables";
 
 import * as turf from "@turf/turf";
 
-export const markerPersonIndex = [1];
-export const markerFnIndex = [1];
 export const markerProblemIndex = [1];
 export const markerHouseIndex = [1];
 export const groupFnIndex = [1];
@@ -573,7 +572,7 @@ export const Markers = observer(({ SetModal }) => {
         addIconHandle("");
       } else if (addIcon === "function" && click) {
         L.marker([e.latlng.lat, e.latlng.lng], {
-          index: markerFnIndex[0],
+          options: { index: markerFnIndex[0], type: "function" },
           icon: divFunction(
             [styles["rectangle-fn"], styles["fn--black"]].join(" "),
             `Function ${markerFnIndex[0]}`
