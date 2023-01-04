@@ -11,22 +11,10 @@ import {
   popupWorld,
 } from "../marker/Marker";
 import { STORES } from "../../store/GlobalStore";
-import {
-  addedFunction,
-  aFunction,
-  eFunction,
-  existingFunction,
-  handleName,
-  HnT,
-  markerFnIndex,
-  UnT,
-} from "../variable/variables";
+import { handleName, markerFnIndex } from "../variable/variables";
 
 // for Function/Person
-export const customPopUp = (SetModal, index, type, error) => {
-  const checked = functionSelected.find((item) => {
-    return item === index;
-  });
+export const customPopUp = (SetModal, type, error) => {
   window.openModal = () => {
     SetModal("modal");
   };
@@ -92,25 +80,6 @@ ${error === "solution" ? "Identify as solution" : "Identify as problem "}
   <div onclick="deleteItem()" class="${[styles.row].join(" ")}">
     Delete
   </div>
-  <div  style="display:flex; ${
-    functionSelected.length < 9 || checked
-      ? "color:unset"
-      : "color:#ddd;pointer-events: none"
-  }" class="${
-    styles.row
-  }"><label style="margin-left:4px;hieght:20px;width:100%" for="input">Select</label>
-  <input style="${
-    functionSelected.length < 9 || checked ? "opacity:1 " : "opacity:0.2"
-  }" onchange="inputChange(event,${index})" id="input" ${
-    checked ? "checked" : ""
-  } type ="checkbox"/> </div>
-  <div onclick="${
-    checked && functionSelected.length > 1
-  } ? makeGroup():makeGroup" style="${
-    checked && functionSelected.length > 1 ? "" : "color:#ddd"
-  }" class="${[styles.row].join(" ")}">
-    Make Group
-  </div>
   </div>`;
 };
 
@@ -150,7 +119,7 @@ export const changeIcon = (map, SetModal, e) => {
   !e.target._icon.classList.contains(styles["person"])
     ? L.popup()
         .setLatLng([e.latlng.lat, e.latlng.lng])
-        .setContent(customPopUp(SetModal, e.target.options.index, type, error))
+        .setContent(customPopUp(SetModal, type, error))
         .openOn(map)
     : L.popup()
         .setLatLng([e.latlng.lat, e.latlng.lng])
@@ -229,6 +198,8 @@ export const changeIcon = (map, SetModal, e) => {
           e.target._icon.textContent
         )
       );
+      e.target.options.target.shape = shape;
+      console.log(e.target.options.target);
     } else if (shape === "rectangle") {
       e.target.setIcon(
         divFunction(
@@ -236,6 +207,8 @@ export const changeIcon = (map, SetModal, e) => {
           e.target._icon.textContent
         )
       );
+      e.target.options.target.shape = shape;
+      console.log(e.target.options.target);
     } else if (shape === "elip") {
       e.target.setIcon(
         divFunction(
@@ -243,6 +216,8 @@ export const changeIcon = (map, SetModal, e) => {
           e.target._icon.textContent
         )
       );
+      e.target.options.target.shape = shape;
+      console.log(e.target.options.target);
     }
 
     map.closePopup();
@@ -404,20 +379,30 @@ export const groupContext = (index, popup, map, e) => {
   window.changeShapeOption = (shape) => {
     if (shape === "rectangle") {
       e.target.getPopup()._container.classList.remove(styles["group-elip"]);
+      e.target.getPopup()._container.classList.remove(styles["group-circle"]);
       e.target.getPopup()._container.classList.add(styles["group-rectangle"]);
-      e.target._icon.classList.add(styles["rectangle-fn"]);
-      e.target._icon.classList.remove(styles["elip-fn"]);
-      e.target._icon.classList.remove(styles["circle-fn"]);
-    } else {
+      e.target._icon.classList.remove(styles["circle-fn-group"]);
+      e.target._icon.classList.remove(styles["elip-fn-group"]);
+      e.target._icon.classList.add(styles["rectangle-fn-group"]);
+    } else if (shape === "elip") {
       e.target
         .getPopup()
         ._container.classList.remove(styles["group-rectangle"]);
+      e.target.getPopup()._container.classList.remove(styles["group-circle"]);
       e.target.getPopup()._container.classList.add(styles["group-elip"]);
-      e.target._icon.classList.add(styles["elip-fn"]);
-      e.target._icon.classList.remove(styles["rectangle-fn"]);
-      e.target._icon.classList.remove(styles["circle-fn"]);
+      e.target._icon.classList.remove(styles["circle-fn-group"]);
+      e.target._icon.classList.remove(styles["rectangle-fn-group"]);
+      e.target._icon.classList.add(styles["elip-fn-group"]);
+    } else if (shape === "circle") {
+      e.target.getPopup()._container.classList.remove(styles["group-elip"]);
+      e.target
+        .getPopup()
+        ._container.classList.remove(styles["group-rectangle"]);
+      e.target.getPopup()._container.classList.add(styles["group-circle"]);
+      e.target._icon.classList.remove(styles["rectangle-fn-group"]);
+      e.target._icon.classList.remove(styles["elip-fn-group"]);
+      e.target._icon.classList.add(styles["circle-fn-group"]);
     }
-
     map.removeLayer(popup);
   };
 
@@ -446,6 +431,11 @@ export const groupContext = (index, popup, map, e) => {
     <div class="${styles["hover-func"]}">
       <div onclick="changeShapeOption('elip')" class="${[
         styles.black,
+        styles["color-elip"],
+      ].join(" ")}">
+      </div>
+      <div onclick="changeShapeOption('circle')" class="${[
+        styles.black,
         styles["color-circle"],
       ].join(" ")}">
       </div>
@@ -467,16 +457,20 @@ export const groupLayoutPopup = (group) => {
   <div class="${styles["group-function"]}">
   ${group
     .map((item) => {
-      return `<div  class="${[
-        styles["rectangle-fn-gr"],
-        styles["fn--black"],
-      ].join(" ")}">Function ${item} </div>`;
+      let classname = styles["rectangle-fn-gr"];
+      if (item.shape === "circle") {
+        classname = styles["circle-fn-gr"];
+      } else if (item.shape === "elip") {
+        classname = styles["elip-fn-gr"];
+      }
+      return `<div class="${[classname, styles["fn--black"]].join(
+        " "
+      )}">Function ${item.index} </div>`;
     })
     .join("")}
   </div>
   `;
 };
-
 export const groupPersonLayoutPopup = (group) => {
   return `
   <div class="${styles["group-function"]}">

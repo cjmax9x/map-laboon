@@ -150,7 +150,7 @@ export const Countries = observer(({ SetModal }) => {
             y % 2 !== 0 &&
               L.marker(item, {
                 draggable: !lock,
-                index: markerPersonIndex[0],
+                target: { type: "person", index: markerPersonIndex[0] },
                 icon: divPerson(
                   styles["person"],
                   `Person ${markerPersonIndex[0]}`
@@ -163,7 +163,11 @@ export const Countries = observer(({ SetModal }) => {
             y % 2 === 0 &&
               L.marker(item, {
                 draggable: !lock,
-                index: markerFnIndex[0],
+                target: {
+                  type: "function",
+                  shape: "rectangle",
+                  index: markerFnIndex[0],
+                },
                 icon: divFunction(
                   [styles["rectangle-fn"], styles["fn--black"]].join(" "),
                   `Function ${markerFnIndex[0]}`
@@ -177,7 +181,11 @@ export const Countries = observer(({ SetModal }) => {
             object === "function"
               ? L.marker(item, {
                   draggable: !lock,
-                  index: markerFnIndex[0],
+                  target: {
+                    type: "function",
+                    shape: "rectangle",
+                    index: markerFnIndex[0],
+                  },
                   icon: divFunction(
                     [styles["rectangle-fn"], styles["fn--black"]].join(" "),
                     `Function ${markerFnIndex[0]}`
@@ -188,7 +196,7 @@ export const Countries = observer(({ SetModal }) => {
                   .addTo(map) && markerFnIndex[0]++
               : L.marker(item, {
                   draggable: !lock,
-                  index: markerPersonIndex[0],
+                  target: { type: "person", index: markerPersonIndex[0] },
                   icon: divPerson(
                     styles["person"],
                     `Person ${markerPersonIndex[0]}`
@@ -303,7 +311,11 @@ export const Countries = observer(({ SetModal }) => {
         event.stopPropagation();
         L.marker([e.latlng.lat, e.latlng.lng], {
           draggable: !lock,
-          index: markerFnIndex[0],
+          target: {
+            type: "function",
+            shape: "rectangle",
+            index: markerFnIndex[0],
+          },
           icon: divFunction(
             [
               styles["rectangle-fn"],

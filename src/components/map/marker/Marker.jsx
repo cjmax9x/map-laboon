@@ -82,6 +82,8 @@ export const Markers = observer(({ SetModal }) => {
   const { country, click, lock, addIcon, addIconHandle, toggleHouseView } =
     STORES;
   const map = useMap();
+
+  //Selection item
   let areaSelection;
   const addSelectedItem = (event) => {
     event.originalEvent.stopPropagation();
@@ -113,24 +115,41 @@ export const Markers = observer(({ SetModal }) => {
         window.getSelectedList = (_event) => {
           _event.stopPropagation();
           _event.preventDefault();
-
+          let groupShape = "rectangle";
           selectedList.forEach((e) => {
-            if (e.options.target?.type) {
+            if (e.options.target?.type === "person") {
               personSelected.push(e.options.target.index);
             } else {
-              functionSelected.push(e.options.index);
+              functionSelected.push(e.options.target);
             }
           });
 
+          if (
+            functionSelected.length > 0 &&
+            functionSelected.every((item) => {
+              return item.shape === "circle";
+            })
+          )
+            groupShape = "circle";
+          if (
+            functionSelected.length > 0 &&
+            functionSelected.every((item) => {
+              return item.shape === "elip";
+            })
+          )
+            groupShape = "elip";
           functionSelected.length > 0 &&
             L.marker([event.latlng.lat, event.latlng.lng], {
               draggable: !STORES.lock,
               group: {
-                group: [...functionSelected].sort(),
+                group: [...functionSelected],
                 index: groupFnIndex[0],
               },
               icon: divFunction(
-                [styles["rectangle-fn"]].join(" "),
+                [
+                  styles[`${groupShape}-fn-group`],
+                  styles["group-fn-border"],
+                ].join(" "),
                 `Group function ${groupFnIndex[0]}`
               ),
             })
@@ -140,7 +159,9 @@ export const Markers = observer(({ SetModal }) => {
                   return groupLayoutPopup(e.options.group.group);
                 },
                 {
-                  className: `${styles["group-rectangle"]} id-group-${groupFnIndex[0]}`,
+                  className: `${styles[`group-${groupShape}`]} id-group-${
+                    groupFnIndex[0]
+                  }`,
                   offset: L.point(30, -12),
                   autoClose: false,
                   closeOnClick: false,
@@ -148,10 +169,12 @@ export const Markers = observer(({ SetModal }) => {
               )
               .on("contextmenu", changeGroup.bind(this, map))
               .on("popupclose", (e) => {
-                e.target._icon.classList.add(`${styles["group-fn-border"]}`);
+                e.target._icon?.classList?.add(`${styles["group-fn-border"]}`);
               })
               .on("popupopen", (e) => {
-                e.target._icon.classList.remove(`${styles["group-fn-border"]}`);
+                e.target._icon?.classList?.remove(
+                  `${styles["group-fn-border"]}`
+                );
               })
               .openPopup();
 
@@ -230,6 +253,7 @@ export const Markers = observer(({ SetModal }) => {
       }
     }
   };
+  //------------------------------------
   map.doubleClickZoom.disable();
   useEffect(() => {
     if (lock) {
@@ -246,7 +270,6 @@ export const Markers = observer(({ SetModal }) => {
   }, [lock]);
 
   // Scan Selection function
-
   useEffect(() => {
     const getButton = document.getElementById("pointer-event");
 
@@ -264,7 +287,11 @@ export const Markers = observer(({ SetModal }) => {
                   turf.polygon([[...arr, arr[0]]])
                 )
               ) {
-                if (layer.options.index || layer.options.target) {
+                if (
+                  layer.options.index ||
+                  layer.options.target ||
+                  layer.options.options?.shape
+                ) {
                   selectedList.push(layer);
                   layer._icon.classList.add("selected-icon");
                   index++;
@@ -272,7 +299,6 @@ export const Markers = observer(({ SetModal }) => {
               }
             }
           });
-
           if (index > 0) {
             window.handleRemoveTempList = () => {
               for (let index = 0; index < selectedList.length; index++) {
@@ -283,27 +309,45 @@ export const Markers = observer(({ SetModal }) => {
 
             window.getSelectedList = (_event) => {
               _event.stopPropagation();
+
               _event.preventDefault();
 
+              let groupShape = "rectangle";
+
               selectedList.forEach((e) => {
-                if (e.options.target?.type) {
+                if (e.options.target?.type === "person") {
                   personSelected.push(e.options.target.index);
                 } else {
-                  functionSelected.push(e.options.index);
+                  functionSelected.push(e.options.target);
                 }
               });
+              if (
+                functionSelected.length > 0 &&
+                functionSelected.every((item) => {
+                  return item.shape === "circle";
+                })
+              )
+                groupShape = "circle";
+              if (
+                functionSelected.length > 0 &&
+                functionSelected.every((item) => {
+                  return item.shape === "elip";
+                })
+              )
+                groupShape = "elip";
 
               functionSelected.length > 0 &&
                 L.marker([arr[2][0], arr[2][1]], {
                   draggable: !STORES.lock,
                   group: {
-                    group: [...functionSelected].sort(),
+                    group: [...functionSelected],
                     index: groupFnIndex[0],
                   },
                   icon: divFunction(
-                    [styles["rectangle-fn"], styles["group-fn-border"]].join(
-                      " "
-                    ),
+                    [
+                      styles[`${groupShape}-fn-group`],
+                      styles["group-fn-border"],
+                    ].join(" "),
                     `Group function ${groupFnIndex[0]}`
                   ),
                 })
@@ -313,7 +357,9 @@ export const Markers = observer(({ SetModal }) => {
                       return groupLayoutPopup(e.options.group.group);
                     },
                     {
-                      className: `${styles["group-rectangle"]} id-group-${groupFnIndex[0]}`,
+                      className: `${styles[`group-${groupShape}`]} id-group-${
+                        groupFnIndex[0]
+                      }`,
                       offset: L.point(30, -12),
                       autoClose: false,
                       closeOnClick: false,
@@ -425,6 +471,8 @@ export const Markers = observer(({ SetModal }) => {
       getButton.removeEventListener("click", showScanSelection);
     };
   }, []);
+  //-----------------------------------
+
   useEffect(() => {
     const onClick = (event) => {
       if (
@@ -443,7 +491,7 @@ export const Markers = observer(({ SetModal }) => {
       document.removeEventListener("click", onClick);
     };
   }, []);
-
+  //-----------------------------------
   useEffect(() => {
     if (!click) {
       const mapContainer = document.querySelector(".leaflet-container");
@@ -456,11 +504,10 @@ export const Markers = observer(({ SetModal }) => {
 
         if (addIcon === "person") {
           L.marker([latlng.lat, latlng.lng], {
-            index: markerPersonIndex[0],
+            target: { type: "person", index: markerPersonIndex[0] },
             icon: divPerson(styles["person"], `Person ${markerPersonIndex[0]}`),
             draggable: !lock,
           })
-
             .on("contextmenu", changeIcon.bind(this, map, SetModal))
             .addTo(map);
           markerPersonIndex[0]++;
@@ -473,7 +520,11 @@ export const Markers = observer(({ SetModal }) => {
           addIconHandle("");
         } else if (addIcon === "function") {
           L.marker([latlng.lat, latlng.lng], {
-            index: markerFnIndex[0],
+            target: {
+              type: "function",
+              shape: "rectangle",
+              index: markerFnIndex[0],
+            },
             icon: divFunction(
               [styles["rectangle-fn"], styles["fn--black"]].join(" "),
               `Function ${markerFnIndex[0]}`
@@ -488,10 +539,9 @@ export const Markers = observer(({ SetModal }) => {
       };
     }
   }, [click, addIcon]);
-
+  //-----------------------------------
   useMapEvents({
     contextmenu(e) {
-      console.log(2);
       if (country) {
         popupWorld
           .setLatLng([e.latlng.lat, e.latlng.lng])
@@ -572,7 +622,11 @@ export const Markers = observer(({ SetModal }) => {
         addIconHandle("");
       } else if (addIcon === "function" && click) {
         L.marker([e.latlng.lat, e.latlng.lng], {
-          options: { index: markerFnIndex[0], type: "function" },
+          target: {
+            type: "function",
+            shape: "rectangle",
+            index: markerFnIndex[0],
+          },
           icon: divFunction(
             [styles["rectangle-fn"], styles["fn--black"]].join(" "),
             `Function ${markerFnIndex[0]}`

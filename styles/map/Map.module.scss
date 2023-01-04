@@ -451,12 +451,10 @@
   border: 1px solid #fff;
 }
 
-//---------- house
-.house {
-}
-
 // group popup
 
+
+// popup classname
 .group-rectangle {
   padding: 40px 10px;
   min-width: 400px;
@@ -472,11 +470,52 @@
   border: 3px solid #3d3d3d;
   border-radius: 50%;
 }
+.group-circle {
+  padding: 40px 10px;
+  min-width: 400px;
+  min-height: 400px;
+  background-color: transparent;
+  border: 3px solid #3d3d3d;
+  border-radius: 50%;
+}
+
+// group shape classname
+.rectangle-fn-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 400;
+  text-align: center;
+  width: 100px;
+}
+.elip-fn-group {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 400;
+  width: 100px;
+  text-align: center;
+}
+.circle-fn-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px !important;
+  margin: 0 4px 4px 0;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+// group item and wrapper
 .group-function {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-content: flex-start;
+  align-items: center;
   width: 400px;
 }
 .rectangle-fn-gr {
@@ -488,8 +527,7 @@
   margin: 0 4px 4px 0;
   cursor: pointer;
 }
-
-.rectangle-fn-gr {
+.elip-fn-gr {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -497,6 +535,17 @@
   height: 40px;
   margin: 0 4px 4px 0;
   cursor: pointer;
+  border-radius: 50%;
+}
+.circle-fn-gr {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  margin: 0 4px 4px 0;
+  cursor: pointer;
+  border-radius: 50%;
 }
 .button-group {
   position: absolute;
