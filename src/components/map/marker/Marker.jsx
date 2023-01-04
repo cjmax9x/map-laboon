@@ -69,6 +69,7 @@ const arcRouteInit = (e) => {
     color: "transparent",
     weight: 3,
     type: "arc",
+    status: "add",
   };
 
   return {
@@ -504,7 +505,11 @@ export const Markers = observer(({ SetModal }) => {
 
         if (addIcon === "person") {
           L.marker([latlng.lat, latlng.lng], {
-            target: { type: "person", index: markerPersonIndex[0] },
+            target: {
+              type: "person",
+              index: markerPersonIndex[0],
+              status: "add",
+            },
             icon: divPerson(styles["person"], `Person ${markerPersonIndex[0]}`),
             draggable: !lock,
           })
@@ -515,6 +520,7 @@ export const Markers = observer(({ SetModal }) => {
           addIconHandle("");
         } else if (addIcon === "welcome-sign") {
           L.marker([latlng.lat, latlng.lng], {
+            target: { status: "add" },
             icon: divNavigationSigns(),
             draggable: !lock,
           }).addTo(map);
@@ -526,6 +532,7 @@ export const Markers = observer(({ SetModal }) => {
               type: "function",
               shape: "rectangle",
               index: markerFnIndex[0],
+              status: "add",
             },
             icon: divFunction(
               [styles["rectangle-fn"], styles["fn--black"]].join(" "),
@@ -584,7 +591,11 @@ export const Markers = observer(({ SetModal }) => {
       addIconHandle("");
       if (addIcon === "person" && click) {
         L.marker([e.latlng.lat, e.latlng.lng], {
-          target: { type: "person", index: markerPersonIndex[0] },
+          target: {
+            type: "person",
+            index: markerPersonIndex[0],
+            status: "add",
+          },
           draggable: !lock,
           icon: divPerson(styles["person"], `Person ${markerPersonIndex[0]}`),
         })
@@ -596,6 +607,7 @@ export const Markers = observer(({ SetModal }) => {
         addIconHandle("");
       } else if (addIcon === "welcome-sign" && click) {
         L.marker([e.latlng.lat, e.latlng.lng], {
+          target: { status: "add" },
           icon: divNavigationSigns(),
           draggable: !lock,
         })
@@ -629,6 +641,7 @@ export const Markers = observer(({ SetModal }) => {
             type: "function",
             shape: "rectangle",
             index: markerFnIndex[0],
+            status: "add",
           },
           icon: divFunction(
             [styles["rectangle-fn"], styles["fn--black"]].join(" "),
@@ -643,6 +656,7 @@ export const Markers = observer(({ SetModal }) => {
         addIconHandle("");
       } else if (addIcon === "house" && click) {
         L.marker([e.latlng.lat, e.latlng.lng], {
+          target: { status: "add" },
           icon: divHouse(),
         })
           .on("contextmenu", (e) => {
@@ -698,7 +712,7 @@ export const Markers = observer(({ SetModal }) => {
             [e.latlng.lat, e.latlng.lng],
           ],
 
-          { color: "transparent" }
+          { color: "transparent", status: "add" }
         )
 
           .arrowheads({ size: "5%", color: "black", type: "arrow" })
@@ -710,7 +724,7 @@ export const Markers = observer(({ SetModal }) => {
             [e.latlng.lat, e.latlng.lng + 10],
           ],
 
-          { kind: "inter-route", type: "line", color: "black" }
+          { kind: "inter-route", type: "line", color: "black", status: "add" }
         )
           .setText("Inter-route", {
             center: true,
@@ -899,7 +913,7 @@ export const Markers = observer(({ SetModal }) => {
             [e.latlng.lat, e.latlng.lng],
           ],
 
-          { color: "transparent" }
+          { color: "transparent", status: "add" }
         )
 
           .arrowheads({ color: "black", type: "arrow", size: "5%" })
@@ -911,7 +925,7 @@ export const Markers = observer(({ SetModal }) => {
             [e.latlng.lat, e.latlng.lng + 10],
           ],
 
-          { kind: "distance", type: "line", color: "black" }
+          { kind: "distance", type: "line", color: "black", status: "add" }
         )
           .setText("Distance", {
             center: true,

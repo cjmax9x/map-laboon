@@ -35,8 +35,14 @@ const IconList = [
 
 export const TopTool = observer((): React.ReactElement => {
   const [showSumilation, setShowSumilation] = useState<boolean>(false);
-  const { countryName, toggleCountryName, changePosition, switchMainLand } =
-    STORES;
+  const {
+    houseView,
+    countryName,
+    toggleCountryName,
+    changePosition,
+    switchMainLand,
+    getClear,
+  } = STORES;
   return (
     <div className={styles["container"]}>
       {showSumilation && <Modal onClick={setShowSumilation} />}
@@ -141,6 +147,14 @@ export const TopTool = observer((): React.ReactElement => {
               >
                 Origin{" "}
                 {!countryName && <CheckIcon className={styles["check-icon"]} />}
+              </span>
+              <span
+                onClick={() => {
+                  !houseView && getClear();
+                }}
+                className={styles["menu-item"]}
+              >
+                Clear all elements
               </span>
             </div>
           </div>

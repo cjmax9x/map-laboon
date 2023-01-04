@@ -35,7 +35,7 @@ let y = 1;
 const allLayer = [];
 export const Countries = observer(({ SetModal }) => {
   const countryHouse = useRef({});
-  const { country, houseView, lock, code, mainLand, addIconHandle } = STORES;
+  const { country, houseView, lock, code, mainLand } = STORES;
   const map = useMap();
   let cellSide;
 
@@ -150,7 +150,11 @@ export const Countries = observer(({ SetModal }) => {
             y % 2 !== 0 &&
               L.marker(item, {
                 draggable: !lock,
-                target: { type: "person", index: markerPersonIndex[0] },
+                target: {
+                  type: "person",
+                  index: markerPersonIndex[0],
+                  status: "add",
+                },
                 icon: divPerson(
                   styles["person"],
                   `Person ${markerPersonIndex[0]}`
@@ -167,6 +171,7 @@ export const Countries = observer(({ SetModal }) => {
                   type: "function",
                   shape: "rectangle",
                   index: markerFnIndex[0],
+                  status: "add",
                 },
                 icon: divFunction(
                   [styles["rectangle-fn"], styles["fn--black"]].join(" "),
@@ -185,6 +190,7 @@ export const Countries = observer(({ SetModal }) => {
                     type: "function",
                     shape: "rectangle",
                     index: markerFnIndex[0],
+                    status: "add",
                   },
                   icon: divFunction(
                     [styles["rectangle-fn"], styles["fn--black"]].join(" "),
@@ -196,7 +202,11 @@ export const Countries = observer(({ SetModal }) => {
                   .addTo(map) && markerFnIndex[0]++
               : L.marker(item, {
                   draggable: !lock,
-                  target: { type: "person", index: markerPersonIndex[0] },
+                  target: {
+                    type: "person",
+                    index: markerPersonIndex[0],
+                    status: "add",
+                  },
                   icon: divPerson(
                     styles["person"],
                     `Person ${markerPersonIndex[0]}`
@@ -315,6 +325,7 @@ export const Countries = observer(({ SetModal }) => {
             type: "function",
             shape: "rectangle",
             index: markerFnIndex[0],
+            status: "add",
           },
           icon: divFunction(
             [

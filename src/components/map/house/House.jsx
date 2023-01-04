@@ -3,16 +3,28 @@ import * as turf from "@turf/turf";
 import { observer } from "mobx-react";
 import { useEffect } from "react";
 import { useMap } from "react-leaflet";
-import styles from "../../../../styles/map/Map.module.scss";
 import { STORES } from "../../store/GlobalStore";
-import { divHouse, divHouseName, divHouseWorld } from "../marker/Icon";
+import { divHouseName, divHouseWorld } from "../marker/Icon";
 import { allLayer } from "../marker/Marker";
 import { GeoJson } from "../countries/GeoJson";
 
 export const House = observer(({}) => {
   const map = useMap();
-  const { country, houseView, countryName } = STORES;
-
+  const { clear, country, houseView, countryName, getClear } = STORES;
+  useEffect(() => {
+    if (clear) {
+      map.eachLayer((layer) => {
+        if (
+          layer.options.target?.status === "add" ||
+          layer.options.status === "add" ||
+          layer.options.type === "distance"
+        ) {
+          map.removeLayer(layer);
+        }
+      });
+      getClear();
+    }
+  }, [clear]);
   useEffect(() => {
     let index = 1;
     let name;
