@@ -15,6 +15,7 @@ import {
   defaultFunctionPerson,
   markerProblemIndex,
   groupPersonIndex,
+  addSelectedItem,
 } from "../marker/Marker";
 import {
   divFunction,
@@ -161,6 +162,7 @@ export const Countries = observer(({ SetModal }) => {
                 ),
               })
                 .on("contextmenu", changeIcon.bind(this, map, SetModal))
+                .on("click", (e) => addSelectedItem(e, map))
                 .addTo(map) &&
               markerPersonIndex[0]++;
 
@@ -178,8 +180,8 @@ export const Countries = observer(({ SetModal }) => {
                   `Function ${markerFnIndex[0]}`
                 ),
               })
-
                 .on("contextmenu", changeIcon.bind(this, map, SetModal))
+                .on("click", (e) => addSelectedItem(e, map))
                 .addTo(map) &&
               markerFnIndex[0]++;
           } else {
@@ -197,8 +199,8 @@ export const Countries = observer(({ SetModal }) => {
                     `Function ${markerFnIndex[0]}`
                   ),
                 })
-
                   .on("contextmenu", changeIcon.bind(this, map, SetModal))
+                  .on("click", (e) => addSelectedItem(e, map))
                   .addTo(map) && markerFnIndex[0]++
               : L.marker(item, {
                   draggable: !lock,
@@ -214,6 +216,7 @@ export const Countries = observer(({ SetModal }) => {
                 })
 
                   .on("contextmenu", changeIcon.bind(this, map, SetModal))
+                  .on("click", (e) => addSelectedItem(e, map))
                   .addTo(map) && markerPersonIndex[0]++;
           }
           y++;
@@ -338,7 +341,8 @@ export const Countries = observer(({ SetModal }) => {
           ),
         })
           .addTo(map)
-          .on("contextmenu", changeIcon.bind(this, map, SetModal));
+          .on("contextmenu", changeIcon.bind(this, map, SetModal))
+          .on("click", (e) => addSelectedItem(e, map));
         index ? index[0]++ : markerFnIndex[0]++;
         map.closePopup();
       };
